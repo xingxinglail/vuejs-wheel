@@ -1,0 +1,32 @@
+{
+  "name": "vuejs-wheel",
+  "version": "0.0.1",
+  "description": "A vuejs ui wheel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xingxinglail/vuejs-wheel.git"
+  },
+  "keywords": [
+    "vue",
+    "ui"
+  ],
+  "author": "star",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xingxinglail/vuejs-wheel/issues"
+  },
+  "homepage": "https://github.com/xingxinglail/vuejs-wheel#readme",
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3"
+  },
+  "alias": {
+    "vue" : "./node_modules/vue/dist/vue.common.js"
+  }
+}
