@@ -28,6 +28,13 @@
 </head>
 <body>
     <div id="app">
+        <v-input v-model="msg"></v-input>
+        <v-input :value="msg" disabled></v-input>
+        <v-input :value="msg" readonly></v-input>
+        <v-input v-model="msg" error="出错了"></v-input>
+        <br />
+        <br />
+        <br />
         <v-button>按钮</v-button>
         <v-button>按钮2</v-button>
         <v-button icon="setting">设置</v-button>
@@ -53,6 +60,6 @@
         </div>
     </div>
     <script src="./src/app.js"></script>
-    <script src="//at.alicdn.com/t/font_1344838_f1d1pxnnhzv.js"></script>
+    <script src="//at.alicdn.com/t/font_1344838_er035n9m55.js"></script>
 </body>
 </html>
