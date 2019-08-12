@@ -1,4 +1,3 @@
-import sinon from 'sinon'
 import Vue from 'vue'
 import Button from '../src/VButton'
 
