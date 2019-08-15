@@ -1,5 +1,7 @@
 <template>
-    <div class="v-col" :class="[span && `v-col-${span}`, offset && `v-col-offset-${offset}`]">
+    <div class="v-col"
+         :class="[span && `v-col-${span}`, offset && `v-col-offset-${offset}`]"
+         :style="{ paddingLeft: `${gutter / 2}px`, paddingRight: `${gutter / 2}px` }">
         <slot></slot>
     </div>
 </template>
@@ -13,6 +15,11 @@ export default {
         },
         offset: {
             type: [Number, String]
+        }
+    },
+    data () {
+        return {
+            gutter: 0
         }
     }
 }

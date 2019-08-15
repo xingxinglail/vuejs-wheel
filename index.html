@@ -29,20 +29,20 @@
 <body>
     <div id="app">
         <div style="border: 1px solid #000;">
-            <v-row>
-                <v-col></v-col>
-                <v-col></v-col>
+            <v-row gutter="20">
+                <v-col>1111</v-col>
+                <v-col>1111</v-col>
             </v-row>
             <v-row>
-                <v-col span="12"></v-col>
-                <v-col span="12"></v-col>
+                <v-col span="12">2222</v-col>
+                <v-col span="12">2222</v-col>
             </v-row>
-            <v-row>
-                <v-col :span="4" :offset="4"></v-col>
-                <v-col :span="8"></v-col>
-                <v-col :span="8"></v-col>
+            <v-row gutter="20">
+                <v-col :span="4" :offset="4">3333</v-col>
+                <v-col :span="8">3333</v-col>
+                <v-col :span="8">333</v-col>
             </v-row>
-            <v-row>
+            <v-row gutter="30">
                 <v-col></v-col>
                 <v-col></v-col>
                 <v-col></v-col>
@@ -53,8 +53,25 @@
                 <v-col :span="22"></v-col>
             </v-row>
             <v-row>
-                <v-col offset="4":span="4"></v-col>
+                <v-col offset="4" :span="4"></v-col>
                 <v-col :span="16"></v-col>
+            </v-row>
+        </div>
+        <div style="background: gainsboro">
+            <v-row>
+                <v-col :span="10">
+                    <v-row gutter="30">
+                        <v-col>111</v-col>
+                        <v-col>222</v-col>
+                    </v-row>
+                </v-col>
+                <v-col :span="14">
+                    <v-row>
+                        <v-col :span="2">333</v-col>
+                        <v-col :span="18">444</v-col>
+                        <v-col :span="4">555</v-col>
+                    </v-row>
+                </v-col>
             </v-row>
         </div>
         <br />
