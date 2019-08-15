@@ -28,6 +28,38 @@
 </head>
 <body>
     <div id="app">
+        <div style="border: 1px solid #000;">
+            <v-row>
+                <v-col></v-col>
+                <v-col></v-col>
+            </v-row>
+            <v-row>
+                <v-col span="12"></v-col>
+                <v-col span="12"></v-col>
+            </v-row>
+            <v-row>
+                <v-col :span="4" :offset="4"></v-col>
+                <v-col :span="8"></v-col>
+                <v-col :span="8"></v-col>
+            </v-row>
+            <v-row>
+                <v-col></v-col>
+                <v-col></v-col>
+                <v-col></v-col>
+                <v-col></v-col>
+            </v-row>
+            <v-row>
+                <v-col :span="2"></v-col>
+                <v-col :span="22"></v-col>
+            </v-row>
+            <v-row>
+                <v-col offset="4":span="4"></v-col>
+                <v-col :span="16"></v-col>
+            </v-row>
+        </div>
+        <br />
+        <br />
+        <br />
         <v-input v-model="msg"></v-input>
         <v-input :value="msg" disabled></v-input>
         <v-input :value="msg" readonly></v-input>
