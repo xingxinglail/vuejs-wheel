@@ -17,6 +17,15 @@ const validator = value => {
     return vaild
 }
 
+const getClasses = (obj, clsPrefix) => {
+    if (!obj) return []
+    const classes = []
+    const { span, offset } = obj
+    if (span) classes.push(`${clsPrefix}${span}`)
+    if (offset) classes.push(`${clsPrefix}offset-${offset}`)
+    return classes
+}
+
 export default {
     name: 'VCol',
     props: {
@@ -46,27 +55,12 @@ export default {
     },
     computed: {
         colClasses ({ span, offset, ipad, narrowPc, widePc }) {
-            const ipadClasses = []
-            if (ipad) {
-                ipadClasses.push(`v-col-ipad-${ipad.span}`)
-                ipadClasses.push(`v-col-ipad-offset-${ipad.offset}`)
-            }
-            const narrowPcClasses = []
-            if (narrowPc) {
-                narrowPcClasses.push(`v-col-narrow-pc-${narrowPc.span}`)
-                narrowPcClasses.push(`v-col-narrow-pc-offset-${narrowPc.offset}`)
-            }
-            const widePcClasses = []
-            if (widePc) {
-                widePcClasses.push(`v-col-wide-pc-${widePc.span}`)
-                widePcClasses.push(`v-col-wide-pc-offset-${widePc.offset}`)
-            }
             return [
-                span && `v-col-${span}`,
-                offset && `v-col-offset-${offset}`,
-                ...ipadClasses,
-                ...narrowPcClasses,
-                ...widePcClasses
+                ...getClasses({ span }, 'v-col-'),
+                ...getClasses({ offset }, 'v-col-'),
+                ...getClasses(ipad, 'v-col-ipad-'),
+                ...getClasses(narrowPc, 'v-col-narrow-pc-'),
+                ...getClasses(widePc, 'v-col-wide-pc-')
             ]
         },
         colStyle ({ gutter }) {
