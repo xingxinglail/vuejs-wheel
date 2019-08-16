@@ -1,6 +1,6 @@
 <template>
     <div class="v-row"
-         :style="{ marginLeft: `-${gutter / 2}px`, marginRight: `-${gutter / 2}px` }">
+         :style="rowStyle">
         <slot></slot>
     </div>
 </template>
@@ -19,6 +19,17 @@ export default {
             this.$children.forEach(vm => {
                 vm.gutter = gutter
             })
+        }
+    },
+    computed: {
+        rowStyle ({ gutter }) {
+            if (gutter) {
+                const val = gutter / 2
+                return {
+                    marginLeft: `-${val}px`,
+                    marginRight: `-${val}px`
+                }
+            }
         }
     }
 }

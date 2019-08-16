@@ -1,7 +1,7 @@
 <template>
     <div class="v-col"
-         :class="[span && `v-col-${span}`, offset && `v-col-offset-${offset}`]"
-         :style="{ paddingLeft: `${gutter / 2}px`, paddingRight: `${gutter / 2}px` }">
+         :class="colClasses"
+         :style="colStyle">
         <slot></slot>
     </div>
 </template>
@@ -20,6 +20,25 @@ export default {
     data () {
         return {
             gutter: 0
+        }
+    },
+    computed: {
+        colClasses ({ span, offset }) {
+            return [
+                span && `v-col-${span}`,
+                offset && `v-col-offset-${offset}`
+            ]
+        },
+        colStyle ({ gutter }) {
+            if (gutter) {
+                if (gutter) {
+                    const val = gutter / 2
+                    return {
+                        paddingLeft: `${val}px`,
+                        paddingRight: `${val}px`
+                    }
+                }
+            }
         }
     }
 }
