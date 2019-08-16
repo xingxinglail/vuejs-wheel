@@ -56,8 +56,7 @@ export default {
     computed: {
         colClasses ({ span, offset, ipad, narrowPc, widePc }) {
             return [
-                ...getClasses({ span }, 'v-col-'),
-                ...getClasses({ offset }, 'v-col-'),
+                ...getClasses({ span, offset }, 'v-col-'),
                 ...getClasses(ipad, 'v-col-ipad-'),
                 ...getClasses(narrowPc, 'v-col-narrow-pc-'),
                 ...getClasses(widePc, 'v-col-wide-pc-')
