@@ -1,11 +1,13 @@
 <template>
     <div class="v-toast" :class="classes">
-        <div class="message">
-            <div v-if="enableHTML" v-html="$slots.default"></div>
-            <slot v-else></slot>
-        </div>
-        <div class="close-btn" v-if="closeBtnText" @click="close">
-            <span>{{ closeBtnText }}</span>
+        <div class="inner">
+            <div class="message">
+                <div v-if="enableHTML" v-html="$slots.default"></div>
+                <slot v-else></slot>
+            </div>
+            <div class="close-btn" v-if="closeBtnText" @click="close">
+                <span>{{ closeBtnText }}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -73,51 +75,102 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$animation-duration: .3s;
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-bottom {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .v-toast {
     position: fixed;
     z-index: 10;
     left: 50%;
-    display: flex;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.75);
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
-    max-width: 70vw;
-    color: #fff;
     transform: translateX(-50%);
 
-    .message {
-        padding: 10px 16px;
-        font-size: 14px;
+    .inner {
+        display: flex;
+        align-items: center;
+        max-width: 70vw;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.75);
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+
+        .message {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        .close-btn {
+            flex-shrink: 0;
+            align-self: stretch;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            border-left: 1px solid #656565;
+        }
     }
 
     &.v-toast-position-top {
         top: 0;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
+
+        .inner {
+            animation: slide-in-up $animation-duration;
+        }
     }
 
     &.v-toast-position-middle {
         top: 50%;
         transform: translate(-50%, -50%);
+
+        .inner {
+            animation: fade-in $animation-duration;
+        }
     }
 
     &.v-toast-position-bottom {
         bottom: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+
+        .inner {
+            animation: slide-in-bottom $animation-duration;
+        }
     }
 
-    .close-btn {
-        flex-shrink: 0;
-        align-self: stretch;
-        padding: 0 16px;
-        display: flex;
-        align-items: center;
-        border-left: 1px solid #656565;
-    }
-
-    &.v-toast-has-close-btn .message {
+    &.v-toast-has-close-btn .inner .message {
         padding-right: 0;
     }
 }
