@@ -43,10 +43,7 @@ new Vue({
                 message: '<div>卢卡<b>记录卡健身房的考虑将</b>斯按时付款了坚实的浪费空间施蒂利克福建省离开对方家里睡大觉了开始的减肥阿里空间发的玩</div>',
                 duration: 0,
                 enableHTML: true,
-                closeBtnText: '关闭',
-                onClose (toast) {
-                    console.log(toast)
-                }
+                closeBtnText: '关闭'
             })
         },
         createMiddleToast () {
