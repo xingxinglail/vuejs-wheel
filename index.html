@@ -33,10 +33,86 @@
             height: 80px;
             border: 1px solid red;
         }
+
+        .v-header, .v-footer {
+            background-color: #b3c0d1;
+        }
+
+        .v-aside {
+            background-color: #d3dce6;
+        }
+
+        .v-content {
+            background-color: #e9eef3;
+            height: 240px;
+        }
     </style>
 </head>
 <body>
     <div id="app">
+        <v-layout>
+            <v-header>header</v-header>
+            <v-content>content</v-content>
+        </v-layout>
+        <br />
+        <br />
+        <v-layout>
+            <v-header>header</v-header>
+            <v-content>content</v-content>
+            <v-footer>footer</v-footer>
+        </v-layout>
+        <br />
+        <br />
+        <v-layout>
+            <v-aside width="200px">aside</v-aside>
+            <v-content>content</v-content>
+        </v-layout>
+        <v-layout>
+            <v-content>content</v-content>
+            <v-aside width="200px">aside</v-aside>
+        </v-layout>
+        <br />
+        <br />
+        <v-layout>
+            <v-header>header</v-header>
+            <v-layout>
+                <v-aside width="200px">aside</v-aside>
+                <v-content>content</v-content>
+            </v-layout>
+        </v-layout>
+        <br />
+        <br />
+        <v-layout>
+            <v-header>header</v-header>
+            <v-layout>
+                <v-aside width="200px">aside</v-aside>
+                <v-layout>
+                    <v-content>content</v-content>
+                    <v-footer>footer</v-footer>
+                </v-layout>
+            </v-layout>
+        </v-layout>
+        <br />
+        <br />
+        <v-layout>
+            <v-aside width="200px">aside</v-aside>
+            <v-layout>
+                <v-header>header</v-header>
+                <v-content>content</v-content>
+            </v-layout>
+        </v-layout>
+        <br />
+        <br />
+        <v-layout>
+            <v-aside width="200px">aside</v-aside>
+            <v-layout>
+                <v-header>header</v-header>
+                <v-content>content</v-content>
+                <v-footer>footer</v-footer>
+            </v-layout>
+        </v-layout>
+        <br />
+        <br />
         <div class="row">
             <v-row gutter="20">
                 <v-col :span="24" :ipad="{ span: 20 }" :narrow-pc="{ span: 16 }" :wide-pc="{ span: 8, offset: 4 }">
