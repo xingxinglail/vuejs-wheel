@@ -1,6 +1,6 @@
 <template>
     <div class="v-toast" :class="classes">
-        <div class="inner">
+        <div class="inner" :class="innerClass" @animationend="animationend">
             <div class="message">
                 <div v-if="enableHTML" v-html="$slots.default"></div>
                 <slot v-else></slot>
@@ -15,6 +15,11 @@
 <script>
 export default {
     name: 'VToast',
+    data () {
+        return {
+            innerClass: ''
+        }
+    },
     props: {
         enableHTML: {
             type: Boolean,
@@ -66,9 +71,14 @@ export default {
             }
         },
         close () {
-            this.$el.remove()
-            this.$emit('close')
-            this.$destroy()
+            this.innerClass = 'leave'
+        },
+        animationend () {
+            if (this.innerClass) {
+                this.$el.remove()
+                this.$emit('close')
+                this.$destroy()
+            }
         }
     }
 }
@@ -87,6 +97,16 @@ $animation-duration: .3s;
     }
 }
 
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 @keyframes slide-in-up {
     0% {
         opacity: 0;
@@ -99,6 +119,18 @@ $animation-duration: .3s;
     }
 }
 
+@keyframes slide-out-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
 @keyframes slide-in-bottom {
     0% {
         opacity: 0;
@@ -108,6 +140,18 @@ $animation-duration: .3s;
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes slide-out-bottom {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
     }
 }
 
@@ -138,6 +182,7 @@ $animation-duration: .3s;
             display: flex;
             align-items: center;
             border-left: 1px solid #656565;
+            cursor: pointer;
         }
     }
 
@@ -148,6 +193,10 @@ $animation-duration: .3s;
 
         .inner {
             animation: slide-in-up $animation-duration;
+
+            &.leave {
+                animation: slide-out-up $animation-duration;
+            }
         }
     }
 
@@ -157,6 +206,10 @@ $animation-duration: .3s;
 
         .inner {
             animation: fade-in $animation-duration;
+
+            &.leave {
+                animation: fade-out $animation-duration;
+            }
         }
     }
 
@@ -167,6 +220,10 @@ $animation-duration: .3s;
 
         .inner {
             animation: slide-in-bottom $animation-duration;
+
+            &.leave {
+                animation: slide-out-bottom $animation-duration;
+            }
         }
     }
 

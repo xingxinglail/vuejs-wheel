@@ -49,7 +49,7 @@ new Vue({
         createMiddleToast () {
             this.$toast({
                 message: 'hello world',
-                duration: 3000,
+                duration: 400,
                 position: 'middle',
                 onClose (toast) {
                     console.log(toast)
