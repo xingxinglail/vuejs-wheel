@@ -13,6 +13,11 @@ import VFooter from './VFooter'
 import Toast from './plugins/toast'
 import VToast from './plugins/toast/src/Main'
 import ToastTest from './ToastTest'
+import VTabs from './VTabs'
+import VTabPane from './VTabPane'
+import VTabHead from './VTabHead'
+import VTabBody from './VTabBody'
+import VTabNav from './VTabNav'
 
 Vue.component('toast-test', ToastTest)
 Vue.component('v-button', VButton)
@@ -27,12 +32,18 @@ Vue.component('v-content', VContent)
 Vue.component('v-aside', VAside)
 Vue.component('v-footer', VFooter)
 Vue.component('v-toast', VToast)
+Vue.component('v-tabs', VTabs)
+Vue.component('v-tab-pane', VTabPane)
+Vue.component('v-tab-head', VTabHead)
+Vue.component('v-tab-body', VTabBody)
+Vue.component('v-tab-nav', VTabNav)
 Vue.use(Toast)
 
 new Vue({
     el: '#app',
     data: {
-        msg: 'hi'
+        msg: 'hi',
+        tabsActive: 'second'
     },
     created () {
     },
@@ -67,6 +78,10 @@ new Vue({
                 position: 'bottom',
                 closeBtnText: '关闭'
             })
+        },
+        handleTabClick (name, e) {
+            console.log(name);
+            console.log(e);
         }
     }
 })

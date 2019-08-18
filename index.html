@@ -50,7 +50,24 @@
 </head>
 <body>
     <div id="app">
-        <toast-test></toast-test>
+        <v-tabs v-model="tabsActive" @tab-click="handleTabClick">
+            <v-tab-head>
+                <v-tab-nav name="first">用户</v-tab-nav>
+                <v-tab-nav name="second">配置管理</v-tab-nav>
+                <v-tab-nav name="third">角管理</v-tab-nav>
+                <v-tab-nav name="fourth">定时任务补偿</v-tab-nav>
+            </v-tab-head>
+            <v-tab-body>
+                <v-tab-pane name="first">用户管理用户管理</v-tab-pane>
+                <v-tab-pane name="second">配置管理配置管理</v-tab-pane>
+                <v-tab-pane name="third">角色管理角色管理</v-tab-pane>
+                <v-tab-pane name="fourth">定时任务补偿定时任务补偿</v-tab-pane>
+            </v-tab-body>
+        </v-tabs>
+        <br />
+        <br />
+        <br />
+<!--        <toast-test></toast-test>-->
         <v-button @click="createTopToast">toast-top</v-button>
         <v-button @click="createMiddleToast">toast-middel</v-button>
         <v-button @click="createBottomToast">toast-bottom</v-button>
