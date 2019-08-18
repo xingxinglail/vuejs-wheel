@@ -2,14 +2,15 @@ import Toast from './src/Main'
 
 let currentToast = null
 
-function createToast (Vue, { message, duration = 3000, enableHTML, closeBtnText, position, onClose }) {
+function createToast (Vue, { message, duration = 3000, enableHTML, closeBtnText, position, onClose, className }) {
     const Constructor = Vue.extend(Toast)
     const toast = new Constructor({
         propsData: {
             enableHTML,
             duration,
             closeBtnText,
-            position
+            position,
+            className
         }
     })
     toast.$slots.default = message

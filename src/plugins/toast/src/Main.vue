@@ -21,6 +21,10 @@ export default {
         }
     },
     props: {
+        className: {
+            type: String,
+            default: ''
+        },
         enableHTML: {
             type: Boolean,
             default: false
@@ -54,10 +58,11 @@ export default {
         }
     },
     computed: {
-        classes ({ position, closeBtnText }) {
+        classes ({ position, closeBtnText, className }) {
             return [
                 `v-toast-position-${position}`,
-                closeBtnText && 'v-toast-has-close-btn'
+                closeBtnText && 'v-toast-has-close-btn',
+                className
             ]
         }
     },
