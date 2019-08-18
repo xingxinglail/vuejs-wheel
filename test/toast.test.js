@@ -126,21 +126,19 @@ describe('Toast', () => {
         it('可以设置closeBtnText', done => {
             const callback = sinon.fake();
             vm.$toast({
+                className: 'test-close',
                 closeBtnText: '关闭',
                 onClose: callback
             })
-
+            const toast = document.body.querySelector('.test-close')
+            expect(toast.classList.contains('v-toast-has-close-btn')).to.equal(true)
+            const btn = toast.querySelector('.close-btn')
+            expect(btn.children[0].innerText).to.equal('关闭')
+            btn.click()
             setTimeout(() => {
-                const toast = document.body.querySelector('.v-toast')
-                expect(toast.classList.contains('v-toast-has-close-btn')).to.equal(true)
-                const btn = toast.querySelector('.close-btn')
-                expect(btn.children[0].innerText).to.equal('关闭')
-                btn.click()
-                setTimeout(() => {
-                    expect(callback).to.have.been.called
-                    done()
-                }, 400)
-            }, 600)
+                expect(callback).to.have.been.called
+                done()
+            }, 400)
         })
 
         it('可以设置position', (done) => {

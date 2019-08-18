@@ -12,7 +12,9 @@ import VAside from './VAside'
 import VFooter from './VFooter'
 import Toast from './plugins/toast'
 import VToast from './plugins/toast/src/Main'
+import ToastTest from './ToastTest'
 
+Vue.component('toast-test', ToastTest)
 Vue.component('v-button', VButton)
 Vue.component('v-icon', VIcon)
 Vue.component('v-button-group', VButtonGroup)
