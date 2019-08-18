@@ -11,6 +11,7 @@ import VContent from './VContent'
 import VAside from './VAside'
 import VFooter from './VFooter'
 import Toast from './plugins/toast'
+import VToast from './plugins/toast/src/Main'
 
 Vue.component('v-button', VButton)
 Vue.component('v-icon', VIcon)
@@ -23,6 +24,7 @@ Vue.component('v-header', VHeader)
 Vue.component('v-content', VContent)
 Vue.component('v-aside', VAside)
 Vue.component('v-footer', VFooter)
+Vue.component('v-toast', VToast)
 Vue.use(Toast)
 
 new Vue({

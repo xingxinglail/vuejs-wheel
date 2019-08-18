@@ -1,68 +1,158 @@
 import Vue from 'vue'
-import Button from '../src/VButton'
+import Toast from '../src/plugins/toast/src/Main'
+import ToastPlugin from '../src/plugins/toast'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
 
+Vue.use(ToastPlugin)
+
 const expect = chai.expect
 
-describe('VButton', () => {
-    it('存在.', () => {
-        expect(Button).to.be.ok
+describe('Toast', () => {
+
+    describe('Component', () => {
+
+        it('存在.', () => {
+            expect(Toast).to.be.ok
+        })
+
+        it('可以设置duration', done => {
+            const Constructor = Vue.extend(Toast)
+            const vm = new Constructor({
+                propsData: {
+                    duration: 400
+                }
+            }).$mount()
+            vm.$on('close', () => {
+                const toast = document.body.querySelector('.v-toast')
+                expect(toast).to.be.not.exist
+                done()
+            })
+        })
+
+        it('可以设置enableHTML', () => {
+            const Constructor = Vue.extend(Toast)
+            const vm = new Constructor({
+                propsData: {
+                    enableHTML: true
+                }
+            })
+            vm.$slots.default = '<div id="hello">hello</div>'
+            vm.$mount()
+            expect(vm.$el.querySelector('#hello')).to.be.exist
+        })
+
+        it('可以设置closeBtnText', done => {
+            const Constructor = Vue.extend(Toast)
+            const callback = sinon.fake();
+            const vm = new Constructor({
+                propsData: {
+                    closeBtnText: '关闭'
+                }
+            }).$mount()
+            expect(vm.$el.classList.contains('v-toast-has-close-btn')).to.equal(true)
+            const btn = vm.$el.querySelector('.close-btn')
+            expect(btn).to.be.exist
+            vm.$on('close', () => {
+                callback()
+                expect(callback).to.have.been.called
+                done()
+            })
+            btn.click()
+        })
+
+        it('可以设置position', () => {
+            const Constructor = Vue.extend(Toast)
+            let vm = new Constructor({
+                propsData: {
+                    position: 'top'
+                }
+            }).$mount()
+            expect(vm.$el.classList.contains('v-toast-position-top')).to.equal(true)
+            vm = new Constructor({
+                propsData: {
+                    position: 'middle'
+                }
+            }).$mount()
+            expect(vm.$el.classList.contains('v-toast-position-middle')).to.equal(true)
+            vm = new Constructor({
+                propsData: {
+                    position: 'bottom'
+                }
+            }).$mount()
+            expect(vm.$el.classList.contains('v-toast-position-bottom')).to.equal(true)
+        })
     })
 
-    it('可以设置icon.', () => {
-        const Constructor = Vue.extend(Button)
-        const vm = new Constructor({
-            propsData: {
-                icon: 'setting'
-            }
-        }).$mount()
-        const useElement = vm.$el.querySelector('use')
-        expect(useElement.getAttribute('xlink:href')).to.equal('#i-setting')
-        vm.$destroy()
-    })
+    describe('Plugin', () => {
+        let div = null
+        let vm = null
 
-    it('可以设置loading.', () => {
-        const Constructor = Vue.extend(Button)
-        const vm = new Constructor({
-            propsData: {
-                icon: 'setting',
-                loading: true
-            }
-        }).$mount()
-        const useElements = vm.$el.querySelectorAll('use')
-        expect(useElements.length).to.equal(1)
-        expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
-        vm.$destroy()
-    })
+        beforeEach(() => {
+            div = document.createElement('div')
+            vm = new Vue().$mount(div)
+        })
 
-    it('icon position left 的 order 是 2', () => {
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        const Constructor = Vue.extend(Button)
-        const vm = new Constructor({
-            propsData: {
-                icon: 'setting',
-                iconPosition: 'right'
-            }
-        }).$mount(div)
-        const icon = vm.$el.querySelector('svg')
-        expect(getComputedStyle(icon).order).to.eq('2')
-        vm.$el.remove()
-        vm.$destroy()
-    })
+        afterEach(() => {
+            vm.$destroy()
+        })
 
-    it('点击 button 触发 click 事件', () => {
-        const Constructor = Vue.extend(Button)
-        const vm = new Constructor({
-            propsData: {
-                icon: 'setting',
-            }
-        }).$mount()
-        const callback = sinon.fake();
-        vm.$on('click', callback)
-        vm.$el.click()
-        expect(callback).to.have.been.called
+        it('存在.', () => {
+            expect(ToastPlugin).to.be.ok
+            expect(vm.$toast).to.be.exist
+        })
+
+        it('可以设置duration', done => {
+            vm.$toast({
+                duration: 1000,
+                onClose () {
+                    const toast = document.body.querySelector('.v-toast')
+                    expect(toast).to.be.not.exist
+                    done()
+                }
+            })
+        })
+
+        it('可以设置enableHTML', () => {
+            vm.$toast({
+                message: '<div id="hello">hello</div>',
+                enableHTML: true,
+                duration: 100
+            })
+            expect(document.body.querySelector('.v-toast')).to.be.exist
+        })
+
+        it('可以设置closeBtnText', done => {
+            const callback = sinon.fake();
+            vm.$toast({
+                closeBtnText: '关闭',
+                onClose: callback
+            })
+
+            setTimeout(() => {
+                const toast = document.body.querySelector('.v-toast')
+                expect(toast.classList.contains('v-toast-has-close-btn')).to.equal(true)
+                const btn = toast.querySelector('.close-btn')
+                expect(btn.children[0].innerText).to.equal('关闭')
+                btn.click()
+                setTimeout(() => {
+                    expect(callback).to.have.been.called
+                    done()
+                }, 400)
+            }, 600)
+        })
+
+        it('可以设置position', (done) => {
+            vm.$toast({
+                position: 'middle'
+            })
+
+            setTimeout(() => {
+                const toast = document.body.querySelector('.v-toast')
+                expect(toast.classList.contains('v-toast-position-middle')).to.equal(true)
+                done()
+            }, 1000)
+        })
     })
 })
