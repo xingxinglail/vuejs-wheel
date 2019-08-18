@@ -1,7 +1,5 @@
 import Toast from './src/Main'
 
-let currentToast = null
-
 function createToast (Vue, { message, duration = 3000, enableHTML, closeBtnText, position, onClose, className }) {
     const Constructor = Vue.extend(Toast)
     const toast = new Constructor({
@@ -15,7 +13,6 @@ function createToast (Vue, { message, duration = 3000, enableHTML, closeBtnText,
     })
     toast.$slots.default = message
     toast.$on('close', () => {
-        currentToast = null
         if (onClose) onClose(toast)
     })
     toast.$mount()
@@ -26,10 +23,7 @@ function createToast (Vue, { message, duration = 3000, enableHTML, closeBtnText,
 export default {
     install (Vue) {
         Vue.prototype.$toast = function (obj) {
-            if (currentToast) {
-                currentToast.close()
-            }
-            currentToast = createToast(Vue, obj)
+            createToast(Vue, obj)
         }
     }
 }
