@@ -1,6 +1,6 @@
 <template>
     <div class="v-toast" :class="classes">
-        <div class="inner" :class="innerClass" @animationend="animationend">
+        <div class="inner" :class="innerClass">
             <div class="message">
                 <div v-if="enableHTML" v-html="$slots.default"></div>
                 <slot v-else></slot>
@@ -72,13 +72,11 @@ export default {
         },
         close () {
             this.innerClass = 'leave'
-        },
-        animationend () {
-            if (this.innerClass) {
+            this.closeTimer = setTimeout(() => {
                 this.$el.remove()
                 this.$emit('close')
                 this.$destroy()
-            }
+            }, 300)
         }
     }
 }
