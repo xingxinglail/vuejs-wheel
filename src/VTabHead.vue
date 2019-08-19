@@ -1,7 +1,10 @@
 <template>
     <div class="v-tab-head">
         <slot></slot>
-        <div class="line" v-show="lineStyle" :style="lineStyle"></div>
+        <div class="line" :style="lineStyle"></div>
+        <div class="control">
+            <slot name="control"></slot>
+        </div>
     </div>
 </template>
 
@@ -39,16 +42,22 @@ export default {
 <style lang="scss" scoped>
 .v-tab-head {
     display: flex;
+    align-items: center;
     position: relative;
+    border-bottom: 1px solid #ddd;
 
     .line {
         position: absolute;
         z-index: 1;
         left: 0;
-        bottom: 0;
-        height: 3px;
+        bottom: -1px;
+        height: 1px;
         background-color: #09f;
         transition: .4s ease;
+    }
+
+    .control {
+        margin-left: auto;
     }
 }
 </style>

@@ -10,6 +10,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.v-tab-body {
+    padding-top: 10px;
+}
 </style>

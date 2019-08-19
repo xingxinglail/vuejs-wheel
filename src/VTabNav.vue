@@ -1,5 +1,5 @@
 <template>
-    <div class="v-tab-nav" :class="{ disabled }" @click="handleClick">
+    <div class="v-tab-nav" :class="[{ disabled }, className]" @click="handleClick">
         <slot></slot>
     </div>
 </template>
@@ -8,6 +8,11 @@
 export default {
     name: 'VTabNav',
     inject: ['eventBus'],
+    data () {
+        return {
+            className: ''
+        }
+    },
     props: {
         name: {
             type: String,
@@ -17,6 +22,11 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    created () {
+        this.eventBus.$on('tab-click', name => {
+            this.className = name === this.name ? 'actived' : ''
+        })
     },
     methods: {
         handleClick (e) {
@@ -29,11 +39,19 @@ export default {
 
 <style lang="scss" scoped>
 .v-tab-nav {
-    height: 40px;
-    line-height: 40px;
+    height: 32px;
+    line-height: 32px;
     padding: 0 14px;
     font-size: 14px;
     cursor: pointer;
+
+    &.actived {
+        color: #4A90E2;
+    }
+
+    &:hover {
+        color: #4A90E2;
+    }
 
     &.disabled {
         cursor: not-allowed;
