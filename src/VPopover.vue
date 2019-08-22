@@ -11,8 +11,7 @@
             <slot name="content" :close="close"></slot>
         </div>
         <div ref="triggerWrapper"
-             class="trigger"
-             @click="visibile = !visibile">
+             class="trigger">
             <slot></slot>
         </div>
     </div>
@@ -68,27 +67,71 @@ export default {
             validator (value) {
                 return placementMap[value] !== undefined
             }
+        },
+        trigger: {
+            type: String,
+            default: 'click',
+            validator (value) {
+                return ['click', 'hover'].includes(value)
+            }
         }
+    },
+    created () {
+        this._closeDelay = 200
+        this._timer = null
     },
     mounted () {
         const { popover, triggerWrapper } = this.$refs
         this._popover = popover
         this._triggerWrapper = triggerWrapper
+        this.addEvent()
     },
-    beforeDestroy () {
+    destroyed () {
+        this.removeEvent()
         this.close()
     },
     methods: {
+        doToggle () {
+            this.visibile = !this.visibile
+        },
+        handleMouseEnter () {
+            // clearTimeout(this._timer)
+            this.visibile = true
+        },
+        handleMouseLeave () {
+            // clearTimeout(this._timer)
+            this.visibile = false
+        },
+        addEvent () {
+            const { trigger } = this
+            if (trigger === 'click') {
+                this._popover.addEventListener('click', this.doToggle)
+            }
+            if (trigger === 'hover') {
+                this._popover.addEventListener('mouseenter', this.handleMouseEnter)
+                this._popover.addEventListener('mouseleave', this.handleMouseLeave)
+            }
+        },
+        removeEvent () {
+            const { trigger } = this
+            if (trigger === 'click') {
+                this._popover.removeEventListener('click', this.doToggle)
+            }
+            if (trigger === 'hover') {
+                this._popover.removeEventListener('mouseenter', this.handleMouseEnter)
+                this._popover.removeEventListener('mouseleave', this.handleMouseLeave)
+            }
+        },
         showPopover () {
             this.$nextTick(() => {
                 document.body.appendChild(this.$refs.contentWrapper)
                 this.calcPlacement()
-                document.addEventListener('click', this.handleDocumentClick)
+                if (this.trigger === 'click') document.addEventListener('click', this.handleDocumentClick)
             })
         },
         close () {
             this.visibile = false
-            document.removeEventListener('click', this.handleDocumentClick)
+            if (this.trigger === 'click') document.removeEventListener('click', this.handleDocumentClick)
         },
         handleDocumentClick ({ target }) {
             const { contentWrapper } = this.$refs
@@ -198,6 +241,10 @@ export default {
         margin-top: -10px;
         transform: translateY(-100%);
 
+        &::before, &::after {
+            border-bottom: none;
+        }
+
         &::before {
             top: 100%;
             border-top: 6px solid #999;
@@ -235,6 +282,10 @@ export default {
     &.v-popover-placement-common-bottom {
         margin-top: 10px;
 
+        &::before, &::after {
+            border-top: none;
+        }
+
         &::before {
             bottom: 100%;
             border-bottom: 6px solid #999;
@@ -270,6 +321,10 @@ export default {
 
     &.v-popover-placement-common-left {
          margin-left: -10px;
+
+        &::before, &::after {
+            border-right: none;
+        }
 
          &::before {
              left: 100%;
@@ -309,6 +364,10 @@ export default {
 
     &.v-popover-placement-common-right {
         margin-left: 10px;
+
+        &::before, &::after {
+            border-left: none;
+        }
 
         &::before {
             right: 100%;

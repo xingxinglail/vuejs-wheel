@@ -71,7 +71,10 @@
             </template>
             <v-button>按钮</v-button>
         </v-popover>
-        <v-popover v-model="popover2" placement="top-start" popper-class="popover-class">
+        <v-popover v-model="popover2"
+                   trigger="hover"
+                   placement="top-start"
+                   popper-class="popover-class">
             <template slot="content">
                 <div>
                     <p>点击设置触发事件</p>
@@ -117,7 +120,7 @@
             </template>
             <v-button>舒服</v-button>
         </v-popover>
-        <v-popover placement="bottom-end">
+        <v-popover placement="bottom-end" trigger="hover">
             <template slot="content">
                 <p>设是</p>
             </template>
@@ -137,7 +140,7 @@
         </div>
         <br />
         <div>
-            <v-popover placement="left">
+            <v-popover placement="left" trigger="hover">
                 <template slot="content">
                     <p>索尼奥术大师阿双方是否改善电饭锅电饭锅是的发生大事大法索尼奥术大师阿双方是否改善电饭锅电饭锅是的发生大事大法索尼奥术大师阿双方是锅电饭锅是的发生大事大法</p>
                 </template>
@@ -166,7 +169,7 @@
         </div>
         <br />
         <div>
-            <v-popover placement="right">
+            <v-popover placement="right" trigger="hover">
                 <template slot="content">
                     <p>术大师阿双方是否改善电饭锅电饭锅是的发生大事大法术大师阿双方是否改善电饭锅电饭锅是的发生大事大法</p>
                 </template>
