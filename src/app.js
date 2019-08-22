@@ -18,6 +18,7 @@ import VTabPane from './VTabPane'
 import VTabHead from './VTabHead'
 import VTabBody from './VTabBody'
 import VTabNav from './VTabNav'
+import VPopover from './VPopover'
 
 Vue.component('toast-test', ToastTest)
 Vue.component('v-button', VButton)
@@ -37,6 +38,7 @@ Vue.component('v-tab-pane', VTabPane)
 Vue.component('v-tab-head', VTabHead)
 Vue.component('v-tab-body', VTabBody)
 Vue.component('v-tab-nav', VTabNav)
+Vue.component('v-popover', VPopover)
 Vue.use(Toast)
 
 new Vue({
@@ -53,6 +55,9 @@ new Vue({
         }, 3000)
     },
     methods: {
+        testPopover () {
+            console.log(222)
+        },
         createTopToast () {
             this.$toast({
                 message: '<div>卢卡<b>记录卡健身房的考虑将</b>斯按时付款了坚实的浪费空间施蒂利克福建省离开对方家里睡大觉了开始的减肥阿里空间发的玩</div>',
