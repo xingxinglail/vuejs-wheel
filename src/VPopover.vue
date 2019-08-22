@@ -5,8 +5,9 @@
              :style="{ width: `${width}px` }"
              :class="[
                 `v-popover-placement-common-${placement.split('-')[0]}`,
-                 `v-popover-placement-${placement}`,
-                  popperClass]"
+                `v-popover-placement-${placement}`,
+                popperClass
+             ]"
              v-show="visibile">
             <slot name="content" :close="close"></slot>
         </div>
@@ -81,9 +82,10 @@ export default {
         this._timer = null
     },
     mounted () {
-        const { popover, triggerWrapper } = this.$refs
+        const { popover, triggerWrapper, contentWrapper } = this.$refs
         this._popover = popover
         this._triggerWrapper = triggerWrapper
+        this._contentWrapper = contentWrapper
         this.addEvent()
     },
     destroyed () {
@@ -95,36 +97,42 @@ export default {
             this.visibile = !this.visibile
         },
         handleMouseEnter () {
-            // clearTimeout(this._timer)
+            clearTimeout(this._timer)
             this.visibile = true
         },
         handleMouseLeave () {
-            // clearTimeout(this._timer)
-            this.visibile = false
+            clearTimeout(this._timer)
+            this._timer = setTimeout(() => {
+                this.visibile = false
+            }, this._closeDelay)
         },
         addEvent () {
-            const { trigger } = this
+            const { trigger, _popover, _contentWrapper } = this
             if (trigger === 'click') {
-                this._popover.addEventListener('click', this.doToggle)
+                _popover.addEventListener('click', this.doToggle)
             }
             if (trigger === 'hover') {
-                this._popover.addEventListener('mouseenter', this.handleMouseEnter)
-                this._popover.addEventListener('mouseleave', this.handleMouseLeave)
+                _popover.addEventListener('mouseenter', this.handleMouseEnter)
+                _popover.addEventListener('mouseleave', this.handleMouseLeave)
+                _contentWrapper.addEventListener('mouseenter', this.handleMouseEnter)
+                _contentWrapper.addEventListener('mouseleave', this.handleMouseLeave)
             }
         },
         removeEvent () {
-            const { trigger } = this
+            const { trigger, _popover, _contentWrapper } = this
             if (trigger === 'click') {
-                this._popover.removeEventListener('click', this.doToggle)
+                _popover.removeEventListener('click', this.doToggle)
             }
             if (trigger === 'hover') {
-                this._popover.removeEventListener('mouseenter', this.handleMouseEnter)
-                this._popover.removeEventListener('mouseleave', this.handleMouseLeave)
+                _popover.removeEventListener('mouseenter', this.handleMouseEnter)
+                _popover.removeEventListener('mouseleave', this.handleMouseLeave)
+                _contentWrapper.removeEventListener('mouseenter', this.handleMouseEnter)
+                _contentWrapper.removeEventListener('mouseleave', this.handleMouseLeave)
             }
         },
         showPopover () {
             this.$nextTick(() => {
-                document.body.appendChild(this.$refs.contentWrapper)
+                document.body.appendChild(this._contentWrapper)
                 this.calcPlacement()
                 if (this.trigger === 'click') document.addEventListener('click', this.handleDocumentClick)
             })
@@ -134,11 +142,11 @@ export default {
             if (this.trigger === 'click') document.removeEventListener('click', this.handleDocumentClick)
         },
         handleDocumentClick ({ target }) {
-            const { contentWrapper } = this.$refs
+            const { _contentWrapper } = this
             if (
                 this._popover.contains(target) ||
-                target === contentWrapper ||
-                contentWrapper.contains(target)
+                target === _contentWrapper ||
+                _contentWrapper.contains(target)
             ) return
             this.close()
         },
