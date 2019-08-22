@@ -46,6 +46,15 @@
             background-color: #e9eef3;
             height: 240px;
         }
+
+        .popover-class {
+            color: #fff;
+            background-color: #09f !important;
+        }
+
+        .popover-class::after {
+            border-top-color: #09f !important;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +62,7 @@
         <br />
         <br />
         <br />
-        <v-popover placement="top-start">
+        <v-popover placement="top-start" popper-class="popover-class">
             <template slot="content">
                 <div>
                     <p>点击设置触发事件</p>

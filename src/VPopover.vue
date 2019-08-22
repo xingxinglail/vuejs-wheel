@@ -3,7 +3,10 @@
         <div ref="contentWrapper"
              class="v-popover-content"
              :style="{ width: `${width}px` }"
-             :class="[`v-popover-placement-common-${placement.split('-')[0]}`, `v-popover-placement-${placement}`]"
+             :class="[
+                `v-popover-placement-common-${placement.split('-')[0]}`,
+                 `v-popover-placement-${placement}`,
+                  popperClass]"
              v-show="visibile">
             <slot name="content"></slot>
         </div>
@@ -40,6 +43,10 @@ export default {
         }
     },
     props: {
+        popperClass: {
+            type: String,
+            default: ''
+        },
         width: {
             type: Number,
             default: 150,
