@@ -62,11 +62,20 @@
         <br />
         <br />
         <br />
-        <v-popover placement="top-start" popper-class="popover-class">
+        <v-popover v-model="popover" placement="top-start" popper-class="popover-class">
+            <template slot="content" slot-scope="{ close }">
+                <div>
+                    <p>点击设置触发事件</p>
+                    <v-button icon="setting" @click="close">关闭</v-button>
+                </div>
+            </template>
+            <v-button>按钮</v-button>
+        </v-popover>
+        <v-popover v-model="popover2" placement="top-start" popper-class="popover-class">
             <template slot="content">
                 <div>
                     <p>点击设置触发事件</p>
-                    <v-button icon="setting" @click="testPopover">设置</v-button>
+                    <v-button icon="setting" @click="popover2 = false">关闭</v-button>
                 </div>
             </template>
             <v-button>按钮</v-button>

@@ -8,11 +8,11 @@
                  `v-popover-placement-${placement}`,
                   popperClass]"
              v-show="visibile">
-            <slot name="content"></slot>
+            <slot name="content" :close="close"></slot>
         </div>
         <div ref="triggerWrapper"
              class="trigger"
-             @click="show">
+             @click="visibile = !visibile">
             <slot></slot>
         </div>
     </div>
@@ -37,12 +37,20 @@ const placementMap = {
 
 export default {
     name: 'VPopover',
+    model: {
+        prop: 'value',
+        event: 'input'
+    },
     data () {
         return {
             visibile: false
         }
     },
     props: {
+        value: {
+            type: Boolean,
+            default: false
+        },
         popperClass: {
             type: String,
             default: ''
@@ -71,18 +79,12 @@ export default {
         this.close()
     },
     methods: {
-        show () {
-            this.visibile = !this.visibile
-            if (this.visibile) {
-                this.$nextTick(() => {
-                    const { contentWrapper } = this.$refs
-                    document.body.appendChild(contentWrapper)
-                    this.calcPlacement()
-                    document.addEventListener('click', this.handleDocumentClick)
-                })
-            } else {
-                this.close()
-            }
+        showPopover () {
+            this.$nextTick(() => {
+                document.body.appendChild(this.$refs.contentWrapper)
+                this.calcPlacement()
+                document.addEventListener('click', this.handleDocumentClick)
+            })
         },
         close () {
             this.visibile = false
@@ -147,6 +149,22 @@ export default {
                 }
             contentWrapper.style.top = `${top}px`
             contentWrapper.style.left = `${left}px`
+        }
+    },
+    watch: {
+        visibile (val) { // value因为是immediate，所以必须要写在下面才能触发第一次visibile改变
+            if (val) {
+                this.showPopover()
+            } else {
+                this.close()
+            }
+            this.$emit('input', val)
+        },
+        value: {
+            immediate: true,
+            handler (val) {
+                this.visibile = val
+            }
         }
     }
 }
