@@ -8,7 +8,7 @@
                 `v-popover-placement-${placement}`,
                 popperClass
              ]"
-             v-show="visibile">
+             v-show="visible">
             <slot name="content" :close="close"></slot>
         </div>
         <div ref="triggerWrapper"
@@ -43,7 +43,7 @@ export default {
     },
     data () {
         return {
-            visibile: false
+            visible: false
         }
     },
     props: {
@@ -94,17 +94,16 @@ export default {
     },
     methods: {
         doToggle () {
-            this.visibile = !this.visibile
-            // if (!this.visibile) console.log('doToggle close');
+            this.visible = !this.visible
         },
         handleMouseEnter () {
             clearTimeout(this._timer)
-            this.visibile = true
+            this.visible = true
         },
         handleMouseLeave () {
             clearTimeout(this._timer)
             this._timer = setTimeout(() => {
-                this.visibile = false
+                this.visible = false
             }, this._closeDelay)
         },
         addEvent () {
@@ -139,7 +138,7 @@ export default {
             })
         },
         close () {
-            this.visibile = false
+            this.visible = false
             if (this.trigger === 'click') document.removeEventListener('click', this.handleDocumentClick)
         },
         handleDocumentClick ({ target }) {
@@ -204,7 +203,7 @@ export default {
         }
     },
     watch: {
-        visibile (val) { // value因为是immediate，所以必须要写在下面才能触发第一次visibile改变
+        visible (val) { // value因为是immediate，所以必须要写在下面才能触发第一次visible改变
             if (val) {
                 this.showPopover()
                 this.$emit('show')
@@ -217,7 +216,7 @@ export default {
         value: {
             immediate: true,
             handler (val) {
-                this.visibile = val
+                this.visible = val
             }
         }
     }
