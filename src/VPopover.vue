@@ -95,6 +95,7 @@ export default {
     methods: {
         doToggle () {
             this.visibile = !this.visibile
+            // if (!this.visibile) console.log('doToggle close');
         },
         handleMouseEnter () {
             clearTimeout(this._timer)
@@ -206,8 +207,10 @@ export default {
         visibile (val) { // value因为是immediate，所以必须要写在下面才能触发第一次visibile改变
             if (val) {
                 this.showPopover()
+                this.$emit('show')
             } else {
                 this.close()
+                this.$emit('hide')
             }
             this.$emit('input', val)
         },

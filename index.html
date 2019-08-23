@@ -62,7 +62,12 @@
         <br />
         <br />
         <br />
-        <v-popover v-model="popover" placement="top-start" popper-class="popover-class">
+        <v-popover
+                v-model="popover"
+                placement="top-start"
+                popper-class="popover-class"
+                @show="popoverShow"
+                @hide="popoverHide">
             <template slot="content" slot-scope="{ close }">
                 <div>
                     <p>点击设置触发事件</p>
