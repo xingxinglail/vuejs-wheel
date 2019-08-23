@@ -91,6 +91,11 @@ export default {
     destroyed () {
         this.removeEvent()
         this.close()
+        this.cleanup()
+        this.removeChild()
+    },
+    deactivated () {
+        this.cleanup()
     },
     methods: {
         doToggle () {
@@ -122,6 +127,7 @@ export default {
             const { trigger, _popover, _contentWrapper } = this
             if (trigger === 'click') {
                 _popover.removeEventListener('click', this.doToggle)
+                document.removeEventListener('click', this.handleDocumentClick)
             }
             if (trigger === 'hover') {
                 _popover.removeEventListener('mouseenter', this.handleMouseEnter)
@@ -200,6 +206,14 @@ export default {
                 }
             contentWrapper.style.top = `${top}px`
             contentWrapper.style.left = `${left}px`
+        },
+        cleanup () {
+            clearTimeout(this._timer)
+        },
+        removeChild () {
+            if (this._contentWrapper.parentNode === document.body) {
+                document.body.removeChild(this._contentWrapper)
+            }
         }
     },
     watch: {
