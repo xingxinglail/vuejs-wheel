@@ -20,6 +20,8 @@ import VTabHead from './VTabHead'
 import VTabBody from './VTabBody'
 import VTabNav from './VTabNav'
 import VPopover from './VPopover'
+import VCollapse from './VCollapse'
+import VCollapseItem from './VCollapseItem'
 
 Vue.component('toast-test', ToastTest)
 Vue.component('v-button', VButton)
@@ -40,13 +42,17 @@ Vue.component('v-tab-head', VTabHead)
 Vue.component('v-tab-body', VTabBody)
 Vue.component('v-tab-nav', VTabNav)
 Vue.component('v-popover', VPopover)
+Vue.component('v-collapse', VCollapse)
+Vue.component('v-collapse-item', VCollapseItem)
 Vue.use(Toast)
 
 new Vue({
     el: '#app',
     data: {
         msg: 'hi',
-        tabsActive: 'second'
+        tabsActive: 'second',
+        collapseActive: '1',
+        collapseActive2: ['2', '3']
     },
     router,
     created () {
@@ -86,6 +92,14 @@ new Vue({
         handleTabClick (name, e) {
             console.log(name);
             console.log(e);
+        },
+        collapseChange (e) {
+            console.log(e);
+            console.log(this.collapseActive);
+        },
+        collapseChange2 (e) {
+            console.log(e);
+            console.log(this.collapseActive2);
         }
     }
 })
