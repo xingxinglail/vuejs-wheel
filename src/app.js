@@ -52,7 +52,7 @@ new Vue({
         msg: 'hi',
         tabsActive: 'second',
         collapseActive: '1',
-        collapseActive2: ['2', '3']
+        collapseActive2: ['2']
     },
     router,
     created () {
@@ -95,7 +95,6 @@ new Vue({
         },
         collapseChange (e) {
             console.log(e);
-            console.log(this.collapseActive);
         },
         collapseChange2 (e) {
             console.log(e);

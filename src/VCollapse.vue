@@ -33,21 +33,33 @@ export default {
         this.$slots.default.filter(vnode => vnode.componentInstance).forEach((vnode, index) => {
             const componentInstance = vnode.componentInstance
             if (componentInstance.$options.name === 'VCollapseItem') {
-                this._children.push(componentInstance)
                 let { name } = componentInstance
                 if (!name) name = `${index + 1}`
                 componentInstance.relaName = name
-                console.log(componentInstance);
                 if (valueIsArray) {
                     if (value.includes(name)) componentInstance.visible = true
                 } else {
                     if (value === name) componentInstance.visible = true
                 }
                 componentInstance.onClick = this.onClick
+                this._children.push(componentInstance)
             }
         })
     },
     methods: {
+        watchValue (value) {
+            const { accordion } = this
+            const valueIsArray = Array.isArray(value)
+            this._children.forEach(vm => {
+                const { relaName } = vm
+                if (accordion) vm.visible = false
+                if (valueIsArray) {
+                    if (value.includes(relaName)) vm.visible = true
+                } else {
+                    if (value === relaName) vm.visible = true
+                }
+            })
+        },
         onClick (v) {
             const { value, _children, accordion } = this
             _children.forEach(vm => {
@@ -62,6 +74,11 @@ export default {
                 _value = _children.filter(vm => vm.visible).map(vm => vm.relaName)
             }
             this.$emit('change', _value)
+        }
+    },
+    watch: {
+        value (v) {
+            this.watchValue(v)
         }
     }
 }
