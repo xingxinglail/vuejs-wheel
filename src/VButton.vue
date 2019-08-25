@@ -1,6 +1,7 @@
 <template>
     <button class="v-button"
-            :class="{ [`icon-${iconPosition}`]: true }"
+            :disabled="disabled"
+            :class="{ [`icon-${iconPosition}`]: true , loading, disabled }"
             @click="$emit('click')">
         <v-icon class="loading icon" v-if="loading" name="loading"></v-icon>
         <v-icon class="icon" v-if="icon && !loading" :name="icon"></v-icon>
@@ -28,6 +29,10 @@ export default {
         loading: {
             type: Boolean,
             default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
@@ -39,7 +44,7 @@ export default {
 <style lang="scss" scoped>
 $button-height: 32px;
 $font-size: 14px;
-$button-bg: white;
+$button-bg: #fff;
 $button-active-bg: #eee;
 $border-radius: 4px;
 $color: #333;
@@ -61,10 +66,11 @@ $border-color-hover: #666;
     padding: 0 1em;
     border-radius: $border-radius;
     border: 1px solid $border-color;
-    background: $button-bg;
+    background-color: $button-bg;
     display: inline-flex;
     align-items: center;
     vertical-align: top;
+    cursor: pointer;
 
     .text {
         order: 1;
@@ -94,6 +100,20 @@ $border-color-hover: #666;
 
     &:focus {
         outline: none;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        color: #b4b4b4;
+        border-color: #a2a2a2;
+        background-color: #d8d8d8;
+    }
+
+    &.loading {
+        cursor: auto;
+        color: #797979;
+        border-color: #a2a2a2;
+        background-color: #d8d8d8;
     }
 }
 </style>

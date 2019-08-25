@@ -1,6 +1,8 @@
 <template>
     <div>
-        <v-button>设置</v-button>
+        <br />
+        <v-button>默认按钮</v-button>
+        <br />
     </div>
 </template>
 
