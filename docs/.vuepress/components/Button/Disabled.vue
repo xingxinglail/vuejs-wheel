@@ -1,7 +1,7 @@
 <template>
     <div>
         <br />
-        <v-button>默认按钮</v-button>
+        <v-button disabled>默认按钮</v-button>
         <br />
     </div>
 </template>
@@ -10,7 +10,7 @@
 import Button from '../../../../src/VButton'
 
 export default {
-    name: 'ButtonBasis',
+    name: 'ButtonDisabled',
     components: {
         'v-button': Button
     }

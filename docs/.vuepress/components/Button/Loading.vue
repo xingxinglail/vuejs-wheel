@@ -1,7 +1,7 @@
 <template>
     <div>
         <br />
-        <v-button>默认按钮</v-button>
+        <v-button loading>加载中...</v-button>
         <br />
     </div>
 </template>
@@ -10,7 +10,7 @@
 import Button from '../../../../src/VButton'
 
 export default {
-    name: 'ButtonBasis',
+    name: 'ButtonLoading',
     components: {
         'v-button': Button
     }

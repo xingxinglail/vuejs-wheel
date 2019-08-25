@@ -1,5 +1,5 @@
 module.exports = {
-    base: '/wheel-ui/',
+    base: '/vuejs-wheel/',
     title: 'wheel ui',
     description: '帮助你构建更好的应用程序',
     themeConfig: {
