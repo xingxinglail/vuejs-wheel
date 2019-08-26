@@ -79,6 +79,7 @@ export default {
 
 <style lang="scss" scoped>
 .v-col {
+    box-sizing: border-box;
 
     @for $n from 1 through 24 {
 
