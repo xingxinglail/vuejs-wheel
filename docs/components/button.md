@@ -39,3 +39,12 @@ title: Button 按钮
 ``` vue
 <v-button loading>加载中...</v-button>
 ```
+
+#### Attributes
+
+| 参数        | 说明         | 类型    | 可选值  | 默认值 
+| ---------- |--------------| -------| -----|-----
+| icon      | 图标类名       | string |-     |-
+| iconPosition   | 图标位置  | string | right / left | left
+| loading   | 加载状态       | boolean | - | false
+| disabled      | 禁用     | boolean | - | false
