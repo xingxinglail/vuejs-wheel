@@ -2,9 +2,9 @@
 title: 快速上手
 ---
 
-# 快速上手
+### 快速上手
 
-```javascript
+```js
 import { Button } from 'vuejs-vheel'
 import Vue from 'vue'
 

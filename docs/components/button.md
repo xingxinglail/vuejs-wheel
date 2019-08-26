@@ -1,23 +1,24 @@
 ---
 title: Button 按钮
 ---
-## Button 按钮
 
-### 基础用法
+### Button 按钮
+
+#### 基础用法
 
 <Button-Basis />
 ``` vue
 <v-button>设置</v-button>
 ```
 
-### 禁用状态
+#### 禁用状态
 
 <Button-Disabled />
 ``` vue
 <v-button disabled>设置</v-button>
 ```
 
-### 按钮组
+#### 按钮组
 
 <Button-Group />
 ``` vue
@@ -32,7 +33,7 @@ title: Button 按钮
 </v-button-group>
 ```
 
-### 加载中
+#### 加载中
 
 <Button-Loading />
 ``` vue
