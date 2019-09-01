@@ -168,7 +168,7 @@ export default {
             let left = tLeft + scrollLeft
             switch (placement) {
                 case placementMap['top']:
-                    left = left - (cWidth - width) /2
+                    left = left - (cWidth - width) / 2
                     break
                 case placementMap['top-end']:
                     left = left - (cWidth - width)
@@ -178,14 +178,14 @@ export default {
                     break
                 case placementMap['bottom']:
                     top = top + height
-                    left = left - (cWidth - width) /2
+                    left = left - (cWidth - width) / 2
                     break
                 case placementMap['bottom-end']:
                     top = top + height
                     left = left - (cWidth - width)
                     break
                 case placementMap['left']:
-                    top = top - (cHeight - height) /2
+                    top = top - (cHeight - height) / 2
                     break
                 case placementMap['left-end']:
                     top = top - (cHeight - height)
@@ -195,7 +195,7 @@ export default {
                     break
                 case placementMap['right']:
                     left = left + width
-                    top = top - (cHeight - height) /2
+                    top = top - (cHeight - height) / 2
                     break
                 case placementMap['right-end']:
                     left = left + width
@@ -203,7 +203,7 @@ export default {
                     break
                 default:
                     break
-                }
+            }
             contentWrapper.style.top = `${top}px`
             contentWrapper.style.left = `${left}px`
         },

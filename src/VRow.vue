@@ -44,6 +44,7 @@ export default {
                     marginRight: `-${val}px`
                 }
             }
+            return undefined
         },
         rowClass ({ align }) {
             const val = alignMap[align]

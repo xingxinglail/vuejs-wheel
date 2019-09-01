@@ -48,8 +48,6 @@ Vue.component('v-collapse', VCollapse)
 Vue.component('v-collapse-item', VCollapseItem)
 Vue.use(Toast)
 
-Vue.component('v-button', VButton)
-
 new Vue({
     render: h => h(App)
 }).$mount('#app')

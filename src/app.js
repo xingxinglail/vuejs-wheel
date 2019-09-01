@@ -46,6 +46,7 @@ Vue.component('v-collapse', VCollapse)
 Vue.component('v-collapse-item', VCollapseItem)
 Vue.use(Toast)
 
+// eslint-disable-next-line
 new Vue({
     el: '#app',
     data: {
@@ -90,15 +91,15 @@ new Vue({
             })
         },
         handleTabClick (name, e) {
-            console.log(name);
-            console.log(e);
+            console.log(name)
+            console.log(e)
         },
         collapseChange (e) {
-            console.log(e);
+            console.log(e)
         },
         collapseChange2 (e) {
-            console.log(e);
-            console.log(this.collapseActive2);
+            console.log(e)
+            console.log(this.collapseActive2)
         }
     }
 })

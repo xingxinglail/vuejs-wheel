@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "VIcon",
+    name: 'VIcon',
     props: {
         name: {
             type: String,

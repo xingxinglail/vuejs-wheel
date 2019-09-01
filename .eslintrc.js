@@ -10,17 +10,18 @@ module.exports = {
     rules: {
         'no-console': 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'indent': [2, 4, { 'SwitchCase': 1 }]
+        'indent': [2, 4, { 'SwitchCase': 1 }],
+        'no-unneeded-ternary': 'off'
     },
     parserOptions: {
         parser: 'babel-eslint'
     },
     overrides: [
         {
-          files: ['**/__tests__/*.{j,t}s?(x)'],
-          env: {
-            mocha: true
-          }
+            files: ['**/__tests__/*.{j,t}s?(x)'],
+            env: {
+                mocha: true
+            }
         }
     ]
 }
