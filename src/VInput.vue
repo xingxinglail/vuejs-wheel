@@ -50,7 +50,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$height: 32px;
+@import './_var';
+
 $border-color: #999;
 $border-color-hover: #666;
 $border-radius: 4px;

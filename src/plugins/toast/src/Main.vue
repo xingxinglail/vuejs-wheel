@@ -88,6 +88,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../../_var';
+
 $animation-duration: .3s;
 
 @keyframes fade-in {
@@ -175,7 +177,7 @@ $animation-duration: .3s;
 
         .message {
             padding: 10px 16px;
-            font-size: 14px;
+            font-size: $font-size;
         }
 
         .close-btn {

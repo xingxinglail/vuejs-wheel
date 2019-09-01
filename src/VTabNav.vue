@@ -38,11 +38,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './_var';
+
 .v-tab-nav {
-    height: 32px;
-    line-height: 32px;
+    height: $height;
+    line-height: $height;
     padding: 0 14px;
-    font-size: 14px;
+    font-size: $font-size;
     cursor: pointer;
 
     &.actived {

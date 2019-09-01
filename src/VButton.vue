@@ -42,8 +42,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$button-height: 32px;
-$font-size: 14px;
+@import './_var';
+
 $button-bg: #fff;
 $button-active-bg: #eee;
 $border-radius: 4px;
@@ -62,7 +62,7 @@ $border-color-hover: #666;
 
 .v-button {
     font-size: $font-size;
-    height: $button-height;
+    height: $height;
     padding: 0 1em;
     border-radius: $border-radius;
     border: 1px solid $border-color;
