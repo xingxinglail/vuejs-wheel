@@ -60,9 +60,14 @@ describe('Input', () => {
         it('input/change/focus/blur', () => {
             const wrapper = mount(VInput)
             const input = wrapper.find('input')
-            ;['input', 'change', 'focus', 'blur'].forEach(eventName => {
-                const handler = sinon.stub()
-                wrapper.vm.$on(eventName, handler)
+            ;['input', 'change', 'focus', 'blur'].forEach((eventName, index) => {
+                const val = `hi-${index}`
+                const handler = sinon.stub().withArgs(eventName).returns(eventName + val)
+                input.element.value = val
+                wrapper.vm.$on(eventName, e => {
+                    const res = handler(eventName)
+                    expect(res).to.eq(eventName + e)
+                })
                 input.trigger(eventName)
                 expect(handler.called).to.eq(true)
             })
