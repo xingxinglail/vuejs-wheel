@@ -41,6 +41,12 @@ export default {
         separator: {
             type: String,
             default: '/'
+        },
+        props: {
+            type: Object,
+            default () {
+                return Object.create(null)
+            }
         }
     },
     methods: {

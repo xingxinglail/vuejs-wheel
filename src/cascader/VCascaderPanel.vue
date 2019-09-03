@@ -7,6 +7,7 @@
                  :class="{ 'v-cascader-menu-item-selected': data.value === menu.value }"
                  @click="handleSelect(index, menu)">
                 <span class="text">{{ menu.label }}</span>
+                <v-icon v-if="menu.loading" name="loading" class="loading" />
                 <v-icon name="right" v-if="rightIconVisible(menu)" />
             </div>
         </div>
@@ -16,7 +17,8 @@
 <script>
 import VIcon from '../VIcon'
 
-const aryStringEqual = (arrA = [], arrB = []) => {
+const aryStringEqual = (arrA, arrB) => {
+    if (!Array.isArray(arrA) || !Array.isArray(arrB)) return false
     const aLen = arrA.length
     if (aLen !== arrB.length) return false
     for (let i = 0; i < aLen; i++) {
@@ -33,12 +35,13 @@ export default {
     },
     data () {
         return {
+            data: JSON.parse(JSON.stringify(this.options)),
             selectValue: [{
                 value: '',
                 label: '',
-                menus: this.options
+                menus: this.data
             }],
-            checkValue: []
+            checkValue: null
         }
     },
     props: {
@@ -49,28 +52,44 @@ export default {
         options: {
             type: Array,
             default: () => ([])
+        },
+        props: {
+            type: Object,
+            default () {
+                return Object.create(null)
+            }
         }
     },
     methods: {
-        rightIconVisible ({ leaf, children }) {
-            return leaf ? false : Array.isArray(children) && children.length > 0
+        rightIconVisible ({ loading, leaf, children }) {
+            if (this.props.lazy) {
+                return loading ? false : !leaf
+            } else {
+                return leaf ? false : Array.isArray(children) && children.length > 0
+            }
         },
-        handleSelect (index, { value, label, leaf, children }) {
+        handleSelect (index, node) {
+            const { value, label, leaf, children } = node
             const { selectValue } = this
+            node.level = index
             selectValue.splice(index + 1)
             selectValue[index].value = value
             selectValue[index].label = label
             if (leaf) {
                 this.leafHandle(selectValue)
             } else {
-                if (Array.isArray(children)) {
-                    selectValue.push({
-                        value: '',
-                        label: '',
-                        menus: children
-                    })
+                if (this.props.lazy && !node.loaded) {
+                    this.lazyLoad(index, node)
                 } else {
-                    this.leafHandle(selectValue)
+                    if (Array.isArray(children)) {
+                        selectValue.push({
+                            value: '',
+                            label: '',
+                            menus: children
+                        })
+                    } else {
+                        this.leafHandle(selectValue)
+                    }
                 }
             }
         },
@@ -107,7 +126,25 @@ export default {
                     if (Array.isArray(children) && children.length > 0) _tmp = children
                 }
             }
+            if (this.selectValue.length === 0) {
+                this.selectValue = [{
+                    value: '',
+                    label: '',
+                    menus: this.data
+                }]
+            }
             this.parentHandle(this.selectValue.map(c => c.label))
+        },
+        lazyLoad (index, node) {
+            if (!node.loaded) {
+                this.$set(node, 'loading', true)
+                this.props.lazyLoad(node, data => {
+                    node.loaded = true
+                    this.$set(node, 'children', data)
+                    this.$set(node, 'loading', false)
+                    this.handleSelect(node.level, node)
+                })
+            }
         }
     },
     watch: {
@@ -118,16 +155,17 @@ export default {
                     return
                 }
                 this.checkValue = v
-                this.updateSelectValue(this.options, v)
+                this.updateSelectValue(this.data, v)
             }
         },
         options (v) {
+            this.data = JSON.parse(JSON.stringify(v))
             this.selectValue = [{
                 value: '',
                 label: '',
-                menus: v
+                menus: this.data
             }]
-            this.updateSelectValue(v, this.value)
+            this.updateSelectValue(v, this.data)
         }
     },
     components: {
@@ -186,6 +224,10 @@ export default {
                 width: 10px;
                 height: 10px;
                 color: #606266;
+
+                &.loading {
+                    animation: spin 2s infinite linear;
+                }
             }
 
             &:hover {

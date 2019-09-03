@@ -16,6 +16,12 @@
         <div style="margin-top: 200px;padding: 20px;">
             <v-cascader-panel v-model="cascaderValue2" :options="cascaderOptions" />
         </div>
+        <div style="margin-top: 200px;padding: 20px;">
+            <v-cascader-panel v-model="cascaderValue3"
+                              :props="cascaderProps"
+                              :options="cascaderOptions2"
+                              @change="onCascaderChange3" />
+        </div>
         <br />
         <br />
         <v-button>按钮</v-button>
@@ -49,7 +55,26 @@
 export default {
     name: 'App',
     data () {
+        let id = 0
         return {
+            cascaderOptions2: [
+                {
+                    value: 'zhinan',
+                    label: '指南',
+                    leaf: false
+                },
+                {
+                    value: 'zujian',
+                    label: '组件',
+                    leaf: false
+                },
+                {
+                    value: 'ziyuan',
+                    label: '资源',
+                    leaf: false
+                }
+            ],
+            cascaderValue3: [],
             cascaderValue: ['zhinan', 'shejiyuanze', 'fankui', 'xixi'],
             cascaderValue2: ['zhinan', 'shejiyuanze', 'yizhi', 'xixi'],
             cascaderOptions: [{
@@ -253,7 +278,24 @@ export default {
                     value: 'jiaohu',
                     label: '组件交互文档'
                 }]
-            }]
+            }],
+            cascaderProps: {
+                lazy: true,
+                lazyLoad (node, cb) {
+                    const { level } = node
+                    setTimeout(() => {
+                        const nodes = Array.from({ length: level + 1 })
+                            .map(() => {
+                                return {
+                                    value: ++id,
+                                    label: `选项${id}`,
+                                    leaf: id > 10
+                                }
+                            })
+                        cb(nodes)
+                    }, 1000)
+                }
+            }
         }
     },
     created () {
@@ -264,6 +306,10 @@ export default {
     methods: {
         onCascaderChange (val) {
             console.log(val)
+        },
+        onCascaderChange3 (v) {
+            console.log(v)
+            console.log(this.cascaderValue3)
         }
     }
 }
