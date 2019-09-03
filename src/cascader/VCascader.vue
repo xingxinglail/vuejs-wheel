@@ -1,36 +1,27 @@
 <template>
-    <div class="v-cascader">
+    <div class="v-cascader" v-click-body-outside="close">
         <v-input :value="inputValue" readonly @click.native="toggle" />
-        <div class="popover">
-            <v-cascader-panel v-show="visible"
-                              :value="value"
+        <div class="popover" v-show="visible">
+            <v-cascader-panel :value="value"
                               :options="options"
                               @change="onChange" />
         </div>
-<!--        <div class="v-cascader-panel" v-show="visible">-->
-<!--            <div class="v-cascader-menu" v-for="(data, index) in selectValue" :key="data.value">-->
-<!--                <div class="v-cascader-menu-item"-->
-<!--                     v-for="menu in data.menus"-->
-<!--                     :key="menu.value"-->
-<!--                     :class="{ 'v-cascader-menu-item-selected': data.value === menu.value }"-->
-<!--                     @click="handleSelect(index, menu)">-->
-<!--                    <span class="text">{{ menu.label }}</span>-->
-<!--                    <v-icon name="right" v-if="rightIconVisible(menu)" />-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
 </template>
 
 <script>
 import VInput from '../VInput'
 import VCascaderPanel from './VCascaderPanel'
+import clickBodyOutside from '../directives/clickBodyOutside'
 
 export default {
     name: 'VCascader',
     model: {
         prop: 'value',
         event: 'change'
+    },
+    directives: {
+        'click-body-outside': clickBodyOutside
     },
     data () {
         return {
@@ -81,6 +72,7 @@ export default {
 .v-cascader {
     position: relative;
     z-index: 1;
+    display: inline-block;
 
     /deep/ .v-input input {
         cursor: pointer;

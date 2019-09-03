@@ -1,6 +1,6 @@
 <template>
     <div class="v-cascader-panel">
-        <div class="v-cascader-menu" v-for="(data, index) in selectValue" :key="data.value">
+        <div class="v-cascader-menu" v-for="(data, index) in selectValue" :key="index">
             <div class="v-cascader-menu-item"
                  v-for="menu in data.menus"
                  :key="menu.value"
@@ -27,6 +27,10 @@ const aryStringEqual = (arrA = [], arrB = []) => {
 
 export default {
     name: 'VCascaderPanel',
+    model: {
+        prop: 'value',
+        event: 'change'
+    },
     data () {
         return {
             selectValue: [{
@@ -86,6 +90,24 @@ export default {
             if ($parent.$options.name === 'VCascader') {
                 $parent.inputValueHandle(labels)
             }
+        },
+        updateSelectValue (options, value) {
+            this.selectValue = []
+            let _tmp = options
+            for (let i = 0; i < value.length; i++) {
+                const node = _tmp.find(c => value[i] === c.value)
+                if (node) {
+                    const { value, label, children } = node
+                    const data = {
+                        value,
+                        label,
+                        menus: _tmp
+                    }
+                    this.selectValue.splice(i, 1, data)
+                    if (Array.isArray(children) && children.length > 0) _tmp = children
+                }
+            }
+            this.parentHandle(this.selectValue.map(c => c.label))
         }
     },
     watch: {
@@ -96,25 +118,16 @@ export default {
                     return
                 }
                 this.checkValue = v
-                const { options, selectValue } = this
-                let _tmp = options
-                for (let i = 0; i < v.length; i++) {
-                    const node = _tmp.find(c => v[i] === c.value)
-                    if (node) {
-                        const { value, label, children } = node
-                        const data = {
-                            value,
-                            label,
-                            menus: _tmp
-                        }
-                        this.selectValue.splice(i, 1, data)
-                        if (Array.isArray(children) && children.length > 0) _tmp = children
-                    }
-                }
-                this.parentHandle(selectValue.map(c => c.label))
-                console.log(v)
-                // console.log(selectValue)
+                this.updateSelectValue(this.options, v)
             }
+        },
+        options (v) {
+            this.selectValue = [{
+                value: '',
+                label: '',
+                menus: v
+            }]
+            this.updateSelectValue(v, this.value)
         }
     },
     components: {
@@ -166,6 +179,7 @@ export default {
             .text {
                 flex: 1;
                 padding-right: 14px;
+                white-space: nowrap;
             }
 
             .v-icon {

@@ -14,7 +14,7 @@
                         @change="onCascaderChange"></v-cascader>
         </div>
         <div style="margin-top: 200px;padding: 20px;">
-            <v-cascader-panel v-model="cascaderValue2" :options="cascaderOptions" @change="onCascaderChange" />
+            <v-cascader-panel v-model="cascaderValue2" :options="cascaderOptions" />
         </div>
         <br />
         <br />
