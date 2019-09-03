@@ -2,7 +2,7 @@
     <div class="v-popover" ref="popover">
         <div ref="contentWrapper"
              class="v-popover-content"
-             :style="{ width: `${width}px` }"
+             :style="{ width }"
              :class="[
                 `v-popover-placement-common-${placement.split('-')[0]}`,
                 `v-popover-placement-${placement}`,
@@ -56,11 +56,8 @@ export default {
             default: ''
         },
         width: {
-            type: Number,
-            default: 150,
-            validator (value) {
-                return value >= 150
-            }
+            type: String,
+            default: '150px'
         },
         placement: {
             type: String,

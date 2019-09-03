@@ -22,6 +22,8 @@ import VTabNav from './VTabNav'
 import VPopover from './VPopover'
 import VCollapse from './VCollapse'
 import VCollapseItem from './VCollapseItem'
+import VCascader from './cascader/VCascader'
+import VCascaderPanel from './cascader/VCascaderPanel'
 
 Vue.config.productionTip = false
 
@@ -46,6 +48,8 @@ Vue.component('v-tab-nav', VTabNav)
 Vue.component('v-popover', VPopover)
 Vue.component('v-collapse', VCollapse)
 Vue.component('v-collapse-item', VCollapseItem)
+Vue.component('v-cascader', VCascader)
+Vue.component('v-cascader-panel', VCascaderPanel)
 Vue.use(Toast)
 
 new Vue({

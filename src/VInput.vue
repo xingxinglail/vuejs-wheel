@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper" :class="{ error }">
+    <div class="v-input" :class="{ error }">
         <input type="text"
                :value="value"
                :disabled="disabled"
@@ -58,7 +58,7 @@ $border-radius: 4px;
 $font-size: 12px;
 $box-shadow-color: rgba(0, 0, 0, 0.5);
 $red: #F1453D;
-.wrapper {
+.v-input {
     font-size: $font-size;
     display: inline-flex;
     align-items: center;
@@ -82,7 +82,7 @@ $red: #F1453D;
             box-shadow: inset 0 1px 3px $box-shadow-color; outline: none;
         }
 
-        &[disabled], &[readonly] {
+        &[disabled] {
             border-color: #bbb;
             color: #bbb;
             cursor: not-allowed;
