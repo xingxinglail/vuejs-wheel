@@ -236,32 +236,36 @@ describe('CascaderPanel', () => {
     })
 
     it('可以设置value', async () => {
-        vm = createVue({
-            template: `
-                <v-cascader-panel v-model="value" :options="options"></v-cascader-panel>
-            `,
-            data: {
-                options,
-                value: ['zujian', 'form', 'checkbox']
-            }
-        }, true)
-        const panel = vm.$el
-        const menus = panel.querySelectorAll('.v-cascader-menu')
-        expect(menus[0].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
-        expect(menus[1].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
-        expect(menus[2].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
-        menus[0].children[0].click()
-        await wait()
-        expect(menus[0].children[0].classList.contains('v-cascader-menu-item-selected')).to.true
-        expect(menus[0].children[1].classList.contains('v-cascader-menu-item-selected')).to.false
-        const menus2 = panel.querySelectorAll('.v-cascader-menu')
-        expect(menus2.length).to.eq(2)
-        menus2[1].children[0].click()
-        await wait()
-        const menus3 = panel.querySelectorAll('.v-cascader-menu')
-        expect(menus3.length).to.eq(3)
-        menus3[2].children[1].click()
-        expect(vm.value).to.deep.equal(['zhinan', 'shejiyuanze', 'fankui']);
+        try {
+            vm = createVue({
+                template: `
+                    <v-cascader-panel v-model="value" :options="options"></v-cascader-panel>
+                `,
+                data: {
+                    options,
+                    value: ['zujian', 'form', 'checkbox']
+                }
+            }, true)
+            const panel = vm.$el
+            const menus = panel.querySelectorAll('.v-cascader-menu')
+            expect(menus[0].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
+            expect(menus[1].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
+            expect(menus[2].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
+            menus[0].children[0].click()
+            await wait()
+            expect(menus[0].children[0].classList.contains('v-cascader-menu-item-selected')).to.true
+            expect(menus[0].children[1].classList.contains('v-cascader-menu-item-selected')).to.false
+            const menus2 = panel.querySelectorAll('.v-cascader-menu')
+            expect(menus2.length).to.eq(2)
+            menus2[1].children[0].click()
+            await wait()
+            const menus3 = panel.querySelectorAll('.v-cascader-menu')
+            expect(menus3.length).to.eq(3)
+            menus3[2].children[1].click()
+            expect(vm.value).to.deep.equal(['zhinan', 'shejiyuanze', 'fankui']);
+        } catch (err) {
+            console.error(err)
+        }
     })
 
     it('可以设置separator', async () => {
