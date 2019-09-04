@@ -4,7 +4,8 @@ module.exports = {
     description: '帮助你构建更好的应用程序',
     themeConfig: {
         nav: [
-            { text: '主页', link: '/' }
+            { text: '主页', link: '/' },
+            { text: 'GitHub', link: 'https://github.com/xingxinglail/vuejs-wheel' },
         ],
         sidebar: [
             {
@@ -22,6 +23,7 @@ module.exports = {
                     '/components/button',
                     '/components/input',
                     '/components/layout',
+                    '/components/container',
                 ]
             }
         ]
