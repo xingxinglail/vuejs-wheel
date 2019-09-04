@@ -34,16 +34,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './_var';
+
 .v-collapse-item {
 
     .title {
         padding: 0 6px;
-        font-size: 12px;
-        height: 30px;
-        line-height: 30px;
+        font-size: $font-size;
+        height: 40px;
+        line-height: 40px;
         margin-top: -1px;
         border-top: 1px solid #999;
         border-bottom: 1px solid #999;
+        cursor: pointer;
     }
 
     .content {
