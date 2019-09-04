@@ -79,7 +79,7 @@ export default {
                 this.leafHandle(selectValue)
             } else {
                 if (this.props.lazy && !node.loaded) {
-                    this.lazyLoad(index, node)
+                    if (!node.loading) this.lazyLoad(index, node)
                 } else {
                     if (Array.isArray(children)) {
                         selectValue.push({

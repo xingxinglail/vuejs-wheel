@@ -3,6 +3,7 @@
         <v-input :value="inputValue" readonly @click.native="toggle" />
         <div class="popover" v-show="visible">
             <v-cascader-panel :value="value"
+                              :props="props"
                               :options="options"
                               @change="onChange" />
         </div>

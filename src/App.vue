@@ -9,8 +9,7 @@
             </v-popover>
         </div>
         <div style="padding: 20px;">
-            <v-cascader v-model="cascaderValue"
-                        :options="cascaderOptions"
+            <v-cascader separator="-" :options="cascaderOptions"
                         @change="onCascaderChange"></v-cascader>
         </div>
         <div style="margin-top: 200px;padding: 20px;">
@@ -289,7 +288,7 @@ export default {
                                 return {
                                     value: ++id,
                                     label: `选项${id}`,
-                                    leaf: id > 10
+                                    leaf: id > 3
                                 }
                             })
                         cb(nodes)
@@ -309,7 +308,6 @@ export default {
         },
         onCascaderChange3 (v) {
             console.log(v)
-            console.log(this.cascaderValue3)
         }
     }
 }

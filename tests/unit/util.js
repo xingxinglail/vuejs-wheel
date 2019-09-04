@@ -17,6 +17,8 @@ import Footer from '../../src/VFooter'
 import Collapse from '../../src/VCollapse'
 import CollapseItem from '../../src/VCollapseItem'
 import Popover from '../../src/VPopover'
+import Cascader from '../../src/cascader/VCascader'
+import CascaderPanel from '../../src/cascader/VCascaderPanel'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -39,11 +41,13 @@ Vue.component('v-footer', Footer)
 Vue.component('v-collapse', Collapse)
 Vue.component('v-collapse-item', CollapseItem)
 Vue.component('v-popover', Popover)
+Vue.component('v-cascader', Cascader)
+Vue.component('v-cascader-panel', CascaderPanel)
 Vue.use(ToastPlugin)
 
 let id = 0
 
-const createElm = function() {
+const createElm = () => {
     const elm = document.createElement('div')
     elm.id = 'app' + ++id
     document.body.appendChild(elm)
@@ -54,7 +58,7 @@ const createElm = function() {
  * 回收 vm
  * @param  {Object} vm
  */
-export const destroyVM = function(vm) {
+export const destroyVM = vm => {
     vm.$destroy && vm.$destroy();
     vm.$el &&
     vm.$el.parentNode &&
@@ -73,3 +77,11 @@ export const createVue = (Compo, mounted = false) => {
     }
     return new Vue(Compo).$mount(mounted === false ? null : createElm())
 }
+
+/**
+* 等待 ms 毫秒，返回 Promise
+* @param {Number} ms
+*/
+export const wait = (ms = 50) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+};
