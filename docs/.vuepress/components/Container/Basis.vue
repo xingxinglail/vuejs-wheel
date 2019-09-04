@@ -63,7 +63,7 @@ import VContent from '../../../../src/VContent'
 import VFooter from '../../../../src/VFooter'
 
 export default {
-    name: 'LayoutBasis',
+    name: 'ContainerBasis',
     components: {
         'v-layout': VLayout,
         'v-header': VHeader,
