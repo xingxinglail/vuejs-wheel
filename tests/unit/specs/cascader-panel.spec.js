@@ -252,13 +252,13 @@ describe('CascaderPanel', () => {
             expect(menus[1].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
             expect(menus[2].children[1].classList.contains('v-cascader-menu-item-selected')).to.true
             menus[0].children[0].click()
-            await wait()
+            await wait(100)
             expect(menus[0].children[0].classList.contains('v-cascader-menu-item-selected')).to.true
             expect(menus[0].children[1].classList.contains('v-cascader-menu-item-selected')).to.false
             const menus2 = panel.querySelectorAll('.v-cascader-menu')
             expect(menus2.length).to.eq(2)
             menus2[1].children[0].click()
-            await wait()
+            await wait(100)
             const menus3 = panel.querySelectorAll('.v-cascader-menu')
             expect(menus3.length).to.eq(3)
             menus3[2].children[1].click()
