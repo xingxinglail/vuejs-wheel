@@ -1,54 +1,46 @@
-import Vue from 'vue'
-import VPopover from '../src/VPopover'
-
-Vue.config.productionTip = false
-Vue.config.devtools = false
+import chai from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+import { createVue, destroyVM } from '../util'
 
 const expect = chai.expect
+chai.use(sinonChai)
 
-describe('VPopover', () => {
+describe('Popover', () => {
+    let vm
 
-    it('存在.', () => {
-        expect(VPopover).to.be.exist
+    afterEach(() => {
+        destroyVM(vm)
     })
 
     it('可设置placement', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover placement="left-end" ref="popover">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button>设置</button>
-            </v-popover>
-        `
-        const vm = new Vue({
-            el: div
+        vm = createVue({
+            template: `
+                <v-popover placement="left-end" ref="popover">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button>设置</button>
+                </v-popover>
+            `
         })
         setTimeout(() => {
             const { contentWrapper } = vm.$refs.popover.$refs
             expect(contentWrapper.classList.contains('v-popover-placement-left-end')).to.be.equal(true)
-            vm.$destroy()
             done()
         }, 100)
     })
 
     it('点击trigger显示隐藏', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover placement="left-end" ref="popover">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button>设置</button>
-            </v-popover>
-        `
-        const vm = new Vue({
-            el: div
+        vm = createVue({
+            template: `
+                <v-popover placement="left-end" ref="popover">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button>设置</button>
+                </v-popover>
+            `
         })
         setTimeout(() => {
             const popover = vm.$refs.popover
@@ -61,7 +53,6 @@ describe('VPopover', () => {
                 expect(popover.visible).to.be.equal(false)
                 setTimeout(() => {
                     expect(getComputedStyle(contentWrapper).display).to.be.equal('none')
-                    vm.$destroy()
                     done()
                 }, 100)
             }, 100)
@@ -69,19 +60,15 @@ describe('VPopover', () => {
     })
 
     it('点击document隐藏', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover placement="left-end" ref="popover">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button>设置</button>
-            </v-popover>
-        `
-        const vm = new Vue({
-            el: div
+        vm = createVue({
+            template: `
+                <v-popover placement="left-end" ref="popover">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button>设置</button>
+                </v-popover>
+            `
         })
         setTimeout(() => {
             const popover = vm.$refs.popover
@@ -92,7 +79,6 @@ describe('VPopover', () => {
                 setTimeout(() => {
                     expect(popover.visible).to.be.equal(false)
                     expect(getComputedStyle(contentWrapper).display).to.be.equal('none')
-                    vm.$destroy()
                     done()
                 }, 100)
             }, 100)
@@ -100,19 +86,15 @@ describe('VPopover', () => {
     })
 
     it('点击content不隐藏', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover placement="left-end" ref="popover">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button>设置</button>
-            </v-popover>
-        `
-        const vm = new Vue({
-            el: div
+        vm = createVue({
+            template: `
+                <v-popover placement="left-end" ref="popover">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button>设置</button>
+                </v-popover>
+            `
         })
         setTimeout(() => {
             const popover = vm.$refs.popover
@@ -125,7 +107,6 @@ describe('VPopover', () => {
                 setTimeout(() => {
                     expect(popover.visible).to.be.equal(true)
                     expect(getComputedStyle(contentWrapper).display).to.be.equal('block')
-                    vm.$destroy()
                     done()
                 }, 100)
             }, 100)
@@ -133,19 +114,15 @@ describe('VPopover', () => {
     })
 
     it('可设置trigger hover', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover trigger="hover" placement="left-end" ref="popover">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button>设置</button>
-            </v-popover>
-        `
-        const vm = new Vue({
-            el: div
+        vm = createVue({
+            template: `
+                <v-popover trigger="hover" placement="left-end" ref="popover">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button>设置</button>
+                </v-popover>
+            `
         })
         setTimeout(() => {
             const popover = vm.$refs.popover
@@ -169,7 +146,6 @@ describe('VPopover', () => {
                     setTimeout(() => {
                         expect(popover.visible).to.be.equal(false)
                         expect(getComputedStyle(contentWrapper).display).to.be.equal('none')
-                        vm.$destroy()
                         done()
                     }, 210)
                 }, 210)
@@ -178,19 +154,15 @@ describe('VPopover', () => {
     })
 
     it('可设置v-model', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover v-model="visible" placement="left-end" ref="popover">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button @click="visible = false">设置</button>
-            </v-popover>
-        `
-        const vm = new Vue({
-            el: div,
+        vm = createVue({
+            template: `
+                <v-popover v-model="visible" placement="left-end" ref="popover">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button @click="visible = false">设置</button>
+                </v-popover>
+            `,
             data: {
                 visible: true
             }
@@ -209,7 +181,6 @@ describe('VPopover', () => {
                 setTimeout(() => {
                     expect(popover.visible).to.be.equal(true)
                     expect(getComputedStyle(contentWrapper).display).to.be.equal('block')
-                    vm.$destroy()
                     done()
                 }, 100)
             })
@@ -217,20 +188,16 @@ describe('VPopover', () => {
     })
 
     it('派发show事件', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover placement="left-end" ref="popover" @show="show">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button>设置</button>
-            </v-popover>
-        `
         const callback = sinon.fake();
-        const vm = new Vue({
-            el: div,
+        vm = createVue({
+            template: `
+                <v-popover placement="left-end" ref="popover" @show="show">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button>设置</button>
+                </v-popover>
+            `,
             methods: {
                 show () {
                     callback()
@@ -242,27 +209,22 @@ describe('VPopover', () => {
             popover.$el.click()
             setTimeout(() => {
                 expect(callback).to.have.been.called
-                vm.$destroy()
                 done()
             }, 40)
         }, 100)
     })
 
     it('派发hide事件', done => {
-        Vue.component('v-popover', VPopover)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-popover placement="left-end" ref="popover" @hide="hide">
-                <template slot="content">
-                    <p>水电是电饭费</p>
-                </template>
-                <button>设置</button>
-            </v-popover>
-        `
         const callback = sinon.fake();
-        const vm = new Vue({
-            el: div,
+        vm = createVue({
+            template: `
+                <v-popover placement="left-end" ref="popover" @hide="hide">
+                    <template slot="content">
+                        <p>水电是电饭费</p>
+                    </template>
+                    <button>设置</button>
+                </v-popover>
+            `,
             methods: {
                 hide () {
                     callback()
@@ -276,7 +238,6 @@ describe('VPopover', () => {
                 document.body.click()
                 setTimeout(() => {
                     expect(callback).to.have.been.called
-                    vm.$destroy()
                     done()
                 }, 40)
             }, 100)

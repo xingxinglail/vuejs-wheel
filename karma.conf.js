@@ -15,7 +15,7 @@ module.exports = function (config) {
             }
         },
 
-        files: ['tests/unit/specs/*.spec.js'],
+        files: ['tests/**/*.spec.js'],
 
         // list of files / patterns to exclude
         exclude: [],

@@ -1,34 +1,23 @@
-import Vue from 'vue'
-import VTabs from '../src/VTabs'
-import VTabNav from '../src/VTabNav'
-import VTabHead from '../src/VTabHead'
-import VTabBody from '../src/VTabBody'
-import VTabPane from '../src/VTabPane'
-
-Vue.config.productionTip = false
-Vue.config.devtools = false
+import chai from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+import { createVue, destroyVM } from '../util'
 
 const expect = chai.expect
+chai.use(sinonChai)
 
-describe('VTabs', () => {
-    it('存在.', () => {
-        expect(VTabs).to.be.ok
-        expect(VTabNav).to.be.ok
-        expect(VTabHead).to.be.ok
-        expect(VTabBody).to.be.ok
-        expect(VTabPane).to.be.ok
+describe('Tabs', () => {
+    let vm
+
+    afterEach(() => {
+        destroyVM(vm)
     })
 
     it('可点击nav进行切换', () => {
-        Vue.component('v-tabs', VTabs)
-        Vue.component('v-tab-pane', VTabPane)
-        Vue.component('v-tab-head', VTabHead)
-        Vue.component('v-tab-body', VTabBody)
-        Vue.component('v-tab-nav', VTabNav)
-        const div = document.createElement('div')
-        document.body.appendChild(div)
-        div.innerHTML = `
-            <v-tabs v-model="tabsActive" @tab-click="handleTabClick">
+        const callback = sinon.fake();
+        vm = createVue({
+            template: `
+                <v-tabs v-model="tabsActive" @tab-click="handleTabClick">
                 <v-tab-head>
                     <v-tab-nav name="first">用户</v-tab-nav>
                     <v-tab-nav name="second">配置管理</v-tab-nav>
@@ -42,10 +31,7 @@ describe('VTabs', () => {
                     <v-tab-pane name="fourth">定时任务补偿定时任务补偿</v-tab-pane>
                 </v-tab-body>
             </v-tabs>
-        `
-        const callback = sinon.fake();
-        const vm = new Vue({
-            el: div,
+            `,
             data: {
                 tabsActive: 'second'
             },
@@ -54,7 +40,7 @@ describe('VTabs', () => {
                     callback(name)
                 }
             }
-        })
+        }, true)
         const tabs = document.body.querySelector('.v-tabs')
         const nav = tabs.querySelectorAll('.v-tab-nav')
         nav[0].click()
