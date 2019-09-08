@@ -5,10 +5,12 @@
 </template>
 
 <script>
-import './svg'
 
 export default {
     name: 'VIcon',
+    beforeMount () {
+        import('./svg')
+    },
     props: {
         name: {
             type: String,
