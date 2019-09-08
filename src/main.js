@@ -24,6 +24,8 @@ import VCollapse from './VCollapse'
 import VCollapseItem from './VCollapseItem'
 import VCascader from './cascader/VCascader'
 import VCascaderPanel from './cascader/VCascaderPanel'
+import VCarousel from './carousel/VCarousel'
+import VCarouselItem from './carousel/VCarouselItem'
 
 Vue.config.productionTip = false
 
@@ -50,6 +52,8 @@ Vue.component('v-collapse', VCollapse)
 Vue.component('v-collapse-item', VCollapseItem)
 Vue.component('v-cascader', VCascader)
 Vue.component('v-cascader-panel', VCascaderPanel)
+Vue.component('v-carousel', VCarousel)
+Vue.component('v-carousel-item', VCarouselItem)
 Vue.use(Toast)
 
 new Vue({

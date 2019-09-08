@@ -1,5 +1,41 @@
 <template>
     <div>
+        <div style="padding: 20px;">
+            <v-carousel :autoplay="autoplay" :interval="1000" direction="vertical">
+                <v-carousel-item name="first">
+                    <div class="carousel-box">
+                        1
+                    </div>
+                </v-carousel-item>
+                <v-carousel-item name="second">
+                    <div class="carousel-box">
+                        2
+                    </div>
+                </v-carousel-item>
+                <v-carousel-item name="third">
+                    <div class="carousel-box">
+                        3
+                    </div>
+                </v-carousel-item>
+            </v-carousel>
+            <v-carousel active-name="second" :interval="1000">
+                <v-carousel-item name="first">
+                    <div class="carousel-box">
+                        1
+                    </div>
+                </v-carousel-item>
+                <v-carousel-item name="second">
+                    <div class="carousel-box">
+                        2
+                    </div>
+                </v-carousel-item>
+                <v-carousel-item name="third">
+                    <div class="carousel-box">
+                        3
+                    </div>
+                </v-carousel-item>
+            </v-carousel>
+        </div>
         <div style="margin: 140px;">
             <v-popover placement="top-start">
                 <template slot="content">
@@ -56,6 +92,7 @@ export default {
     data () {
         let id = 0
         return {
+            carouselList: [],
             cascaderOptions2: [
                 {
                     value: 'zhinan',
@@ -294,13 +331,14 @@ export default {
                         cb(nodes)
                     }, 1000)
                 }
-            }
+            },
+            autoplay: true
         }
     },
     created () {
-        // setTimeout(() => {
-        //     this.cascaderValue = ['zhinan', 'shejiyuanze', 'fankui', 'xixi']
-        // }, 1400)
+        setTimeout(() => {
+            this.autoplay = false
+        }, 3000)
     },
     methods: {
         onCascaderChange (val) {
@@ -308,7 +346,21 @@ export default {
         },
         onCascaderChange3 (v) {
             console.log(v)
+        },
+        onCarouselChange (v) {
+            console.log(v)
         }
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.carousel-box {
+    line-height: 200px;
+    height: 200px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    background-color: #23b2ff;
+}
+</style>
