@@ -19,6 +19,8 @@ import CollapseItem from '../../src/VCollapseItem'
 import Popover from '../../src/VPopover'
 import Cascader from '../../src/cascader/VCascader'
 import CascaderPanel from '../../src/cascader/VCascaderPanel'
+import VCarousel from '../../src/carousel/VCarousel'
+import VCarouselItem from '../../src/carousel/VCarouselItem'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -43,6 +45,8 @@ Vue.component('v-collapse-item', CollapseItem)
 Vue.component('v-popover', Popover)
 Vue.component('v-cascader', Cascader)
 Vue.component('v-cascader-panel', CascaderPanel)
+Vue.component('v-carousel', VCarousel)
+Vue.component('v-carousel-item', VCarouselItem)
 Vue.use(ToastPlugin)
 
 let id = 0

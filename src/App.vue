@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="padding: 20px;">
-            <v-carousel :autoplay="autoplay" :interval="1000" direction="vertical">
+            <v-carousel :autoplay="false" :interval="1000" direction="vertical">
                 <v-carousel-item name="first">
                     <div class="carousel-box">
                         1
