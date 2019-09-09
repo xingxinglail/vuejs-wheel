@@ -26,7 +26,7 @@ export default {
         }
     },
     created () {
-        this.$nextTick(() => {
+        setTimeout(() => {
             this.transition = this.isVertical ? 'v-carousel-item-vertical' : 'v-carousel-item'
         })
     }
