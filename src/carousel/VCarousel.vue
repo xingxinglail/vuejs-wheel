@@ -76,6 +76,11 @@ export default {
         this._carouselItems = carouselItems
         this.init(carouselItems)
     },
+    beforeDestroy () {
+        if (this.autoplay || this._timer) {
+            this.clearTimeout()
+        }
+    },
     methods: {
         init (carouselItems) {
             if (carouselItems.length <= 0) return
@@ -134,10 +139,10 @@ export default {
         },
         clearTimeout () {
             clearTimeout(this._timer)
+            this._timer = null
         },
         onMouseenter () {
             this.clearTimeout()
-            this._timer = null
         },
         onMouseleave () {
             if (this.autoplay) this.playAutomatically()
