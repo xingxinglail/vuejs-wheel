@@ -7,12 +7,12 @@
             <slot />
         </div>
         <div class="v-carousel-indicator">
-            <div class="v-carousel-dot icon"
+            <div class="v-carousel-dot v-carousel-dot-prev"
                  v-if="direction === 'horizontal'"
                  @click="prev">
                 <v-icon name="left" />
             </div>
-            <div class="v-carousel-dot icon"
+            <div class="v-carousel-dot v-carousel-dot-prev"
                  v-else
                  @click="prev">
                 <v-icon name="up" />
@@ -22,12 +22,12 @@
                  :key="n"
                  @click="changeSlide(n - 1)"
                  :class="{ active: currentIndex + 1 === n }">{{ n }}</div>
-            <div class="v-carousel-dot icon"
+            <div class="v-carousel-dot v-carousel-dot-next"
                  v-if="direction === 'horizontal'"
                  @click="next">
                 <v-icon name="right" />
             </div>
-            <div class="v-carousel-dot icon"
+            <div class="v-carousel-dot v-carousel-dot-next"
                  v-else
                  @click="next">
                 <v-icon name="down" />
@@ -186,7 +186,8 @@ export default {
             margin: 0 8px;
             border-radius: 50%;
 
-            &.icon .v-icon {
+            &.v-carousel-dot-prev .v-icon,
+            &.v-carousel-dot-next .v-icon {
                 width: 10px;
                 height: 10px;
                 line-height: 22px;
