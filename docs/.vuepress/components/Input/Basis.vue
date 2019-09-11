@@ -1,7 +1,7 @@
 <template>
     <div>
         <br />
-        <v-input v-model="value"></v-input>
+        <v-input v-model="value" placeholder="请输入内容"></v-input>
         <br />
     </div>
 </template>

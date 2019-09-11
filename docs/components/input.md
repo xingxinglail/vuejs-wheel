@@ -78,6 +78,7 @@ export default {
 | disabled   | 禁用         | boolean | false
 | readonly   | 只读         | boolean | false
 | error      | 错误提示     | boolean / string | false
+| placeholder | 输入框占位文本 | string | 
 
 #### Input Events
 
