@@ -4,6 +4,7 @@
                :value="value"
                :disabled="disabled"
                :readonly="readonly"
+               :placeholder="placeholder"
                @input="emitEvent('input', $event)"
                @change="emitEvent('change', $event)"
                @focus="emitEvent('focus', $event)"
@@ -36,6 +37,10 @@ export default {
         error: {
             type: [Boolean, String],
             default: false
+        },
+        placeholder: {
+            type: String,
+            default: ''
         }
     },
     methods: {
