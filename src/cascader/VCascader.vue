@@ -1,6 +1,6 @@
 <template>
     <div class="v-cascader" v-click-body-outside="close">
-        <v-input :value="inputValue" readonly placeholder="请选择" @click.native="toggle" />
+        <v-input :value="inputValue" readonly :placeholder="placeholder" @click.native="toggle" />
         <div class="popover" v-show="visible">
             <v-cascader-panel :value="value"
                               :props="props"
@@ -52,6 +52,10 @@ export default {
         showAllLevels: {
             type: Boolean,
             default: true
+        },
+        placeholder: {
+            type: String,
+            default: '请选择'
         }
     },
     methods: {
