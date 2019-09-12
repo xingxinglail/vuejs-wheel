@@ -28,6 +28,7 @@ module.exports = {
                     '/components/collapse',
                     '/components/cascader',
                     '/components/carousel',
+                    '/components/popover',
                 ]
             }
         ]
