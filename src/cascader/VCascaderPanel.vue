@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import VIcon from '../VIcon'
+import VIcon from '../icon/VIcon'
 
 const aryStringEqual = (arrA, arrB) => {
     if (!Array.isArray(arrA) || !Array.isArray(arrB)) return false

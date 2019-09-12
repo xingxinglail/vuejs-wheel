@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Input from '../../../../src/VInput'
+import Input from '../../../../src/input/VInput'
 
 export default {
     name: 'InputBasis',

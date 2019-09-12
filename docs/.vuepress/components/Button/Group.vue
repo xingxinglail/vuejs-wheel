@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import ButtonGroup from '../../../../src/VButtonGroup'
-import Button from '../../../../src/VButton'
+import ButtonGroup from '../../../../src/button/VButtonGroup'
+import Button from '../../../../src/button/VButton'
 
 export default {
     name: 'ButtonGroup',

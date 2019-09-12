@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import VIcon from '../VIcon'
+import VIcon from '../icon/VIcon'
 
 export default {
     name: 'VCarousel',

@@ -56,11 +56,11 @@
 </template>
 
 <script>
-import VLayout from '../../../../src/VLayout'
-import VHeader from '../../../../src/VHeader'
-import VAside from '../../../../src/VAside'
-import VContent from '../../../../src/VContent'
-import VFooter from '../../../../src/VFooter'
+import VLayout from '../../../../src/container/VLayout'
+import VHeader from '../../../../src/container/VHeader'
+import VAside from '../../../../src/container/VAside'
+import VContent from '../../../../src/container/VContent'
+import VFooter from '../../../../src/container/VFooter'
 
 export default {
     name: 'ContainerBasis',

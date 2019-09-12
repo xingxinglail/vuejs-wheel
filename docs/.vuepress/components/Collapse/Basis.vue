@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import VCollapse from '../../../../src/VCollapse'
-import VCollapseItem from '../../../../src/VCollapseItem'
+import VCollapse from '../../../../src/collapse/VCollapse'
+import VCollapseItem from '../../../../src/collapse/VCollapseItem'
 
 export default {
     name: 'CollapseBasis',

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Button from '../../../../src/VButton'
+import Button from '../../../../src/button/VButton'
 
 export default {
     name: 'ButtonLoading',

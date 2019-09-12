@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import VIcon from './icon/VIcon'
+import VIcon from '../icon/VIcon'
 
 export default {
     name: 'VInput',
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './_var';
+@import '../var';
 
 $border-color: #999;
 $border-color-hover: #666;

@@ -9,7 +9,7 @@
 export default {
     name: 'VIcon',
     beforeMount () {
-        import('./svg')
+        import('../svg')
     },
     props: {
         name: {

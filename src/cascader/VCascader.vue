@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import VInput from '../VInput'
+import VInput from '../input/VInput'
 import VCascaderPanel from './VCascaderPanel'
 import clickBodyOutside from '../directives/clickBodyOutside'
 

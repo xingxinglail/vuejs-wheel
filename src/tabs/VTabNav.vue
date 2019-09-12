@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './_var';
+@import '../var';
 
 .v-tab-nav {
     height: $height;

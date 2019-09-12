@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import VIcon from '../../../../src/VIcon'
-import Button from '../../../../src/VButton'
+import VIcon from '../../../../src/icon/VIcon'
+import Button from '../../../../src/button/VButton'
 
 export default {
     name: 'IconList',

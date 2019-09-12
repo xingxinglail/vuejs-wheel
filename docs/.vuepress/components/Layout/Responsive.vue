@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Row from '../../../../src/VRow'
-import Col from '../../../../src/VCol'
+import Row from '../../../../src/layout/VRow'
+import Col from '../../../../src/layout/VCol'
 
 export default {
     name: 'LayoutResponsive',

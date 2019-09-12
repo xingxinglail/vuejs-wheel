@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import VIcon from './VIcon'
+import VIcon from '../icon/VIcon'
 
 export default {
     name: 'VButton',
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './_var';
+@import '../var';
 
 $button-bg: #fff;
 $button-active-bg: #eee;
