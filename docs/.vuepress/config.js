@@ -29,6 +29,7 @@ module.exports = {
                     '/components/cascader',
                     '/components/carousel',
                     '/components/popover',
+                    '/components/tabs',
                 ]
             }
         ]

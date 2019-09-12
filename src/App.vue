@@ -1,20 +1,23 @@
 <template>
     <div>
-        <div style="margin: 140px;">
-            <v-popover placement="top-start">
-                <template slot="content">
-                    <p>aaaaaaaaaaasdasdasdsfsdfdsfsdfsdfsdf</p>
-                </template>
-                <v-button>按钮</v-button>
-            </v-popover>
-        </div>
+        1
     </div>
 </template>
 
 <script>
 
 export default {
-    name: 'App'
+    name: 'App',
+    data () {
+        return {
+            tabsActive: 'second'
+        }
+    },
+    methods: {
+        handleTabClick (val) {
+            console.log(val)
+        }
+    }
 }
 </script>
 
