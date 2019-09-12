@@ -27,6 +27,7 @@ module.exports = {
                     '/components/container',
                     '/components/collapse',
                     '/components/cascader',
+                    '/components/carousel',
                 ]
             }
         ]
