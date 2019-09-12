@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const bindDomList = []
 
 const clickHandle = ({ target }) => {
@@ -8,7 +10,7 @@ const clickHandle = ({ target }) => {
     })
 }
 
-document.addEventListener('click', clickHandle)
+if (!Vue.prototype.$isServer) document.addEventListener('click', clickHandle)
 
 export default {
     bind (el, binding) {
