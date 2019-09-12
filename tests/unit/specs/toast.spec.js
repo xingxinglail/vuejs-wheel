@@ -28,7 +28,7 @@ describe('Toast', () => {
                         done()
                     }
                 }
-            })
+            }, true)
         })
 
         it('可以设置enableHTML', () => {
@@ -53,7 +53,7 @@ describe('Toast', () => {
                         done()
                     }
                 }
-            })
+            }, true)
             expect(vm.$el.classList.contains('v-toast-has-close-btn')).to.equal(true)
             const btn = vm.$el.querySelector('.close-btn')
             expect(btn).to.be.exist
