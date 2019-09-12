@@ -57,6 +57,7 @@ export default {
 
     &.disabled {
         cursor: not-allowed;
+        color: #999;
     }
 }
 </style>
