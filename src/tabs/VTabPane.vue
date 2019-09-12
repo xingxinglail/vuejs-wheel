@@ -17,10 +17,6 @@ export default {
         name: {
             type: String,
             require: true
-        },
-        label: {
-            type: String,
-            default: ''
         }
     },
     created () {
