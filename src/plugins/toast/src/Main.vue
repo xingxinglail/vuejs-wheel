@@ -77,11 +77,13 @@ export default {
         },
         close () {
             this.innerClass = 'leave'
-            this.closeTimer = setTimeout(() => {
-                this.$el.remove()
-                this.$emit('close')
-                this.$destroy()
-            }, 300)
+            this.$el.addEventListener('animationend', this.animationend)
+        },
+        animationend () {
+            this.$el.removeEventListener('animationend', this.animationend)
+            this.$el.remove()
+            this.$emit('close')
+            this.$destroy()
         }
     }
 }
@@ -162,7 +164,7 @@ $animation-duration: .3s;
 
 .v-toast {
     position: fixed;
-    z-index: 10;
+    z-index: 200;
     left: 50%;
     transform: translateX(-50%);
 
