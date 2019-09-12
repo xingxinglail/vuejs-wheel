@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import VIcon from '../VIcon'
+
 export default {
     name: 'VCarousel',
     props: {
@@ -156,6 +158,9 @@ export default {
                 this.clearTimeout()
             }
         }
+    },
+    components: {
+        'v-icon': VIcon
     }
 }
 </script>
