@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import App from './App.vue'
 import VButton from './button/VButton'
 import VIcon from './icon/VIcon'
@@ -28,6 +29,12 @@ import VCarouselItem from './carousel/VCarouselItem'
 import VMenu from './menu/VMenu'
 import VMenuItem from './menu/VMenuItem'
 import VSubMenu from './menu/VSubMenu'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+    routes: []
+})
 
 Vue.config.productionTip = false
 
@@ -61,5 +68,6 @@ Vue.component('v-sub-menu', VSubMenu)
 Vue.use(Toast)
 
 new Vue({
-    render: h => h(App)
+    render: h => h(App),
+    router
 }).$mount('#app')

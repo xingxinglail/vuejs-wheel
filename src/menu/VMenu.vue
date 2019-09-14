@@ -36,6 +36,10 @@ export default {
             default () {
                 return []
             }
+        },
+        router: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -62,9 +66,9 @@ export default {
             this.initSubVmChildrenHandle()
         },
         initItemVmChildrenHandle () {
-            const { _itemVmChildren, active, updateChildren } = this
+            const { _itemVmChildren, active, afterUpdateChildren } = this
             _itemVmChildren.forEach(vm => {
-                vm.$on('menu-item-click', updateChildren)
+                vm.$on('menu-item-click', afterUpdateChildren)
                 if (vm.name === active) {
                     vm.isActive = true
                     vm.updateNamePath()
@@ -89,18 +93,27 @@ export default {
         addSub (vm) {
             this._subVmChildren.push(vm)
         },
-        updateChildren (curVm) {
+        afterUpdateChildren (name) {
+            this.updateChildren(name)
+            if (this.router && this.$router) this.$router.push(this.active)
+            this.$emit('select', this.active, this.namePath)
+        },
+        updateChildren (name) {
+            this.active = name
             this._itemVmChildren.forEach(vm => {
-                if (curVm === vm) {
-                    this.active = vm.name
+                if (vm.name === name) {
+                    this.active = name
                     vm.isActive = true
+                    vm.updateNamePath()
                 } else {
                     vm.isActive = false
                 }
             })
-            console.log(this.active)
-            console.log(this.namePath)
-            this.$emit('select', this.active, this.namePath)
+        }
+    },
+    watch: {
+        defaultActive (v, oldV) {
+            if (v !== oldV) this.updateChildren(v)
         }
     }
 }
