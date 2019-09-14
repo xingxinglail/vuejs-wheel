@@ -23,6 +23,13 @@ export default {
             validator (value) {
                 return ['horizontal', 'vertical'].includes(value)
             }
+        },
+        menuTrigger: {
+            type: String,
+            default: 'hover',
+            validator (value) {
+                return ['click', 'hover'].includes(value)
+            }
         }
     },
     data () {
@@ -40,15 +47,19 @@ export default {
         this._itemVmChildren = []
     },
     mounted () {
-        const { _itemVmChildren, active, updateChildren } = this
-        _itemVmChildren.forEach(vm => {
-            vm.$on('menu-item-click', updateChildren)
-            if (vm.name === active) {
-                vm.isActive = true
-            }
-        })
+        this.init()
     },
     methods: {
+        init () {
+            const { _itemVmChildren, active, updateChildren } = this
+            _itemVmChildren.forEach(vm => {
+                vm.$on('menu-item-click', updateChildren)
+                if (vm.name === active) {
+                    vm.isActive = true
+                    vm.updateNamePath()
+                }
+            })
+        },
         addItem (vm) {
             this._itemVmChildren.push(vm)
         },
