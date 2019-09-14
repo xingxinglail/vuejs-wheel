@@ -30,6 +30,12 @@ export default {
             validator (value) {
                 return ['click', 'hover'].includes(value)
             }
+        },
+        defaultOpeneds: {
+            type: Array,
+            default () {
+                return []
+            }
         }
     },
     data () {
@@ -45,12 +51,17 @@ export default {
     },
     created () {
         this._itemVmChildren = []
+        this._subVmChildren = []
     },
     mounted () {
         this.init()
     },
     methods: {
         init () {
+            this.initItemVmChildrenHandle()
+            this.initSubVmChildrenHandle()
+        },
+        initItemVmChildrenHandle () {
             const { _itemVmChildren, active, updateChildren } = this
             _itemVmChildren.forEach(vm => {
                 vm.$on('menu-item-click', updateChildren)
@@ -60,8 +71,23 @@ export default {
                 }
             })
         },
+        initSubVmChildrenHandle () {
+            const { defaultOpeneds, _subVmChildren } = this
+            if (defaultOpeneds.length > 0 && _subVmChildren.length > 0) {
+                defaultOpeneds.forEach(name => {
+                    _subVmChildren.forEach(vm => {
+                        if (name === vm.name) {
+                            vm.show()
+                        }
+                    })
+                })
+            }
+        },
         addItem (vm) {
             this._itemVmChildren.push(vm)
+        },
+        addSub (vm) {
+            this._subVmChildren.push(vm)
         },
         updateChildren (curVm) {
             this._itemVmChildren.forEach(vm => {

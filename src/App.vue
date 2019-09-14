@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-menu mode="horizontal" default-active="vue">
+        <v-menu mode="horizontal" default-active="vue" :default-openeds="['programming-language']">
             <v-menu-item name="home">首页</v-menu-item>
             <v-sub-menu name="programming-language">
                 <template v-slot:title>编程语言</template>
@@ -17,7 +17,7 @@
             <v-menu-item name="about">关于我</v-menu-item>
         </v-menu>
         <div style="margin-top: 300px;">
-            <v-menu mode="horizontal" menu-trigger="click" default-active="vue">
+            <v-menu mode="horizontal" menu-trigger="click" default-active="vue" :default-openeds="['programming-language', 'framework']">
                 <v-menu-item name="home">首页</v-menu-item>
                 <v-sub-menu name="programming-language">
                     <template v-slot:title>编程语言</template>

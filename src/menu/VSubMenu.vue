@@ -50,6 +50,7 @@ export default {
         const { root } = this
         this._isClick = (root.menuTrigger === 'click' || root.mode === 'vertical')
         this._hoverTimer = null
+        this.root.addSub(this)
     },
     mounted () {
         this._subMenuTitle = this.$refs.subMenuTitle
