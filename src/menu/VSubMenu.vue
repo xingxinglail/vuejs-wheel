@@ -5,9 +5,11 @@
              ref="subMenuTitle">
             <slot name="title"></slot>
         </div>
-        <div class="v-sub-menu-popover" ref="subMenuPopover" v-show="visible">
-            <slot />
-        </div>
+        <transition name="hover-transition">
+            <div class="v-sub-menu-popover" ref="subMenuPopover" v-show="visible">
+                <slot />
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -126,4 +128,19 @@ export default {
 
 <style lang="scss" scoped>
 @import '../var';
+
+.v-sub-menu {
+
+    .hover-transition-enter-active,
+    .hover-transition-leave-active  {
+        transform-origin: top;
+        transition: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cubic-bezier(.23, 1, .32, 1);
+    }
+
+    .hover-transition-enter,
+    .hover-transition-leave-to {
+        opacity: 0;
+        transform: scale3d(1, 0, 1);
+    }
+}
 </style>
