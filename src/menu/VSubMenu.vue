@@ -1,9 +1,12 @@
 <template>
-    <div class="v-sub-menu" v-click-body-outside="outSideHide">
+    <div class="v-sub-menu"
+         :class="{ 'v-sub-menu-opened': visible }"
+         v-click-body-outside="outSideHide">
         <div class="v-sub-menu-title"
              :class="{ 'v-sub-menu-title-active': isActive }"
              ref="subMenuTitle">
             <slot name="title"></slot>
+            <v-icon name="down" />
         </div>
         <transition name="hover-transition">
             <div class="v-sub-menu-popover" ref="subMenuPopover" v-show="visible">
@@ -14,6 +17,7 @@
 </template>
 
 <script>
+import VIcon from '../icon/VIcon'
 import clickBodyOutside from '../directives/clickBodyOutside'
 
 export default {
@@ -123,6 +127,9 @@ export default {
             }
             this.hide()
         }
+    },
+    components: {
+        VIcon
     }
 }
 </script>
@@ -142,6 +149,19 @@ export default {
     .hover-transition-leave-to {
         opacity: 0;
         transform: scale3d(1, 0, 1);
+    }
+
+    .v-sub-menu-title {
+        display: flex;
+        align-items: center;
+
+        .v-icon {
+            margin-left: 8px;
+            width: 8px;
+            height: 8px;
+            color: #909399;
+            transition: transform .3s;
+        }
     }
 }
 </style>

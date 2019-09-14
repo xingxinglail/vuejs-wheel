@@ -156,6 +156,16 @@ $active-color: #303133;
         .v-sub-menu {
             position: relative;
 
+            .v-sub-menu .v-sub-menu-title {
+                display: flex;
+                justify-content: space-between;
+
+                .v-icon {
+                    margin-right: 8px;
+                    transform: rotate(270deg);
+                }
+            }
+
             .v-menu-item, .v-sub-menu .v-sub-menu-title {
                 padding: 0 10px;
                 height: 36px;
@@ -181,6 +191,14 @@ $active-color: #303133;
                     margin-top: 0;
                     margin-left: 6px;
                 }
+            }
+
+            &.v-sub-menu-opened > .v-sub-menu-title .v-icon {
+                    transform: rotate(180deg);
+            }
+
+            .v-sub-menu.v-sub-menu-opened > .v-sub-menu-title .v-icon {
+                    transform: rotate(450deg);
             }
         }
     }
