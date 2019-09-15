@@ -21,6 +21,9 @@ import Cascader from '../../src/cascader/VCascader'
 import CascaderPanel from '../../src/cascader/VCascaderPanel'
 import VCarousel from '../../src/carousel/VCarousel'
 import VCarouselItem from '../../src/carousel/VCarouselItem'
+import VMenu from '../../src/menu/VMenu'
+import VMenuItem from '../../src/menu/VMenuItem'
+import VSubMenu from '../../src/menu/VSubMenu'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -47,6 +50,9 @@ Vue.component('v-cascader', Cascader)
 Vue.component('v-cascader-panel', CascaderPanel)
 Vue.component('v-carousel', VCarousel)
 Vue.component('v-carousel-item', VCarouselItem)
+Vue.component('v-menu', VMenu)
+Vue.component('v-menu-item', VMenuItem)
+Vue.component('v-sub-menu', VSubMenu)
 Vue.use(ToastPlugin)
 
 let id = 0
