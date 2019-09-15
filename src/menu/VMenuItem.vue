@@ -25,7 +25,6 @@ export default {
     methods: {
         onClick () {
             if (this.isActive) return
-            // this.updateNamePath()
             this.$emit('menu-item-click', this.name)
         },
         updateNamePath () {

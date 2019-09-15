@@ -1,5 +1,5 @@
 <template>
-    <div class="v-menu" :class="classes">
+    <div class="v-menu" :class="classes" :style="styles">
         <slot />
     </div>
 </template>
@@ -40,6 +40,12 @@ export default {
         router: {
             type: Boolean,
             default: false
+        },
+        styles: {
+            type: Object,
+            default () {
+                return Object.create(null)
+            }
         }
     },
     data () {
@@ -126,9 +132,11 @@ $active-color: #303133;
 
 .v-menu {
     font-size: $font-size;
+    user-select: none;
 
     .v-menu-item, .v-sub-menu .v-sub-menu-title {
         cursor: pointer;
+        padding: 0 20px;
     }
 
     &.v-menu-horizontal {
@@ -139,7 +147,6 @@ $active-color: #303133;
         .v-menu-item, .v-sub-menu .v-sub-menu-title {
             height: 60px;
             line-height: 60px;
-            padding: 0 20px;
             border-bottom: 2px solid transparent;
             transition: color .3s, border-color .3s;
 
@@ -194,11 +201,46 @@ $active-color: #303133;
             }
 
             &.v-sub-menu-opened > .v-sub-menu-title .v-icon {
-                    transform: rotate(180deg);
+                transform: rotate(180deg);
             }
 
             .v-sub-menu.v-sub-menu-opened > .v-sub-menu-title .v-icon {
-                    transform: rotate(450deg);
+                transform: rotate(450deg);
+            }
+        }
+    }
+
+    &.v-menu-vertical {
+        border-right: 1px solid #e6e6e6;
+        color: #303133;
+
+        .v-menu-item, .v-sub-menu .v-sub-menu-title {
+            height: 56px;
+            line-height: 56px;
+            transition: color .3s, background-color .3s;
+
+            &:hover {
+                background-color: #ecf5ff;
+            }
+
+            &.v-menu-item-active {
+                color: #409eff;
+            }
+
+            &.v-sub-menu-title {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        .v-sub-menu {
+
+            .v-sub-menu-popover {
+                overflow-y: hidden;
+            }
+
+            &.v-sub-menu-opened > .v-sub-menu-title .v-icon {
+                transform: rotate(180deg);
             }
         }
     }

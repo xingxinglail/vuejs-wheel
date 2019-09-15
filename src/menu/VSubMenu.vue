@@ -8,8 +8,15 @@
             <slot name="title"></slot>
             <v-icon name="down" />
         </div>
-        <transition name="hover-transition">
-            <div class="v-sub-menu-popover" ref="subMenuPopover" v-show="visible">
+        <transition :name="isVerticalMode ? 'click-transition' : 'hover-transition'"
+                    @enter="enter"
+                    @after-enter="afterEnter"
+                    @leave="leave"
+                    @after-leave="afterLeave"
+                    @leave-cancelled="leaveCancelled">
+            <div class="v-sub-menu-popover"
+                 ref="subMenuPopover"
+                 v-show="visible">
                 <slot />
             </div>
         </transition>
@@ -42,7 +49,8 @@ export default {
     },
     data () {
         return {
-            visible: false
+            visible: false,
+            isVerticalMode: this.root.mode === 'vertical'
         }
     },
     computed: {
@@ -52,13 +60,14 @@ export default {
     },
     created () {
         const { root } = this
-        this._isClick = (root.menuTrigger === 'click' || root.mode === 'vertical')
+        this._isClick = (root.menuTrigger === 'click' || this.isVerticalMode)
         this._hoverTimer = null
         this.root.addSub(this)
     },
     mounted () {
         this._subMenuTitle = this.$refs.subMenuTitle
         this._subMenuPopover = this.$refs.subMenuPopover
+        this.setPaddingStyle()
         this.bindEvent()
     },
     beforeDestroy () {
@@ -74,6 +83,24 @@ export default {
         }
     },
     methods: {
+        setPaddingStyle () {
+            if (!this.isVerticalMode) return
+            let parent = this.$parent
+            let paddingLeft = 40
+            while (parent.$options.name === 'VSubMenu') {
+                paddingLeft += 20
+                parent = parent.$parent
+            }
+            this.$children.forEach(vm => {
+                const { name } = vm.$options
+                if (name === 'VMenuItem') {
+                    vm.$el.style.paddingLeft = `${paddingLeft}px`
+                }
+                if (name === 'VSubMenu') {
+                    vm.$el.querySelector('.v-sub-menu-title').style.paddingLeft = `${paddingLeft}px`
+                }
+            })
+        },
         bindEvent () {
             const { _subMenuTitle } = this
             if (this._isClick) {
@@ -96,7 +123,7 @@ export default {
             this.visible = false
         },
         outSideHide () {
-            if (!this._isClick) return
+            if (!this._isClick || this.isVerticalMode) return
             this.hide()
         },
         clickHandle () {
@@ -125,7 +152,33 @@ export default {
             } else {
                 this.root.namePath.unshift(this.name)
             }
-            this.hide()
+            if (!this.isVerticalMode) this.hide()
+        },
+        enter (el) {
+            if (!this.isVerticalMode) return
+            const { height } = el.getBoundingClientRect()
+            el.style.height = 0
+            el.getBoundingClientRect()
+            el.style.height = `${height}px`
+        },
+        afterEnter (el) {
+            if (!this.isVerticalMode) return
+            el.style.height = ''
+        },
+        leave (el) {
+            if (!this.isVerticalMode) return
+            const { height } = el.getBoundingClientRect()
+            el.style.height = `${height}px`
+            el.getBoundingClientRect()
+            el.style.height = 0
+        },
+        afterLeave (el) {
+            if (!this.isVerticalMode) return
+            el.style.height = ''
+        },
+        leaveCancelled (el) {
+            if (!this.isVerticalMode) return
+            el.style.height = ''
         }
     },
     components: {
@@ -149,6 +202,11 @@ export default {
     .hover-transition-leave-to {
         opacity: 0;
         transform: scale3d(1, 0, 1);
+    }
+
+    .click-transition-enter-active,
+    .click-transition-leave-active  {
+        transition: height .3s;
     }
 
     .v-sub-menu-title {
