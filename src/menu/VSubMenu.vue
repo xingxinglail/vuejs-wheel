@@ -73,13 +73,13 @@ export default {
     beforeDestroy () {
         const { _subMenuTitle } = this
         if (this._isClick) {
-            _subMenuTitle.removeListener('click', this.clickHandle)
+            _subMenuTitle.removeEventListener('click', this.clickHandle)
         } else {
             const { _subMenuPopover, mouseenterHandle, mouseleaveHandle, clearHoverTimer } = this
-            _subMenuTitle.removeListener('mouseenter', mouseenterHandle)
-            _subMenuTitle.removeListener('mouseleave', mouseleaveHandle)
-            _subMenuPopover.removeListener('mouseenter', clearHoverTimer)
-            _subMenuPopover.removeListener('mouseleave', mouseleaveHandle)
+            _subMenuTitle.removeEventListener('mouseenter', mouseenterHandle)
+            _subMenuTitle.removeEventListener('mouseleave', mouseleaveHandle)
+            _subMenuPopover.removeEventListener('mouseenter', clearHoverTimer)
+            _subMenuPopover.removeEventListener('mouseleave', mouseleaveHandle)
         }
     },
     methods: {
