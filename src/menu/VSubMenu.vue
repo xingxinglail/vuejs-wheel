@@ -65,10 +65,7 @@ export default {
         this.root.addSub(this)
     },
     mounted () {
-        this._subMenuTitle = this.$refs.subMenuTitle
-        this._subMenuPopover = this.$refs.subMenuPopover
-        this.setPaddingStyle()
-        this.bindEvent()
+        this.init()
     },
     beforeDestroy () {
         const { _subMenuTitle } = this
@@ -83,6 +80,12 @@ export default {
         }
     },
     methods: {
+        init () {
+            this._subMenuTitle = this.$refs.subMenuTitle
+            this._subMenuPopover = this.$refs.subMenuPopover
+            this.setPaddingStyle()
+            this.bindEvent()
+        },
         setPaddingStyle () {
             if (!this.isVerticalMode) return
             let parent = this.$parent
@@ -131,15 +134,11 @@ export default {
         },
         mouseenterHandle () {
             this.clearHoverTimer()
-            this._hoverTimer = setTimeout(() => {
-                this.show()
-            }, this.showTimeout)
+            this._hoverTimer = setTimeout(this.show, this.showTimeout)
         },
         mouseleaveHandle () {
             this.clearHoverTimer()
-            this._hoverTimer = setTimeout(() => {
-                this.hide()
-            }, this.hideTimeout)
+            this._hoverTimer = setTimeout(this.hide, this.hideTimeout)
         },
         clearHoverTimer () {
             clearTimeout(this._hoverTimer)
