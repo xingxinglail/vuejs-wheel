@@ -31,6 +31,7 @@ module.exports = {
                     '/components/popover',
                     '/components/tabs',
                     '/components/toast',
+                    '/components/menu',
                 ]
             }
         ]
