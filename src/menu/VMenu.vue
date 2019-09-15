@@ -184,9 +184,11 @@ $active-color: #303133;
                 position: absolute;
                 top: 60px;
                 left: 0;
+                z-index: 1;
                 border-radius: $border-radius;
                 box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
                 margin-top: 6px;
+                background-color: #fff;
 
                 .v-menu-item, .v-sub-menu-title {
                     border-bottom: none;
