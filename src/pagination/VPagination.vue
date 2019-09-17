@@ -4,7 +4,7 @@
             <v-icon name="left" />
         </div>
         <div class="item" :class="{ active: cur === 1 }" @click="jump({ key: 1 })">1</div>
-        <div class="item ellipsis" v-if="total > 7" v-show="cur > 4" @click="onMoreLeft">
+        <div class="item quick-jump" v-if="total > 7" v-show="cur > 4" @click="onMoreLeft">
             <v-icon name="ellipsis" />
             <v-icon name="doubleleft" />
         </div>
@@ -13,7 +13,7 @@
              :key="item.key"
              :class="{ active: item.key === cur }"
              @click="jump(item)">{{ item.key }}</div>
-        <div class="item ellipsis" v-if="total > 7" v-show="total - cur >= 4" @click="onMoreRight">
+        <div class="item quick-jump" v-if="total > 7" v-show="total - cur >= 4" @click="onMoreRight">
             <v-icon name="ellipsis" />
             <v-icon name="doubleright" />
         </div>
@@ -147,7 +147,7 @@ export default {
         text-align: center;
         line-height: 30px;
         border: 1px solid #E1E1E1;
-        font-size: $font-size;
+        font-size: 13px;
         color: #333;
         box-sizing: border-box;
         cursor: pointer;
@@ -175,7 +175,7 @@ export default {
             border-color: #4b90e2;
         }
 
-        &.ellipsis {
+        &.quick-jump {
 
             .v-icon:last-child {
                 display: none;
