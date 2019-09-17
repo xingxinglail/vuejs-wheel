@@ -50,38 +50,39 @@ export default {
         }
     },
     created () {
-        this.getPages()
+        this.getPages(this.current)
     },
     methods: {
-        getPages () {
-            const { total, current } = this
-            let cur = current
-            if (cur > total) cur = total
-            if (cur < 0) cur = 1
-            this.cur = cur
+        getPages (val) {
+            const { total, cur } = this
+            if (val === cur) return
+            let _cur = val
+            if (_cur > total) _cur = total
+            if (_cur < 0) _cur = 1
+            this.cur = _cur
             const pages = []
             if (total > 7) {
-                if (cur <= 4) {
+                if (_cur <= 4) {
                     for (let i = 2; i <= 6; i++) {
                         pages.push({ key: i })
                     }
                 } else {
-                    if (total - cur < 1) {
-                        pages.push({ key: cur - 5 })
+                    if (total - _cur < 1) {
+                        pages.push({ key: _cur - 5 })
                     }
-                    if (total - cur < 2) {
-                        pages.push({ key: cur - 4 })
+                    if (total - _cur < 2) {
+                        pages.push({ key: _cur - 4 })
                     }
-                    if (total - cur < 3) {
-                        pages.push({ key: cur - 3 })
+                    if (total - _cur < 3) {
+                        pages.push({ key: _cur - 3 })
                     }
-                    pages.push({ key: cur - 2 })
-                    pages.push({ key: cur - 1 })
-                    if (cur !== total && cur <= total) pages.push({ key: cur }) // 不填充最大页码
-                    if (cur + 1 < total) {
-                        pages.push({ key: cur + 1 })
-                        if (cur + 2 < total) {
-                            pages.push({ key: cur + 2 })
+                    pages.push({ key: _cur - 2 })
+                    pages.push({ key: _cur - 1 })
+                    if (_cur !== total && _cur <= total) pages.push({ key: _cur }) // 不填充最大页码
+                    if (_cur + 1 < total) {
+                        pages.push({ key: _cur + 1 })
+                        if (_cur + 2 < total) {
+                            pages.push({ key: _cur + 2 })
                         }
                     }
                 }
@@ -113,16 +114,17 @@ export default {
             this.changeCurrent(current > total ? total : current)
         },
         changeCurrent (val) {
+            this.getPages(val)
             this.$emit('update:current', val)
             this.$emit('change', val)
         }
     },
     watch: {
-        current () {
-            this.getPages()
+        current (v) {
+            this.getPages(v)
         },
         total () {
-            this.getPages()
+            this.getPages(this.current)
         }
     },
     components: {
