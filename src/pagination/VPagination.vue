@@ -1,24 +1,24 @@
 <template>
-    <div class="v-pagination">
-        <div class="item icon" :class="{ disabled: current === 1 }" @click="prev">
+    <div class="v-pagination" v-show="!(hideIfOnePage && total < 2)">
+        <div class="item icon" :class="{ disabled: cur === 1 }" @click="prev">
             <v-icon name="left" />
         </div>
-        <div class="item" :class="{ active: current === 1 }" @click="jump({ key: 1 })">1</div>
-        <div class="item ellipsis" v-if="total > 7" v-show="current > 4" @click="onMoreLeft">
+        <div class="item" :class="{ active: cur === 1 }" @click="jump({ key: 1 })">1</div>
+        <div class="item ellipsis" v-if="total > 7" v-show="cur > 4" @click="onMoreLeft">
             <v-icon name="ellipsis" />
             <v-icon name="doubleleft" />
         </div>
         <div class="item"
              v-for="item in pages"
              :key="item.key"
-             :class="{ active: item.key === current }"
+             :class="{ active: item.key === cur }"
              @click="jump(item)">{{ item.key }}</div>
-        <div class="item ellipsis" v-if="total > 7" v-show="total - current >= 4" @click="onMoreRight">
+        <div class="item ellipsis" v-if="total > 7" v-show="total - cur >= 4" @click="onMoreRight">
             <v-icon name="ellipsis" />
             <v-icon name="doubleright" />
         </div>
-        <div class="item" :class="{ active: current === total }" @click="jump({ key: total })">{{ total }}</div>
-        <div class="item icon" :class="{ disabled: current === total }" @click="next">
+        <div class="item" :class="{ active: cur === total }" @click="jump({ key: total })">{{ total }}</div>
+        <div class="item icon" :class="{ disabled: cur === total }" @click="next">
             <v-icon name="right" />
         </div>
     </div>
@@ -37,76 +37,92 @@ export default {
         current: {
             type: Number,
             require: true
+        },
+        hideIfOnePage: {
+            type: Boolean,
+            default: true
         }
     },
-    computed: {
-        pages ({ total, current }) {
+    data () {
+        return {
+            pages: [],
+            cur: null
+        }
+    },
+    created () {
+        this.getPages()
+    },
+    methods: {
+        getPages () {
+            const { total, current } = this
+            let cur = current
+            if (cur > total) cur = total
+            if (cur < 0) cur = 1
+            this.cur = cur
             const pages = []
             if (total > 7) {
-                if (current <= 4) {
+                if (cur <= 4) {
                     for (let i = 2; i <= 6; i++) {
                         pages.push({ key: i })
                     }
                 } else {
-                    if (total - current < 1) {
-                        pages.push({ key: current - 5 })
+                    if (total - cur < 1) {
+                        pages.push({ key: cur - 5 })
                     }
-                    if (total - current < 2) {
-                        pages.push({ key: current - 4 })
+                    if (total - cur < 2) {
+                        pages.push({ key: cur - 4 })
                     }
-                    if (total - current < 3) {
-                        pages.push({ key: current - 3 })
+                    if (total - cur < 3) {
+                        pages.push({ key: cur - 3 })
                     }
-                    pages.push({ key: current - 2 })
-                    pages.push({ key: current - 1 })
-                    if (current !== total) pages.push({ key: current }) // 不填充最大页码
-                    if (current + 1 < total) {
-                        pages.push({ key: current + 1 })
-                        if (current + 2 < total) {
-                            pages.push({ key: current + 2 })
+                    pages.push({ key: cur - 2 })
+                    pages.push({ key: cur - 1 })
+                    if (cur !== total && cur <= total) pages.push({ key: cur }) // 不填充最大页码
+                    if (cur + 1 < total) {
+                        pages.push({ key: cur + 1 })
+                        if (cur + 2 < total) {
+                            pages.push({ key: cur + 2 })
                         }
                     }
                 }
-                return pages
             } else {
                 for (let i = 2; i < total; i++) {
                     pages.push({ key: i })
                 }
-                return pages
             }
-        }
-    },
-    methods: {
+            this.pages = pages
+        },
         prev () {
-            if (this.current > 1) this.changeCurrent(this.current - 1)
+            if (this.cur > 1) this.changeCurrent(this.cur - 1)
         },
         next () {
-            if (this.current < this.total) this.changeCurrent(this.current + 1)
+            if (this.cur < this.total) this.changeCurrent(this.cur + 1)
         },
         jump ({ key }) {
-            switch (key) {
-                case 'prev-omit':
-                    break
-                case 'next-omit':
-                    break
-                default:
-                    if (key !== this.current) {
-                        this.changeCurrent(key)
-                    }
-                    break
+            if (key !== this.cur) {
+                this.changeCurrent(key)
             }
         },
         onMoreLeft () {
-            const cur = this.current - 5
+            const cur = this.cur - 5
             this.changeCurrent(cur < 1 ? 1 : cur)
         },
         onMoreRight () {
-            const { current, total } = this
-            const cur = current + 5
-            this.changeCurrent(cur > total ? total : cur)
+            const { cur, total } = this
+            const current = cur + 5
+            this.changeCurrent(current > total ? total : current)
         },
         changeCurrent (val) {
+            this.$emit('update:current', val)
             this.$emit('change', val)
+        }
+    },
+    watch: {
+        current () {
+            this.getPages()
+        },
+        total () {
+            this.getPages()
         }
     },
     components: {

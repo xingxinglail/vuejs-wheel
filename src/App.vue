@@ -3,7 +3,7 @@
         <v-pagination :total="7" :current="current" @change="change" />
         <br>
         <br>
-        <v-pagination :total="79" :current="current2" @change="change2" />
+        <v-pagination :total="79" :current.sync="current" />
     </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     data () {
         return {
             current: 3,
-            current2: 5
+            current2: -9
         }
     },
     methods: {
