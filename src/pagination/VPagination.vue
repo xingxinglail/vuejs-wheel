@@ -4,13 +4,19 @@
             <v-icon name="left" />
         </div>
         <div class="item" :class="{ active: current === 1 }" @click="jump({ key: 1 })">1</div>
-        <div class="item" v-if="total > 7" v-show="current > 4">...</div>
+        <div class="item ellipsis" v-if="total > 7" v-show="current > 4" @click="onMoreLeft">
+            <v-icon name="ellipsis" />
+            <v-icon name="doubleleft" />
+        </div>
         <div class="item"
              v-for="item in pages"
              :key="item.key"
              :class="{ active: item.key === current }"
              @click="jump(item)">{{ item.key }}</div>
-        <div class="item" v-if="total > 7" v-show="total - current >= 4">...</div>
+        <div class="item ellipsis" v-if="total > 7" v-show="total - current >= 4" @click="onMoreRight">
+            <v-icon name="ellipsis" />
+            <v-icon name="doubleright" />
+        </div>
         <div class="item" :class="{ active: current === total }" @click="jump({ key: total })">{{ total }}</div>
         <div class="item icon" :class="{ disabled: current === total }" @click="next">
             <v-icon name="right" />
@@ -90,6 +96,15 @@ export default {
                     break
             }
         },
+        onMoreLeft () {
+            const cur = this.current - 5
+            this.changeCurrent(cur < 1 ? 1 : cur)
+        },
+        onMoreRight () {
+            const { current, total } = this
+            const cur = current + 5
+            this.changeCurrent(cur > total ? total : cur)
+        },
         changeCurrent (val) {
             this.$emit('change', val)
         }
@@ -122,13 +137,12 @@ export default {
         cursor: pointer;
         border-radius: $border-radius;
 
-        &.icon {
+        .v-icon {
+            width: 10px;
+            height: 10px;
+        }
 
-            .v-icon {
-                width: 10px;
-                height: 10px;
-                color: #909399;
-            }
+        &.icon {
 
             &.disabled {
                 border-color: #eee;
@@ -143,6 +157,24 @@ export default {
         &.active {
             cursor: default;
             border-color: #4b90e2;
+        }
+
+        &.ellipsis {
+
+            .v-icon:last-child {
+                display: none;
+            }
+
+            &:hover {
+
+                .v-icon:first-child {
+                    display: none;
+                }
+
+                .v-icon:last-child {
+                    display: initial;
+                }
+            }
         }
     }
 }
