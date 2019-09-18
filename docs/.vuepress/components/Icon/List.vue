@@ -1,9 +1,9 @@
 <template>
     <div class="container">
         <div class="wrapper">
-            <div class="item" v-for="item in icons" :key="item.val">
-                <v-icon :name="item.key" />
-                <p>{{ item.val }}</p>
+            <div class="item" v-for="item in icons" :key="item">
+                <v-icon :name="item" />
+                <p>{{ item }}</p>
             </div>
         </div>
     </div>
@@ -18,42 +18,18 @@ export default {
     data () {
         return {
             icons: [
-                {
-                    key: 'info-circle',
-                    val: 'i-info-circle'
-                },
-                {
-                    key: 'loading',
-                    val: 'i-loading'
-                },
-                {
-                    key: 'download',
-                    val: 'i-download'
-                },
-                {
-                    key: 'upload',
-                    val: 'i-upload'
-                },
-                {
-                    key: 'down',
-                    val: 'i-down'
-                },
-                {
-                    key: 'up',
-                    val: 'i-up'
-                },
-                {
-                    key: 'left',
-                    val: 'i-left'
-                },
-                {
-                    key: 'right',
-                    val: 'i-right'
-                },
-                {
-                    key: 'setting',
-                    val: 'i-setting'
-                }
+                'info-circle',
+                'loading',
+                'download',
+                'upload',
+                'down',
+                'up',
+                'left',
+                'right',
+                'setting',
+                'ellipsis',
+                'doubleleft',
+                'doubleright'
             ]
         }
     },
