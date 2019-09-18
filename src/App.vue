@@ -3,7 +3,7 @@
         <v-pagination :total="7" :current="current" @change="change" />
         <br>
         <br>
-        <v-pagination :total="79" :current.sync="current" />
+        <v-pagination :total="79" :current="current" />
     </div>
 </template>
 
