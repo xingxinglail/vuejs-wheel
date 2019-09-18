@@ -32,6 +32,7 @@ module.exports = {
                     '/components/tabs',
                     '/components/toast',
                     '/components/menu',
+                    '/components/pagination',
                 ]
             }
         ]
