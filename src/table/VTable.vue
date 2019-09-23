@@ -3,6 +3,18 @@
         <table>
             <thead>
                 <tr>
+                    <th v-if="selection">
+                        <div class="v-table-column">
+                            <input class="checkbox"
+                                   :class="{ disabled: data.length === 0 }"
+                                   type="checkbox"
+                                   ref="allCheckbox"
+                                   :checked="allChecked"
+                                   :disabled="data.length === 0"
+                                   @click="onSelectAll"
+                                   @change="onAllCheckedChange">
+                        </div>
+                    </th>
                     <th v-for="item in columns" :key="item.field">
                         <div class="v-table-column"
                              :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
@@ -19,6 +31,15 @@
             </thead>
             <tbody>
                 <tr v-for="row in data" :key="row[rowKey]">
+                    <th v-if="selection">
+                        <div class="v-table-column">
+                            <input class="checkbox"
+                                   type="checkbox"
+                                   :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
+                                   @click="onSelect(row, $event)"
+                                   @change="onCheckboxChange(row[rowKey], $event)">
+                        </div>
+                    </th>
                     <td v-for="col in columns" :key="col.field">
                         {{ row[col.field] }}
                     </td>
@@ -76,15 +97,67 @@ export default {
         loading: {
             type: Boolean,
             default: false
+        },
+        selection: {
+            type: Object,
+            default: null
         }
     },
     data () {
         return {
             innerSorter: Object.create(null),
-            sortRule
+            sortRule,
+            allChecked: false
         }
     },
+    beforeCreate () {
+        this._innerSelectedKeys = []
+    },
+    mounted () {
+        this._allCheckedDom = this.$refs.allCheckbox
+    },
     methods: {
+        onSelect (row, e) {
+            const rows = []
+            const { data, rowKey, _innerSelectedKeys } = this
+            const keys = _innerSelectedKeys.concat(row[rowKey])
+            keys.forEach(key => {
+                const row = data.find(c => c[rowKey] === key)
+                if (row) rows.push(row)
+            })
+            this.$emit('select', row, e.target.checked, rows, e)
+        },
+        onCheckboxChange (key, { target }) {
+            const { data, rowKey, _innerSelectedKeys } = this
+            if (target.checked) {
+                _innerSelectedKeys.push(key)
+            } else {
+                const index = _innerSelectedKeys.indexOf(key)
+                if (index >= 0) _innerSelectedKeys.splice(index, 1)
+            }
+            const rows = []
+            _innerSelectedKeys.forEach(key => {
+                const row = data.find(c => c[rowKey] === key)
+                if (row) rows.push(row)
+            })
+            this.$emit('selection-change', _innerSelectedKeys, rows)
+        },
+        onSelectAll (e) {
+            this.onAllCheckedChange(e, true)
+        },
+        onAllCheckedChange ({ target }, select) {
+            const checked = target.checked
+            this.allChecked = checked
+            const { data, rowKey } = this
+            let keys = []
+            let _data = []
+            if (checked) {
+                keys = data.map(c => c[rowKey])
+                _data = data
+            }
+            this.$emit('selection-change', keys, _data)
+            if (select) this.$emit('select-all', checked, _data)
+        },
         onTableColumnClick ({ field }) {
             const { innerSorter } = this
             if (field in innerSorter) {
@@ -108,6 +181,26 @@ export default {
                     }
                 }
             }
+        },
+        checkAllCheckedState (data, keys) {
+            if (!this.selection) return
+            let indeterminate = false
+            this.allChecked = false
+            if (data.length > 0 && keys.length > 0) {
+                const keyLen = keys.length
+                if (keyLen === data.length) { // 判断是否全选
+                    let allChecked = true
+                    const { rowKey } = this
+                    for (let i = 0; i < keyLen; i++) {
+                        allChecked = data.some(c => keys[i] === c[rowKey])
+                        if (!allChecked) break
+                    }
+                    this.allChecked = allChecked
+                } else {
+                    indeterminate = true
+                }
+            }
+            this._allCheckedDom.indeterminate = indeterminate
         }
     },
     watch: {
@@ -124,6 +217,20 @@ export default {
                 }
                 this.innerSorter = innerSorter
             }
+        },
+        'selection.selectedKeys': {
+            immediate: true,
+            handler (v) {
+                this._innerSelectedKeys = Array.isArray(v) ? deepClone(v) : []
+                this.$nextTick(() => {
+                    this.checkAllCheckedState(this.data, v)
+                })
+            }
+        },
+        data (v) {
+            this.$nextTick(() => {
+                this.checkAllCheckedState(v, this._innerSelectedKeys)
+            })
         }
     },
     components: {
@@ -195,6 +302,15 @@ export default {
                             color: #409eff;
                         }
                     }
+                }
+            }
+
+            .checkbox {
+                font-size: 16px;
+                cursor: pointer;
+
+                &.disabled {
+                    cursor: not-allowed;
                 }
             }
         }

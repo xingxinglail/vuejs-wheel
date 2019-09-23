@@ -1,5 +1,17 @@
 <template>
     <div style="padding: 20px">
+        <v-table :columns="columns"
+                 :data="data2"
+                 :selection="selection"
+                 :sorter="sorter"
+                 :loading="loading"
+                 @selection-change="onSelectionChange"
+                 @select="onSelect"
+                 @select-all="onSelectAll"
+                 @sort-change="onSortChange" />
+        <br>
+        <br><br>
+        <br>
         <v-table :columns="columns" :data="data" :sorter="sorter" bordered :loading="loading" @sort-change="onSortChange" />
         <br>
         <br>
@@ -53,12 +65,26 @@ export default {
                 }
             ],
             data: [],
+            data2: data,
             sorter: {
                 age: 'descend',
                 date: false
             },
-            loading: false
+            loading: false,
+            selection: {
+                selectedKeys: ['2']
+            }
         }
+    },
+    created () {
+        setTimeout(() => {
+            this.data2.push({
+                key: '5',
+                name: '王五',
+                age: 31,
+                date: '1984-10-08'
+            })
+        }, 1000)
     },
     methods: {
         onSortChange ({ field, order }) {
@@ -78,11 +104,24 @@ export default {
                     })
                 }
                 this.data = clone
+                this.data2 = clone
                 this.loading = false
             }, 500)
         },
-        change2 (val) {
-            this.current2 = val
+        onSelectionChange (selectedKeys, selectedRows) {
+            this.selection.selectedKeys = selectedKeys
+            console.log('selectedKeys change', selectedKeys)
+            console.log('selectedRows change', selectedRows)
+        },
+        onSelect (row, selected, selectedRows, nativeEvent) {
+            console.log('onselect', row)
+            console.log('onselect', selected)
+            console.log('onselect', selectedRows)
+            console.log('onselect', nativeEvent)
+        },
+        onSelectAll (selected, selectedRows) {
+            console.log('onSelectAll', selected)
+            console.log('onSelectAll', selectedRows)
         }
     }
 }
