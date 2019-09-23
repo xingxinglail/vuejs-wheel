@@ -25,6 +25,12 @@
                 </tr>
             </tbody>
         </table>
+        <transition name="fade">
+            <div v-if="loading" class="v-table-loading">
+                <v-icon name="loading" />
+                加载中...
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -64,6 +70,10 @@ export default {
             default: 'key'
         },
         bordered: {
+            type: Boolean,
+            default: false
+        },
+        loading: {
             type: Boolean,
             default: false
         }
@@ -126,6 +136,7 @@ export default {
 @import '../var';
 
 .v-table {
+    position: relative;
 
     table {
         width: 100%;
@@ -211,6 +222,34 @@ export default {
         th, td {
             border: 1px solid #e8e8e8;
         }
+    }
+
+    .v-table-loading {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        color: #888;
+        background-color: rgba(255, 255, 255, 0.8);
+
+        .v-icon {
+            font-size: 20px;
+            margin-right: 4px;
+            animation: spin 2s infinite linear;
+        }
+    }
+
+    .fade-enter-active {
+        animation: fade-in .2s ease;
+    }
+
+    .fade-leave-active {
+        animation: fade-out .2s ease;
     }
 }
 </style>

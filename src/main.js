@@ -30,6 +30,7 @@ import VMenu from './menu/VMenu'
 import VMenuItem from './menu/VMenuItem'
 import VSubMenu from './menu/VSubMenu'
 import VPagination from './pagination/VPagination'
+import VTable from './table/VTable'
 
 Vue.use(VueRouter)
 
@@ -67,6 +68,7 @@ Vue.component('v-menu', VMenu)
 Vue.component('v-menu-item', VMenuItem)
 Vue.component('v-sub-menu', VSubMenu)
 Vue.component('v-pagination', VPagination)
+Vue.component('v-table', VTable)
 Vue.use(Toast)
 
 new Vue({
