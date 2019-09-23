@@ -3,8 +3,6 @@
         <v-table :columns="columns"
                  :data="data2"
                  :selection="selection"
-                 :sorter="sorter"
-                 :loading="loading"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"
@@ -111,7 +109,7 @@ export default {
         onSelectionChange (selectedKeys, selectedRows) {
             this.selection.selectedKeys = selectedKeys
             console.log('selectedKeys change', selectedKeys)
-            console.log('selectedRows change', selectedRows)
+            // console.log('selectedRows change', selectedRows)
         },
         onSelect (row, selected, selectedRows, nativeEvent) {
             console.log('onselect', row)

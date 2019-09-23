@@ -36,8 +36,8 @@
                             <input class="checkbox"
                                    type="checkbox"
                                    :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
-                                   @click="onSelect(row, $event)"
-                                   @change="onCheckboxChange(row[rowKey], $event)">
+                                   @click="onSelect(row, row[rowKey], $event)"
+                                   @change="onCheckboxChange(row, row[rowKey], $event)">
                         </div>
                     </th>
                     <td v-for="col in columns" :key="col.field">
@@ -117,30 +117,33 @@ export default {
         this._allCheckedDom = this.$refs.allCheckbox
     },
     methods: {
-        onSelect (row, e) {
-            const rows = []
-            const { data, rowKey, _innerSelectedKeys } = this
-            const keys = _innerSelectedKeys.concat(row[rowKey])
-            keys.forEach(key => {
-                const row = data.find(c => c[rowKey] === key)
-                if (row) rows.push(row)
-            })
-            this.$emit('select', row, e.target.checked, rows, e)
+        onSelect (row, key, e) {
+            this.onCheckboxChange(row, key, e, true)
         },
-        onCheckboxChange (key, { target }) {
+        onCheckboxChange (row, key, e, select) {
+            const { checked } = e.target
             const { data, rowKey, _innerSelectedKeys } = this
-            if (target.checked) {
-                _innerSelectedKeys.push(key)
+            if (select) {
+                if (checked) {
+                    _innerSelectedKeys.push(key)
+                } else {
+                    const index = _innerSelectedKeys.indexOf(key)
+                    if (index >= 0) _innerSelectedKeys.splice(index, 1)
+                }
+                const rows = []
+                _innerSelectedKeys.forEach(key => {
+                    const row = data.find(c => c[rowKey] === key)
+                    if (row) rows.push(row)
+                })
+                this.$emit('select', row, checked, rows, e)
             } else {
-                const index = _innerSelectedKeys.indexOf(key)
-                if (index >= 0) _innerSelectedKeys.splice(index, 1)
+                const rows = []
+                _innerSelectedKeys.forEach(key => {
+                    const row = data.find(c => c[rowKey] === key)
+                    if (row) rows.push(row)
+                })
+                this.$emit('selection-change', _innerSelectedKeys, rows)
             }
-            const rows = []
-            _innerSelectedKeys.forEach(key => {
-                const row = data.find(c => c[rowKey] === key)
-                if (row) rows.push(row)
-            })
-            this.$emit('selection-change', _innerSelectedKeys, rows)
         },
         onSelectAll (e) {
             this.onAllCheckedChange(e, true)
