@@ -259,18 +259,20 @@ export default {
         calcColumnsWidth () {
             const { innerColumns, _tableWrapper, _x } = this
             let maxWidth = _tableWrapper.offsetWidth
-            if (maxWidth < _x.minTableWidth) maxWidth = _x.minTableWidth
-            this.maxWidth = `${maxWidth}px`
-            console.log(_x)
             const surplusMeanWidth = maxWidth - _x.maxColumnWidth
             const surplusColumnsCount = innerColumns.length - _x.hasWidthColumnCount
             const relaWidth = Math.floor(surplusMeanWidth / surplusColumnsCount)
+            maxWidth = 0
             for (let i = 0; i < innerColumns.length; i++) {
-                if (innerColumns[i].width === undefined) {
-                    innerColumns[i].relaWidth = relaWidth < 80 ? 80 : relaWidth
+                const { width, minWidth } = innerColumns[i]
+                if (width === undefined) {
+                    let mWidth = _x.minWidth
+                    if (minWidth) mWidth = parseFloat(minWidth)
+                    innerColumns[i].relaWidth = relaWidth < mWidth ? mWidth : relaWidth
                 }
+                maxWidth += innerColumns[i].relaWidth
             }
-            console.log(this.maxWidth)
+            this.maxWidth = `${maxWidth}px`
         }
     },
     watch: {
@@ -446,6 +448,7 @@ export default {
 
     &.v-table-bordered {
         border: 1px solid #e8e8e8;
+        box-sizing: border-box;
 
         th:not(:last-child), td:not(:last-child) {
             border-right: 1px solid #e8e8e8;

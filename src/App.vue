@@ -11,13 +11,13 @@
         <br>
         <br>
         <br>
-        <v-table :columns="columns"
-                 :data="data2"
-                 bordered
-                 @selection-change="onSelectionChange"
-                 @select="onSelect"
-                 @select-all="onSelectAll"
-                 @sort-change="onSortChange" />
+<!--        <v-table :columns="columns"-->
+<!--                 :data="data2"-->
+<!--                 bordered-->
+<!--                 @selection-change="onSelectionChange"-->
+<!--                 @select="onSelect"-->
+<!--                 @select-all="onSelectAll"-->
+<!--                 @sort-change="onSortChange" />-->
 <!--        <v-table :columns="columns"-->
 <!--                 :data="data2"-->
 <!--                 bordered-->
@@ -93,12 +93,12 @@ export default {
                 },
                 {
                     title: '年龄',
-                    field: 'age',
-                    width: '100px'
+                    field: 'age'
                 },
                 {
                     title: '出生日期',
-                    field: 'date'
+                    field: 'date',
+                    minWidth: '130'
                 },
                 {
                     title: 'key',
