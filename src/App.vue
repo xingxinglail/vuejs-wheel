@@ -2,6 +2,7 @@
     <div style="padding: 20px">
         <v-table :columns="columns"
                  :data="data2"
+                 bordered
                  height="200"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
@@ -12,6 +13,7 @@
         <br>
         <v-table :columns="columns"
                  :data="data2"
+                 bordered
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"

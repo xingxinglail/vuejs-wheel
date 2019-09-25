@@ -444,10 +444,11 @@ export default {
         }
     }
 
-    &.v-table-bordered table {
+    &.v-table-bordered {
+        border: 1px solid #e8e8e8;
 
-        th, td {
-            border: 1px solid #e8e8e8;
+        th:not(:last-child), td:not(:last-child) {
+            border-right: 1px solid #e8e8e8;
         }
     }
 
