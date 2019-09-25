@@ -2,16 +2,33 @@
     <div style="padding: 20px">
         <v-table :columns="columns"
                  :data="data2"
-                 :selection="selection"
+                 height="200"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"
                  @sort-change="onSortChange" />
         <br>
-        <br><br>
         <br>
-        <v-table :columns="columns" :data="data" :sorter="sorter" bordered :loading="loading" @sort-change="onSortChange" />
         <br>
+        <v-table :columns="columns"
+                 :data="data2"
+                 @selection-change="onSelectionChange"
+                 @select="onSelect"
+                 @select-all="onSelectAll"
+                 @sort-change="onSortChange" />
+<!--        <v-table :columns="columns"-->
+<!--                 :data="data2"-->
+<!--                 bordered-->
+<!--                 :selection="selection"-->
+<!--                 @selection-change="onSelectionChange"-->
+<!--                 @select="onSelect"-->
+<!--                 @select-all="onSelectAll"-->
+<!--                 @sort-change="onSortChange" />-->
+<!--        <br>-->
+<!--        <br><br>-->
+<!--        <br>-->
+<!--        <v-table :columns="columns" :data="data" :sorter="sorter" bordered :loading="loading" @sort-change="onSortChange" />-->
+<!--        <br>-->
         <br>
     </div>
 </template>
@@ -41,6 +58,24 @@ const data = [
         name: '李四',
         age: 15,
         date: '1999-10-11'
+    },
+    {
+        key: '5',
+        name: '李5四',
+        age: 55,
+        date: '1999-10-11'
+    },
+    {
+        key: '6',
+        name: '李66四',
+        age: 2,
+        date: '1999-10-11'
+    },
+    {
+        key: '7',
+        name: '李777四',
+        age: 12,
+        date: '1999-10-11'
     }
 ]
 
@@ -51,15 +86,21 @@ export default {
             columns: [
                 {
                     title: '姓名',
-                    field: 'name'
+                    field: 'name',
+                    width: '200px'
                 },
                 {
                     title: '年龄',
-                    field: 'age'
+                    field: 'age',
+                    width: '100px'
                 },
                 {
                     title: '出生日期',
                     field: 'date'
+                },
+                {
+                    title: 'key',
+                    field: 'key'
                 }
             ],
             data: [],
@@ -75,14 +116,14 @@ export default {
         }
     },
     created () {
-        setTimeout(() => {
-            this.data2.push({
-                key: '5',
-                name: '王五',
-                age: 31,
-                date: '1984-10-08'
-            })
-        }, 1000)
+        // setTimeout(() => {
+        //     this.data2.push({
+        //         key: '5',
+        //         name: '王五',
+        //         age: 31,
+        //         date: '1984-10-08'
+        //     })
+        // }, 1000)
     },
     methods: {
         onSortChange ({ field, order }) {

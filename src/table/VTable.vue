@@ -1,51 +1,69 @@
 <template>
-    <div class="v-table" :class="{ 'v-table-bordered': bordered }">
-        <table>
-            <thead>
-                <tr>
-                    <th v-if="selection">
-                        <div class="v-table-column">
-                            <input class="checkbox"
-                                   :class="{ disabled: data.length === 0 }"
-                                   type="checkbox"
-                                   ref="allCheckbox"
-                                   :checked="allChecked"
-                                   :disabled="data.length === 0"
-                                   @click="onSelectAll"
-                                   @change="onAllCheckedChange">
-                        </div>
-                    </th>
-                    <th v-for="item in columns" :key="item.field">
-                        <div class="v-table-column"
-                             :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
-                             @click="onTableColumnClick(item)">
-                            <span>{{ item.title }}</span>
-                            <div class="v-table-column-sorters"
-                                 :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
-                                <v-icon name="caret-up" />
-                                <v-icon name="caret-down" />
+    <div class="v-table"
+         ref="tableWrapper"
+         :class="{ 'v-table-bordered': bordered }">
+        <div class="v-table-header" ref="headerWrapper">
+            <table :style="{ width: maxWidth }">
+                <colgroup>
+                    <col v-for="item in innerColumns"
+                         :key="item.field"
+                         :style="{ width: item.relaWidth + 'px' }" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th v-if="selection">
+                            <div class="v-table-column">
+                                <input class="checkbox"
+                                       :class="{ disabled: data.length === 0 }"
+                                       type="checkbox"
+                                       ref="allCheckbox"
+                                       :checked="allChecked"
+                                       :disabled="data.length === 0"
+                                       @click="onSelectAll"
+                                       @change="onAllCheckedChange">
                             </div>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="row in data" :key="row[rowKey]">
-                    <th v-if="selection">
-                        <div class="v-table-column">
-                            <input class="checkbox"
-                                   type="checkbox"
-                                   :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
-                                   @click="onSelect(row, row[rowKey], $event)"
-                                   @change="onCheckboxChange(row, row[rowKey], $event)">
-                        </div>
-                    </th>
-                    <td v-for="col in columns" :key="col.field">
-                        {{ row[col.field] }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </th>
+                        <th v-for="item in innerColumns" :key="item.field">
+                            <div class="v-table-column"
+                                 :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
+                                 @click="onTableColumnClick(item)">
+                                <span>{{ item.title }}</span>
+                                <div class="v-table-column-sorters"
+                                     :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
+                                    <v-icon name="caret-up" />
+                                    <v-icon name="caret-down" />
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="v-table-body" ref="bodyWrapper" :style="{ height: parseFloat(height) + 'px' }">
+            <table :style="{ width: maxWidth }">
+                <colgroup>
+                    <col v-for="item in innerColumns"
+                         :key="item.field"
+                         :style="{ width: item.relaWidth + 'px' }" />
+                </colgroup>
+                <tbody>
+                    <tr v-for="row in data" :key="row[rowKey]">
+                        <th v-if="selection">
+                            <div class="v-table-column">
+                                <input class="checkbox"
+                                       type="checkbox"
+                                       :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
+                                       @click="onSelect(row, row[rowKey], $event)"
+                                       @change="onCheckboxChange(row, row[rowKey], $event)">
+                            </div>
+                        </th>
+                        <td v-for="col in innerColumns" :key="col.field">
+                            {{ row[col.field] }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <transition name="fade">
             <div v-if="loading" class="v-table-loading">
                 <v-icon name="loading" />
@@ -68,6 +86,9 @@ const sortRule = {
 export default {
     name: 'VTable',
     props: {
+        height: {
+            type: String
+        },
         columns: {
             type: Array,
             default () {
@@ -105,16 +126,37 @@ export default {
     },
     data () {
         return {
+            innerColumns: [],
             innerSorter: Object.create(null),
             sortRule,
-            allChecked: false
+            allChecked: false,
+            maxWidth: null
         }
     },
     beforeCreate () {
+        this._x = {
+            minWidth: 80,
+            minTableWidth: 0,
+            maxColumnWidth: 0,
+            hasWidthColumnCount: 0
+        }
         this._innerSelectedKeys = []
     },
     mounted () {
-        this._allCheckedDom = this.$refs.allCheckbox
+        const { tableWrapper, allCheckbox, headerWrapper, bodyWrapper } = this.$refs
+        this._tableWrapper = tableWrapper
+        this._headerWrapper = headerWrapper
+        this._bodyWrapper = bodyWrapper
+        this._allCheckedDom = allCheckbox
+        window.addEventListener('resize', this.onResizeHandle)
+        headerWrapper.addEventListener('scroll', this.onHeaderWrapperScrollHandle)
+        bodyWrapper.addEventListener('scroll', this.onBodyWrapperScrollHandle)
+    },
+    beforeDestroy () {
+        window.removeEventListener('resize', this.onResizeHandle)
+        const { _headerWrapper, _bodyWrapper } = this
+        if (_headerWrapper) _headerWrapper.removeEventListener('scroll', this.onHeaderWrapperScrollHandle)
+        if (_bodyWrapper) _bodyWrapper.removeEventListener('scroll', this.onBodyWrapperScrollHandle)
     },
     methods: {
         onSelect (row, key, e) {
@@ -204,9 +246,54 @@ export default {
                 }
             }
             this._allCheckedDom.indeterminate = indeterminate
+        },
+        onHeaderWrapperScrollHandle ({ target }) {
+            this._bodyWrapper.scrollLeft = target.scrollLeft
+        },
+        onBodyWrapperScrollHandle ({ target }) {
+            this._headerWrapper.scrollLeft = target.scrollLeft
+        },
+        onResizeHandle () {
+            this.calcColumnsWidth()
+        },
+        calcColumnsWidth () {
+            const { innerColumns, _tableWrapper, _x } = this
+            let maxWidth = _tableWrapper.offsetWidth
+            if (maxWidth < _x.minTableWidth) maxWidth = _x.minTableWidth
+            this.maxWidth = `${maxWidth}px`
+            console.log(_x)
+            const surplusMeanWidth = maxWidth - _x.maxColumnWidth
+            const surplusColumnsCount = innerColumns.length - _x.hasWidthColumnCount
+            const relaWidth = Math.floor(surplusMeanWidth / surplusColumnsCount)
+            for (let i = 0; i < innerColumns.length; i++) {
+                if (innerColumns[i].width === undefined) {
+                    innerColumns[i].relaWidth = relaWidth < 80 ? 80 : relaWidth
+                }
+            }
+            console.log(this.maxWidth)
         }
     },
     watch: {
+        columns: {
+            deep: true,
+            immediate: true,
+            handler (v) {
+                const { _x } = this
+                this.innerColumns = v.map(c => {
+                    const { width } = c
+                    const relaWidth = width !== undefined ? parseFloat(width) : undefined
+                    const data = { ...c, relaWidth: null }
+                    if (relaWidth) {
+                        _x.maxColumnWidth += relaWidth
+                        _x.hasWidthColumnCount += 1
+                        data.relaWidth = relaWidth
+                    }
+                    return data
+                })
+                _x.minTableWidth = _x.maxColumnWidth + ((v.length - _x.hasWidthColumnCount) * _x.minWidth)
+                this.$nextTick(this.calcColumnsWidth)
+            }
+        },
         sorter: {
             deep: true,
             immediate: true,
@@ -247,9 +334,34 @@ export default {
 
 .v-table {
     position: relative;
+    border-bottom: 1px solid #e8e8e8;
+
+    /*.v-table-header {*/
+    /*    overflow: hidden;*/
+    /*}*/
+
+    .v-table-body, .v-table-header {
+        overflow: auto;
+
+        &.v-table-body {
+
+            table tr:not(:last-child) {
+                border-bottom: 1px solid #e8e8e8;
+            }
+        }
+
+        &.v-table-header {
+            border-bottom: 1px solid #e8e8e8;
+
+            &::-webkit-scrollbar {
+                display: none;
+                width: 0;
+                height: 0;
+            }
+        }
+    }
 
     table {
-        width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
         font-size: $font-size;
@@ -321,10 +433,6 @@ export default {
         th .v-table-column, td {
             padding: 16px;
             text-align: left;
-        }
-
-        tr {
-            border-bottom: 1px solid #e8e8e8;
         }
 
         tbody tr {
