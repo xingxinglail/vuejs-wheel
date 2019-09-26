@@ -142,11 +142,11 @@ export default {
         }
     },
     beforeCreate () {
-        this._x = {
+        this._sizeData = {
             minWidth: 80,
             minTableWidth: 0,
-            maxColumnWidth: 0,
-            hasWidthColumnCount: 0
+            maxColumnWidth: 0, // 带有width属性的总列宽
+            hasWidthColumnCount: 0 // 带有width属性的总列数
         }
         this._innerSelectedKeys = []
     },
@@ -269,17 +269,18 @@ export default {
             this.calcColumnsWidth()
         },
         calcColumnsWidth () {
-            const { columns, _tableWrapper, _x } = this
+            const { columns, _tableWrapper, _sizeData } = this
             let maxWidth = _tableWrapper.offsetWidth
-            const surplusMeanWidth = maxWidth - _x.maxColumnWidth
-            const surplusColumnsCount = columns.length - _x.hasWidthColumnCount
-            const realWidth = Math.floor(surplusMeanWidth / surplusColumnsCount)
+            const surplusMeanWidth = maxWidth - _sizeData.maxColumnWidth // 可分配的最大宽度
+            const surplusColumnsCount = columns.length - _sizeData.hasWidthColumnCount // 没有width属性的列个数
+            const realWidth = Math.floor(surplusMeanWidth / surplusColumnsCount) // 实际宽度平均值
+            // 平均值除不尽，如要把小数抹平，剩余宽度补在最后一列
             const lastColumnWidth = surplusMeanWidth - realWidth * surplusColumnsCount
             maxWidth = 0
             for (let i = 0; i < columns.length; i++) {
                 const { width, minWidth } = columns[i]
                 if (width === undefined) {
-                    let mWidth = _x.minWidth
+                    let mWidth = _sizeData.minWidth
                     if (minWidth) mWidth = parseFloat(minWidth)
                     const data = columns[i]
                     data.realWidth = realWidth < mWidth ? mWidth : realWidth
@@ -293,12 +294,12 @@ export default {
         insertColumn (data, scopedSlots, index) {
             if (scopedSlots.default) data.render = scopedSlots.default
             this.columns.splice(index, 0, data)
-            const { _x } = this
+            const { _sizeData } = this
             if (data.realWidth) {
-                _x.maxColumnWidth += data.realWidth
-                _x.hasWidthColumnCount += 1
+                _sizeData.maxColumnWidth += data.realWidth
+                _sizeData.hasWidthColumnCount += 1
             }
-            _x.minTableWidth = _x.maxColumnWidth + ((this.columns.length - _x.hasWidthColumnCount) * _x.minWidth)
+            _sizeData.minTableWidth = _sizeData.maxColumnWidth + ((this.columns.length - _sizeData.hasWidthColumnCount) * _sizeData.minWidth)
             this.$nextTick(this.calcColumnsWidth)
         }
     },

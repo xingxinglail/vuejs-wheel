@@ -8,6 +8,11 @@
                  @select="onSelect"
                  @select-all="onSelectAll"
                  @sort-change="onSortChange">
+            <v-table-column type="expand">
+                <template>
+                    6
+                </template>
+            </v-table-column>
             <v-table-column type="selection" width="60" />
             <v-table-column
                 v-for="item in columns"
@@ -23,8 +28,8 @@
                 </template>
             </v-table-column>
             <v-table-column label="操作2" align="center" min-width="200">
-                <template v-slot="slotProps">
-                    <v-input v-model="slotProps.row.name"></v-input>
+                <template v-slot="{ row }">
+                    <v-input v-model="row.name"></v-input>
                 </template>
             </v-table-column>
         </v-table>

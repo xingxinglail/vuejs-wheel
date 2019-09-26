@@ -18,7 +18,6 @@ export default {
     },
     created () {
         const { type, label, field, width, minWidth, align } = this
-        const realWidth = width !== undefined ? parseFloat(width) : undefined
         const data = {
             type,
             label,
@@ -31,6 +30,7 @@ export default {
             if (!align) data.align = 'center'
             if (!width && !minWidth) data.width = 50
         }
+        const realWidth = data.width !== undefined ? parseFloat(data.width) : undefined
         if (realWidth) data.realWidth = realWidth
         this.columnConfig = data
     },
