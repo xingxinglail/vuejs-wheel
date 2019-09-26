@@ -2,10 +2,11 @@
     <div class="v-table"
          ref="tableWrapper"
          :class="{ 'v-table-bordered': bordered }">
+        <div class="hidden-columns" ref="hiddenColumns"><slot /></div>
         <div class="v-table-header" ref="headerWrapper">
             <table :style="{ width: maxWidth }">
                 <colgroup>
-                    <col v-for="item in innerColumns"
+                    <col v-for="item in columns"
                          :key="item.field"
                          :style="{ width: item.relaWidth + 'px' }" />
                 </colgroup>
@@ -23,11 +24,11 @@
                                        @change="onAllCheckedChange">
                             </div>
                         </th>
-                        <th v-for="item in innerColumns" :key="item.field">
+                        <th v-for="item in columns" :key="item.field">
                             <div class="v-table-column"
                                  :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
                                  @click="onTableColumnClick(item)">
-                                <span>{{ item.title }}</span>
+                                <span>{{ item.label }}</span>
                                 <div class="v-table-column-sorters"
                                      :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
                                     <v-icon name="caret-up" />
@@ -42,7 +43,7 @@
         <div class="v-table-body" ref="bodyWrapper" :style="{ height: parseFloat(height) + 'px' }">
             <table :style="{ width: maxWidth }">
                 <colgroup>
-                    <col v-for="item in innerColumns"
+                    <col v-for="item in columns"
                          :key="item.field"
                          :style="{ width: item.relaWidth + 'px' }" />
                 </colgroup>
@@ -57,7 +58,7 @@
                                        @change="onCheckboxChange(row, row[rowKey], $event)">
                             </div>
                         </th>
-                        <td v-for="col in innerColumns" :key="col.field">
+                        <td v-for="col in columns" :key="col.field">
                             {{ row[col.field] }}
                         </td>
                     </tr>
@@ -88,12 +89,6 @@ export default {
     props: {
         height: {
             type: String
-        },
-        columns: {
-            type: Array,
-            default () {
-                return []
-            }
         },
         data: {
             type: Array,
@@ -126,7 +121,7 @@ export default {
     },
     data () {
         return {
-            innerColumns: [],
+            columns: [],
             innerSorter: Object.create(null),
             sortRule,
             allChecked: false,
@@ -257,46 +252,39 @@ export default {
             this.calcColumnsWidth()
         },
         calcColumnsWidth () {
-            const { innerColumns, _tableWrapper, _x } = this
+            const { columns, _tableWrapper, _x } = this
             let maxWidth = _tableWrapper.offsetWidth
-            if (this.bordered) maxWidth -= 2
             const surplusMeanWidth = maxWidth - _x.maxColumnWidth
-            const surplusColumnsCount = innerColumns.length - _x.hasWidthColumnCount
-            const relaWidth = surplusMeanWidth / surplusColumnsCount
+            const surplusColumnsCount = columns.length - _x.hasWidthColumnCount
+            const relaWidth = Math.floor(surplusMeanWidth / surplusColumnsCount)
+            const lastColumnWidth = surplusMeanWidth - relaWidth * surplusColumnsCount
             maxWidth = 0
-            for (let i = 0; i < innerColumns.length; i++) {
-                const { width, minWidth } = innerColumns[i]
+            for (let i = 0; i < columns.length; i++) {
+                const { width, minWidth } = columns[i]
                 if (width === undefined) {
                     let mWidth = _x.minWidth
                     if (minWidth) mWidth = parseFloat(minWidth)
-                    innerColumns[i].relaWidth = relaWidth < mWidth ? mWidth : relaWidth
+                    const data = columns[i]
+                    data.relaWidth = relaWidth < mWidth ? mWidth : relaWidth
+                    if (i === columns.length - 1) data.relaWidth += lastColumnWidth
+                    this.$set(columns, i, data)
                 }
-                maxWidth += innerColumns[i].relaWidth
+                maxWidth += columns[i].relaWidth
             }
             this.maxWidth = `${maxWidth}px`
+        },
+        insertColumn (data, index) {
+            this.columns.splice(index, 0, data)
+            const { _x } = this
+            if (data.relaWidth) {
+                _x.maxColumnWidth += data.relaWidth
+                _x.hasWidthColumnCount += 1
+            }
+            _x.minTableWidth = _x.maxColumnWidth + ((this.columns.length - _x.hasWidthColumnCount) * _x.minWidth)
+            this.$nextTick(this.calcColumnsWidth)
         }
     },
     watch: {
-        columns: {
-            deep: true,
-            immediate: true,
-            handler (v) {
-                const { _x } = this
-                this.innerColumns = v.map(c => {
-                    const { width } = c
-                    const relaWidth = width !== undefined ? parseFloat(width) : undefined
-                    const data = { ...c }
-                    if (relaWidth) {
-                        _x.maxColumnWidth += relaWidth
-                        _x.hasWidthColumnCount += 1
-                        data.relaWidth = relaWidth
-                    }
-                    return data
-                })
-                _x.minTableWidth = _x.maxColumnWidth + ((v.length - _x.hasWidthColumnCount) * _x.minWidth)
-                this.$nextTick(this.calcColumnsWidth)
-            }
-        },
         sorter: {
             deep: true,
             immediate: true,
@@ -338,10 +326,6 @@ export default {
 .v-table {
     position: relative;
     border-bottom: 1px solid #e8e8e8;
-
-    /*.v-table-header {*/
-    /*    overflow: hidden;*/
-    /*}*/
 
     .v-table-body, .v-table-header {
         overflow: auto;
@@ -448,11 +432,28 @@ export default {
     }
 
     &.v-table-bordered {
-        border: 1px solid #e8e8e8;
-        box-sizing: border-box;
+        position: relative;
+        border-top: 1px solid #e8e8e8;
 
         th:not(:last-child), td:not(:last-child) {
             border-right: 1px solid #e8e8e8;
+        }
+
+        &::before, &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background-color: #e8e8e8;
+        }
+
+        &::before {
+            left: 0;
+        }
+
+        &::after {
+            right: 0;
         }
     }
 

@@ -1,22 +1,37 @@
 <template>
     <div style="padding: 20px">
-        <v-table :columns="columns"
-                 :data="data2"
+        <v-table :data="data2"
                  bordered
                  height="200"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"
-                 @sort-change="onSortChange" />
+                 @sort-change="onSortChange">
+            <v-table-column
+                v-for="item in columns"
+                :key="item.field"
+                :label="item.label"
+                :field="item.field"
+                :width="item.width"
+                :min-width="item.minWidth"></v-table-column>
+        </v-table>
         <br>
         <br>
         <br>
-        <v-table :columns="columns"
-                 :data="data2"
+        <v-table :data="data2"
+                 height="200"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"
-                 @sort-change="onSortChange" />
+                 @sort-change="onSortChange">
+            <v-table-column
+                v-for="item in columns"
+                :key="item.field"
+                :label="item.label"
+                :field="item.field"
+                :width="item.width"
+                :min-width="item.minWidth"></v-table-column>
+        </v-table>
 <!--        <v-table :columns="columns"-->
 <!--                 :data="data2"-->
 <!--                 bordered-->
@@ -87,20 +102,24 @@ export default {
             columns: [
                 {
                     title: '姓名',
+                    label: '姓名',
                     field: 'name',
                     width: '200px'
                 },
                 {
                     title: '年龄',
+                    label: '年龄',
                     field: 'age'
                 },
                 {
                     title: '出生日期',
+                    label: '出生日期',
                     field: 'date',
                     minWidth: '130'
                 },
                 {
                     title: 'key',
+                    label: 'key',
                     field: 'key'
                 }
             ],
@@ -123,6 +142,17 @@ export default {
         //         name: '王五',
         //         age: 31,
         //         date: '1984-10-08'
+        //     })
+        // }, 1000)
+        // let i = 1
+        // setTimeout(() => {
+        //     this.columns.push({
+        //         title: i,
+        //         field: i + '6543'
+        //     })
+        //     this.columns.push({
+        //         title: i + 1,
+        //         field: i + 1 + '6543'
         //     })
         // }, 1000)
     },
