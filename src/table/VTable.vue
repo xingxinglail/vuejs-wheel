@@ -49,8 +49,8 @@
                          :key="item.field"
                          :style="{ width: item.realWidth + 'px' }" />
                 </colgroup>
-                <tbody>
-                    <tr v-for="(row, index) in data" :key="row[rowKey]">
+                <tbody ref="tbody">
+                    <tr v-for="(row, index) in data" :key="row[rowKey]" ref="bodyRows">
                         <td v-for="col in columns" :key="col.field" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                             <template v-if="col.type === 'selection'">
                                 <div class="v-table-column">
@@ -59,6 +59,11 @@
                                            :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
                                            @click="onSelect(row, row[rowKey], $event)"
                                            @change="onCheckboxChange(row, row[rowKey], $event)">
+                                </div>
+                            </template>
+                            <template v-if="col.type === 'expand'">
+                                <div class="v-table-column v-table-column-expand" @click="toggleExpandRow(col, index)">
+                                    <v-icon class="v-table-expand-icon" name="right" />
                                 </div>
                             </template>
                             <template v-else>
@@ -70,6 +75,9 @@
                                 </div>
                             </template>
                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="7">123</td>
                     </tr>
                 </tbody>
             </table>
@@ -84,6 +92,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { deepClone } from '../helper'
 import Icon from '../icon/VIcon'
 
@@ -301,6 +310,30 @@ export default {
             }
             _sizeData.minTableWidth = _sizeData.maxColumnWidth + ((this.columns.length - _sizeData.hasWidthColumnCount) * _sizeData.minWidth)
             this.$nextTick(this.calcColumnsWidth)
+        },
+        toggleExpandRow (col, rowIndex) {
+            const { bodyRows, tbody } = this.$refs
+            this.$set(col, 'expand', !col.expand)
+            const a = new Vue({
+                render: createElement => {
+                    return createElement(
+                        'tr',
+                        [
+                            createElement(
+                                'td',
+                                {
+                                    attrs: {
+                                        colspan: this.columns.length
+                                    }
+                                },
+                                col.render({ a: 1 })
+                            )
+                        ]
+                    )
+                }
+            }).$mount()
+            tbody.insertBefore(a.$el, bodyRows[rowIndex + 1])
+            console.log(a.$el)
         }
     },
     watch: {
@@ -380,6 +413,7 @@ export default {
         .v-table-column {
             display: flex;
             align-items: center;
+            padding: 0 10px;
 
             .v-table-column-sorters {
                 display: none;
@@ -438,10 +472,21 @@ export default {
                     cursor: not-allowed;
                 }
             }
+
+            &.v-table-column-expand {
+                cursor: pointer;
+                padding: 6px;
+
+                .v-table-expand-icon {
+                    color: #666;
+                    width: 10px;
+                    height: 10px;
+                }
+            }
         }
 
-        th .v-table-column, td {
-            padding: 16px;
+        th, td {
+            padding: 12px 0;
         }
 
         tbody tr {

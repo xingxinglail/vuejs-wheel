@@ -9,8 +9,8 @@
                  @select-all="onSelectAll"
                  @sort-change="onSortChange">
             <v-table-column type="expand">
-                <template>
-                    6
+                <template v-slot="slotProps">
+                    <v-button>查看{{ slotProps.a }}详情</v-button>
                 </template>
             </v-table-column>
             <v-table-column type="selection" width="60" />
@@ -25,6 +25,7 @@
             <v-table-column label="操作" align="center" min-width="130">
                 <template v-slot="slotProps">
                     <v-button @click="test(slotProps)">查看详情</v-button>
+                    <v-button @click="test(slotProps)">删除</v-button>
                 </template>
             </v-table-column>
             <v-table-column label="操作2" align="center" min-width="200">
@@ -37,7 +38,6 @@
         <br>
         <br>
 <!--        <v-table :data="data2"-->
-<!--                 height="200"-->
 <!--                 @selection-change="onSelectionChange"-->
 <!--                 @select="onSelect"-->
 <!--                 @select-all="onSelectAll"-->
