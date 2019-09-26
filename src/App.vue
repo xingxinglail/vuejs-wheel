@@ -17,7 +17,7 @@
                 :field="item.field"
                 :width="item.width"
                 :min-width="item.minWidth"></v-table-column>
-            <v-table-column label="操作" align="center" min-width="100">
+            <v-table-column label="操作" align="center" min-width="130">
                 <template v-slot="slotProps">
                     <v-button @click="test(slotProps)">查看详情</v-button>
                 </template>

@@ -8,7 +8,7 @@
                 <colgroup>
                     <col v-for="item in columns"
                          :key="item.field"
-                         :style="{ width: item.relaWidth + 'px' }" />
+                         :style="{ width: item.realWidth + 'px' }" />
                 </colgroup>
                 <thead>
                     <tr>
@@ -47,7 +47,7 @@
                 <colgroup>
                     <col v-for="item in columns"
                          :key="item.field"
-                         :style="{ width: item.relaWidth + 'px' }" />
+                         :style="{ width: item.realWidth + 'px' }" />
                 </colgroup>
                 <tbody>
                     <tr v-for="(row, index) in data" :key="row[rowKey]">
@@ -273,8 +273,8 @@ export default {
             let maxWidth = _tableWrapper.offsetWidth
             const surplusMeanWidth = maxWidth - _x.maxColumnWidth
             const surplusColumnsCount = columns.length - _x.hasWidthColumnCount
-            const relaWidth = Math.floor(surplusMeanWidth / surplusColumnsCount)
-            const lastColumnWidth = surplusMeanWidth - relaWidth * surplusColumnsCount
+            const realWidth = Math.floor(surplusMeanWidth / surplusColumnsCount)
+            const lastColumnWidth = surplusMeanWidth - realWidth * surplusColumnsCount
             maxWidth = 0
             for (let i = 0; i < columns.length; i++) {
                 const { width, minWidth } = columns[i]
@@ -282,11 +282,11 @@ export default {
                     let mWidth = _x.minWidth
                     if (minWidth) mWidth = parseFloat(minWidth)
                     const data = columns[i]
-                    data.relaWidth = relaWidth < mWidth ? mWidth : relaWidth
-                    if (i === columns.length - 1) data.relaWidth += lastColumnWidth
+                    data.realWidth = realWidth < mWidth ? mWidth : realWidth
+                    if (i === columns.length - 1) data.realWidth += lastColumnWidth
                     this.$set(columns, i, data)
                 }
-                maxWidth += columns[i].relaWidth
+                maxWidth += columns[i].realWidth
             }
             this.maxWidth = `${maxWidth}px`
         },
@@ -294,8 +294,8 @@ export default {
             if (scopedSlots.default) data.render = scopedSlots.default
             this.columns.splice(index, 0, data)
             const { _x } = this
-            if (data.relaWidth) {
-                _x.maxColumnWidth += data.relaWidth
+            if (data.realWidth) {
+                _x.maxColumnWidth += data.realWidth
                 _x.hasWidthColumnCount += 1
             }
             _x.minTableWidth = _x.maxColumnWidth + ((this.columns.length - _x.hasWidthColumnCount) * _x.minWidth)
