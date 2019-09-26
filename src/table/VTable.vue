@@ -12,8 +12,11 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th v-for="item in columns" :key="item.field">
-                            <div class="v-table-column" v-if="item.type === 'selection'">
+                        <th v-for="item in columns"
+                            :key="item.field"
+                            :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
+                            <div class="v-table-column"
+                                 v-if="item.type === 'selection'">
                                 <input class="checkbox"
                                        :class="{ disabled: data.length === 0 }"
                                        type="checkbox"
@@ -48,7 +51,7 @@
                 </colgroup>
                 <tbody>
                     <tr v-for="row in data" :key="row[rowKey]">
-                        <td v-for="col in columns" :key="col.field">
+                        <td v-for="col in columns" :key="col.field" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                             <template v-if="col.type === 'selection'">
                                 <div class="v-table-column">
                                     <input class="checkbox"
@@ -59,7 +62,9 @@
                                 </div>
                             </template>
                             <template v-else>
-                                {{ row[col.field] }}
+                                <div class="v-table-column">
+                                    {{ row[col.field] }}
+                                </div>
                             </template>
                         </td>
                     </tr>
@@ -428,7 +433,6 @@ export default {
 
         th .v-table-column, td {
             padding: 16px;
-            text-align: left;
         }
 
         tbody tr {
@@ -436,6 +440,20 @@ export default {
 
             &:hover {
                 background-color: #f5f7fa;
+            }
+        }
+
+        th.column-center, td.column-center {
+
+            .v-table-column {
+                justify-content: center;
+            }
+        }
+
+        th.column-right, td.column-right {
+
+            .v-table-column {
+                justify-content: flex-end;
             }
         }
     }

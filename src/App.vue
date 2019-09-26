@@ -13,6 +13,7 @@
                 v-for="item in columns"
                 :key="item.field"
                 :label="item.label"
+                :align="item.align"
                 :field="item.field"
                 :width="item.width"
                 :min-width="item.minWidth"></v-table-column>
@@ -20,20 +21,20 @@
         <br>
         <br>
         <br>
-        <v-table :data="data2"
-                 height="200"
-                 @selection-change="onSelectionChange"
-                 @select="onSelect"
-                 @select-all="onSelectAll"
-                 @sort-change="onSortChange">
-            <v-table-column
-                v-for="item in columns"
-                :key="item.field"
-                :label="item.label"
-                :field="item.field"
-                :width="item.width"
-                :min-width="item.minWidth"></v-table-column>
-        </v-table>
+<!--        <v-table :data="data2"-->
+<!--                 height="200"-->
+<!--                 @selection-change="onSelectionChange"-->
+<!--                 @select="onSelect"-->
+<!--                 @select-all="onSelectAll"-->
+<!--                 @sort-change="onSortChange">-->
+<!--            <v-table-column-->
+<!--                v-for="item in columns"-->
+<!--                :key="item.field"-->
+<!--                :label="item.label"-->
+<!--                :field="item.field"-->
+<!--                :width="item.width"-->
+<!--                :min-width="item.minWidth"></v-table-column>-->
+<!--        </v-table>-->
 <!--        <v-table :columns="columns"-->
 <!--                 :data="data2"-->
 <!--                 bordered-->
@@ -103,26 +104,25 @@ export default {
         return {
             columns: [
                 {
-                    title: '姓名',
                     label: '姓名',
                     field: 'name',
-                    width: '200px'
+                    width: '200px',
+                    align: 'right'
                 },
                 {
-                    title: '年龄',
                     label: '年龄',
-                    field: 'age'
+                    field: 'age',
+                    align: 'left'
                 },
                 {
-                    title: '出生日期',
                     label: '出生日期',
                     field: 'date',
                     minWidth: '130'
                 },
                 {
-                    title: 'key',
                     label: 'key',
-                    field: 'key'
+                    field: 'key',
+                    align: 'center'
                 }
             ],
             data: [],
