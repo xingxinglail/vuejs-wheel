@@ -259,9 +259,10 @@ export default {
         calcColumnsWidth () {
             const { innerColumns, _tableWrapper, _x } = this
             let maxWidth = _tableWrapper.offsetWidth
+            if (this.bordered) maxWidth -= 2
             const surplusMeanWidth = maxWidth - _x.maxColumnWidth
             const surplusColumnsCount = innerColumns.length - _x.hasWidthColumnCount
-            const relaWidth = Math.floor(surplusMeanWidth / surplusColumnsCount)
+            const relaWidth = surplusMeanWidth / surplusColumnsCount
             maxWidth = 0
             for (let i = 0; i < innerColumns.length; i++) {
                 const { width, minWidth } = innerColumns[i]
@@ -284,7 +285,7 @@ export default {
                 this.innerColumns = v.map(c => {
                     const { width } = c
                     const relaWidth = width !== undefined ? parseFloat(width) : undefined
-                    const data = { ...c, relaWidth: null }
+                    const data = { ...c }
                     if (relaWidth) {
                         _x.maxColumnWidth += relaWidth
                         _x.hasWidthColumnCount += 1

@@ -11,13 +11,12 @@
         <br>
         <br>
         <br>
-<!--        <v-table :columns="columns"-->
-<!--                 :data="data2"-->
-<!--                 bordered-->
-<!--                 @selection-change="onSelectionChange"-->
-<!--                 @select="onSelect"-->
-<!--                 @select-all="onSelectAll"-->
-<!--                 @sort-change="onSortChange" />-->
+        <v-table :columns="columns"
+                 :data="data2"
+                 @selection-change="onSelectionChange"
+                 @select="onSelect"
+                 @select-all="onSelectAll"
+                 @sort-change="onSortChange" />
 <!--        <v-table :columns="columns"-->
 <!--                 :data="data2"-->
 <!--                 bordered-->
