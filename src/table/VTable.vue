@@ -12,20 +12,19 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th v-if="selection">
-                            <div class="v-table-column">
+                        <th v-for="item in columns" :key="item.field">
+                            <div class="v-table-column" v-if="item.type === 'selection'">
                                 <input class="checkbox"
                                        :class="{ disabled: data.length === 0 }"
                                        type="checkbox"
-                                       ref="allCheckbox"
+                                       ref="checkboxes"
                                        :checked="allChecked"
                                        :disabled="data.length === 0"
                                        @click="onSelectAll"
                                        @change="onAllCheckedChange">
                             </div>
-                        </th>
-                        <th v-for="item in columns" :key="item.field">
                             <div class="v-table-column"
+                                 v-else
                                  :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
                                  @click="onTableColumnClick(item)">
                                 <span>{{ item.label }}</span>
@@ -49,17 +48,19 @@
                 </colgroup>
                 <tbody>
                     <tr v-for="row in data" :key="row[rowKey]">
-                        <th v-if="selection">
-                            <div class="v-table-column">
-                                <input class="checkbox"
-                                       type="checkbox"
-                                       :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
-                                       @click="onSelect(row, row[rowKey], $event)"
-                                       @change="onCheckboxChange(row, row[rowKey], $event)">
-                            </div>
-                        </th>
                         <td v-for="col in columns" :key="col.field">
-                            {{ row[col.field] }}
+                            <template v-if="col.type === 'selection'">
+                                <div class="v-table-column">
+                                    <input class="checkbox"
+                                           type="checkbox"
+                                           :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
+                                           @click="onSelect(row, row[rowKey], $event)"
+                                           @change="onCheckboxChange(row, row[rowKey], $event)">
+                                </div>
+                            </template>
+                            <template v-else>
+                                {{ row[col.field] }}
+                            </template>
                         </td>
                     </tr>
                 </tbody>
@@ -116,7 +117,11 @@ export default {
         },
         selection: {
             type: Object,
-            default: null
+            default () {
+                return {
+                    selectedKeys: []
+                }
+            }
         }
     },
     data () {
@@ -138,11 +143,13 @@ export default {
         this._innerSelectedKeys = []
     },
     mounted () {
-        const { tableWrapper, allCheckbox, headerWrapper, bodyWrapper } = this.$refs
+        const { tableWrapper, headerWrapper, bodyWrapper } = this.$refs
         this._tableWrapper = tableWrapper
         this._headerWrapper = headerWrapper
         this._bodyWrapper = bodyWrapper
-        this._allCheckedDom = allCheckbox
+        this.$nextTick(() => {
+            this._checkboxes = this.$refs.checkboxes
+        })
         window.addEventListener('resize', this.onResizeHandle)
         headerWrapper.addEventListener('scroll', this.onHeaderWrapperScrollHandle)
         bodyWrapper.addEventListener('scroll', this.onBodyWrapperScrollHandle)
@@ -223,7 +230,7 @@ export default {
             }
         },
         checkAllCheckedState (data, keys) {
-            if (!this.selection) return
+            if (!this._checkboxes) return
             let indeterminate = false
             this.allChecked = false
             if (data.length > 0 && keys.length > 0) {
@@ -240,7 +247,9 @@ export default {
                     indeterminate = true
                 }
             }
-            this._allCheckedDom.indeterminate = indeterminate
+            this._checkboxes.forEach(checkbox => {
+                checkbox.indeterminate = indeterminate
+            })
         },
         onHeaderWrapperScrollHandle ({ target }) {
             this._bodyWrapper.scrollLeft = target.scrollLeft
@@ -302,10 +311,10 @@ export default {
         'selection.selectedKeys': {
             immediate: true,
             handler (v) {
-                this._innerSelectedKeys = Array.isArray(v) ? deepClone(v) : []
-                this.$nextTick(() => {
+                this._innerSelectedKeys = Array.isArray(v) ? [...v] : []
+                setTimeout(() => {
                     this.checkAllCheckedState(this.data, v)
-                })
+                }, 50)
             }
         },
         data (v) {

@@ -6,21 +6,20 @@
 export default {
     name: 'VTableColumn',
     props: {
+        type: String,
         label: {
             type: String,
             default: ''
         },
-        field: {
-            type: String,
-            required: true
-        },
+        field: String,
         width: String,
         minWidth: String
     },
     created () {
-        const { label, field, width, minWidth } = this
+        const { type, label, field, width, minWidth } = this
         const relaWidth = width !== undefined ? parseFloat(width) : undefined
         const data = {
+            type,
             label,
             field,
             width,

@@ -3,10 +3,12 @@
         <v-table :data="data2"
                  bordered
                  height="200"
+                 :selection="selection"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"
                  @sort-change="onSortChange">
+            <v-table-column type="selection" width="60" />
             <v-table-column
                 v-for="item in columns"
                 :key="item.field"
@@ -131,7 +133,7 @@ export default {
             },
             loading: false,
             selection: {
-                selectedKeys: ['2']
+                selectedKeys: []
             }
         }
     },
