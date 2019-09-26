@@ -17,6 +17,16 @@
                 :field="item.field"
                 :width="item.width"
                 :min-width="item.minWidth"></v-table-column>
+            <v-table-column label="操作" align="center" min-width="100">
+                <template v-slot="slotProps">
+                    <v-button @click="test(slotProps)">查看详情</v-button>
+                </template>
+            </v-table-column>
+            <v-table-column label="操作2" align="center" min-width="200">
+                <template v-slot="slotProps">
+                    <v-input v-model="slotProps.row.name"></v-input>
+                </template>
+            </v-table-column>
         </v-table>
         <br>
         <br>
@@ -118,12 +128,12 @@ export default {
                     label: '出生日期',
                     field: 'date',
                     minWidth: '130'
-                },
-                {
-                    label: 'key',
-                    field: 'key',
-                    align: 'center'
                 }
+                // {
+                //     label: 'key',
+                //     field: 'key',
+                //     align: 'center'
+                // }
             ],
             data: [],
             data2: data,
@@ -159,6 +169,9 @@ export default {
         // }, 1000)
     },
     methods: {
+        test (val) {
+            console.log(val)
+        },
         onSortChange ({ field, order }) {
             this.loading = true
             setTimeout(() => {

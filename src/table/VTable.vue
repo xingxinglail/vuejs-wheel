@@ -50,7 +50,7 @@
                          :style="{ width: item.relaWidth + 'px' }" />
                 </colgroup>
                 <tbody>
-                    <tr v-for="row in data" :key="row[rowKey]">
+                    <tr v-for="(row, index) in data" :key="row[rowKey]">
                         <td v-for="col in columns" :key="col.field" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                             <template v-if="col.type === 'selection'">
                                 <div class="v-table-column">
@@ -62,6 +62,9 @@
                                 </div>
                             </template>
                             <template v-else>
+                                <div class="v-table-column" v-if="col.render">
+                                    <vnodes :vnodes="col.render({ $index: index, column: col, row })" />
+                                </div>
                                 <div class="v-table-column">
                                     {{ row[col.field] }}
                                 </div>
@@ -287,7 +290,8 @@ export default {
             }
             this.maxWidth = `${maxWidth}px`
         },
-        insertColumn (data, index) {
+        insertColumn (data, scopedSlots, index) {
+            if (scopedSlots.default) data.render = scopedSlots.default
             this.columns.splice(index, 0, data)
             const { _x } = this
             if (data.relaWidth) {
@@ -329,7 +333,11 @@ export default {
         }
     },
     components: {
-        'v-icon': Icon
+        'v-icon': Icon,
+        Vnodes: {
+            functional: true,
+            render: (h, ctx) => ctx.props.vnodes
+        }
     }
 }
 </script>

@@ -38,7 +38,7 @@ export default {
         const { $parent } = this
         const children = $parent.$refs.hiddenColumns.children
         const columnIndex = this.getColumnIndex(children)
-        $parent.insertColumn(this.columnConfig, columnIndex)
+        $parent.insertColumn(this.columnConfig, this.$scopedSlots, columnIndex)
     },
     methods: {
         getColumnIndex (children) {
