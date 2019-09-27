@@ -228,7 +228,7 @@
             </div>
             <div class="v-table-body v-table-body-fixed v-table-body-fixed-right"
                  ref="fixedRightBodyWrapper"
-                 :style="{ height: parseFloat(height) + 'px' }">
+                 :style="{ height: parseFloat(height) + 'px', top: fixedHeaderHeight + 'px' }">
                 <div class="inner-wrapper">
                     <table :style="{ width: maxWidth }">
                         <colgroup>
@@ -774,7 +774,6 @@ export default {
             position: absolute;
             width: 100%;
             height: 100%;
-            top: 44px;
             left: 0;
             z-index: 1;
             overflow: hidden;
@@ -966,6 +965,10 @@ export default {
                 justify-content: flex-end;
             }
         }
+    }
+
+    .v-table-col {
+        border-bottom: 1px solid #e8e8e8;
     }
 
     &.v-table-bordered {
