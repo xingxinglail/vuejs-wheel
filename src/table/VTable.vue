@@ -14,6 +14,7 @@
                     <tr>
                         <th v-for="item in columns"
                             :key="item.field"
+                            class="v-table-col"
                             :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
                             <div class="v-table-column"
                                  v-if="item.type === 'selection'">
@@ -50,8 +51,12 @@
                          :style="{ width: item.realWidth + 'px' }" />
                 </colgroup>
                 <tbody ref="tbody">
-                    <tr v-for="(row, index) in data" :key="row[rowKey]" ref="bodyRows">
-                        <td v-for="col in columns" :key="col.field" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
+                    <tr class="v-table-row"
+                        v-for="(row, index) in data"
+                        :key="row[rowKey]"
+                        ref="bodyRows"
+                        :class="{ 'v-table-row-expanded': row.$expand }">
+                        <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                             <template v-if="col.type === 'selection'">
                                 <div class="v-table-column">
                                     <input class="checkbox"
@@ -62,7 +67,9 @@
                                 </div>
                             </template>
                             <template v-if="col.type === 'expand'">
-                                <div class="v-table-column v-table-column-expand" @click="toggleExpandRow(col, index)">
+                                <div class="v-table-column v-table-column-expand"
+                                     :class="{ 'expand-icon': row.$expand }"
+                                     @click="toggleExpandRow(row, col, index)">
                                     <v-icon class="v-table-expand-icon" name="right" />
                                 </div>
                             </template>
@@ -75,9 +82,6 @@
                                 </div>
                             </template>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">123</td>
                     </tr>
                 </tbody>
             </table>
@@ -139,6 +143,16 @@ export default {
                     selectedKeys: []
                 }
             }
+        },
+        defaultExpandAll: {
+            type: Boolean,
+            default: false
+        },
+        expandRowKeys: {
+            type: Array,
+            default () {
+                return []
+            }
         }
     },
     data () {
@@ -157,7 +171,6 @@ export default {
             maxColumnWidth: 0, // 带有width属性的总列宽
             hasWidthColumnCount: 0 // 带有width属性的总列数
         }
-        this._innerSelectedKeys = []
     },
     mounted () {
         const { tableWrapper, headerWrapper, bodyWrapper } = this.$refs
@@ -170,6 +183,11 @@ export default {
         window.addEventListener('resize', this.onResizeHandle)
         headerWrapper.addEventListener('scroll', this.onHeaderWrapperScrollHandle)
         bodyWrapper.addEventListener('scroll', this.onBodyWrapperScrollHandle)
+        if (this.expandRowKeys.length > 0) {
+            this.expandByRowKeys()
+        } else {
+            this.expandAll()
+        }
     },
     beforeDestroy () {
         window.removeEventListener('resize', this.onResizeHandle)
@@ -178,6 +196,34 @@ export default {
         if (_bodyWrapper) _bodyWrapper.removeEventListener('scroll', this.onBodyWrapperScrollHandle)
     },
     methods: {
+        expandAll () {
+            if (!this.defaultExpandAll) return
+            this.$nextTick(() => {
+                this.data.forEach((row, rowIndex) => {
+                    this.columns.forEach((col) => {
+                        if (col.type === 'expand') {
+                            this.toggleExpandRow(row, col, rowIndex, true)
+                        }
+                    })
+                })
+            })
+        },
+        expandByRowKeys () {
+            this.$nextTick(() => {
+                const { columns, rowKey, expandRowKeys } = this
+                this.data.forEach((row, rowIndex) => {
+                    columns.forEach((col) => {
+                        if (col.type === 'expand') {
+                            if (expandRowKeys.indexOf(row[rowKey]) >= 0) {
+                                this.toggleExpandRow(row, col, rowIndex, true)
+                            } else {
+                                this.closeExpandRow(row)
+                            }
+                        }
+                    })
+                })
+            })
+        },
         onSelect (row, key, e) {
             this.onCheckboxChange(row, key, e, true)
         },
@@ -311,32 +357,53 @@ export default {
             _sizeData.minTableWidth = _sizeData.maxColumnWidth + ((this.columns.length - _sizeData.hasWidthColumnCount) * _sizeData.minWidth)
             this.$nextTick(this.calcColumnsWidth)
         },
-        toggleExpandRow (col, rowIndex) {
+        toggleExpandRow (row, col, rowIndex, isExpand) {
             const { bodyRows, tbody } = this.$refs
-            this.$set(col, 'expand', !col.expand)
-            const a = new Vue({
-                render: createElement => {
-                    return createElement(
-                        'tr',
-                        [
-                            createElement(
-                                'td',
-                                {
-                                    attrs: {
-                                        colspan: this.columns.length
-                                    }
-                                },
-                                col.render({ a: 1 })
-                            )
-                        ]
-                    )
+            isExpand = isExpand !== undefined ? isExpand : !row.$expand
+            this.$set(row, '$expand', isExpand)
+            if (row.$expandDom) {
+                row.$expandDom.style.display = isExpand ? '' : 'none'
+            } else {
+                const vm = new Vue({
+                    functional: true,
+                    render: createElement => {
+                        return createElement(
+                            'tr',
+                            [
+                                createElement(
+                                    'td',
+                                    {
+                                        class: ['v-table-expand-cell'],
+                                        attrs: {
+                                            colspan: this.columns.length
+                                        }
+                                    },
+                                    col.render({ $index: rowIndex, column: col, row })
+                                )
+                            ]
+                        )
+                    }
+                }).$mount()
+                const trDom = vm.$el
+                row.$expandDom = trDom
+                if (rowIndex + 1 === bodyRows.length) {
+                    tbody.appendChild(trDom)
+                } else {
+                    tbody.insertBefore(trDom, bodyRows[rowIndex + 1])
                 }
-            }).$mount()
-            tbody.insertBefore(a.$el, bodyRows[rowIndex + 1])
-            console.log(a.$el)
+            }
+        },
+        closeExpandRow (row) {
+            if (row.$expand && row.$expandDom) {
+                this.$set(row, '$expand', false)
+                row.$expandDom.style.display = 'none'
+            }
         }
     },
     watch: {
+        expandRowKeys () {
+            this.expandByRowKeys()
+        },
         sorter: {
             deep: true,
             immediate: true,
@@ -381,20 +448,37 @@ export default {
 
 .v-table {
     position: relative;
-    border-bottom: 1px solid #e8e8e8;
 
     .v-table-body, .v-table-header {
         overflow: auto;
 
         &.v-table-body {
 
-            table tr:not(:last-child) {
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 1px;
+                background-color: #e8e8e8;
+            }
+
+            .v-table-row {
+                border-top: 1px solid #e8e8e8;
+            }
+
+            .v-table-row-expanded {
                 border-bottom: 1px solid #e8e8e8;
+            }
+
+            /deep/ .v-table-expand-cell {
+                padding: 20px 50px;
             }
         }
 
         &.v-table-header {
             border-bottom: 1px solid #e8e8e8;
+            margin-bottom: -1px;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -481,6 +565,11 @@ export default {
                     color: #666;
                     width: 10px;
                     height: 10px;
+                    transition: transform .3s;
+                }
+
+                &.expand-icon .v-table-expand-icon {
+                    transform: rotate(90deg);
                 }
             }
         }
@@ -516,7 +605,7 @@ export default {
         position: relative;
         border-top: 1px solid #e8e8e8;
 
-        th:not(:last-child), td:not(:last-child) {
+        .v-table-col:not(:last-child) {
             border-right: 1px solid #e8e8e8;
         }
 

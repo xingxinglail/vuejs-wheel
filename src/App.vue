@@ -1,16 +1,56 @@
 <template>
     <div style="padding: 20px">
+<!--        <v-table :data="data2"-->
+<!--                 bordered-->
+<!--                 height="200"-->
+<!--                 :selection="selection"-->
+<!--                 @selection-change="onSelectionChange"-->
+<!--                 @select="onSelect"-->
+<!--                 @select-all="onSelectAll"-->
+<!--                 @sort-change="onSortChange">-->
+<!--            <v-table-column type="selection" width="60" />-->
+<!--            <v-table-column-->
+<!--                v-for="item in columns"-->
+<!--                :key="item.field"-->
+<!--                :label="item.label"-->
+<!--                :align="item.align"-->
+<!--                :field="item.field"-->
+<!--                :width="item.width"-->
+<!--                :min-width="item.minWidth"></v-table-column>-->
+<!--            <v-table-column label="操作" align="center" min-width="130">-->
+<!--                <template v-slot="slotProps">-->
+<!--                    <v-button @click="test(slotProps)">查看详情</v-button>-->
+<!--                    <v-button @click="test(slotProps)">删除</v-button>-->
+<!--                </template>-->
+<!--            </v-table-column>-->
+<!--            <v-table-column label="操作2" align="center" min-width="200">-->
+<!--                <template v-slot="{ row }">-->
+<!--                    <v-input v-model="row.name"></v-input>-->
+<!--                </template>-->
+<!--            </v-table-column>-->
+<!--        </v-table>-->
+        <br>
+        <br>
         <v-table :data="data2"
                  bordered
-                 height="200"
+                 default-expand-all
+                 :expand-row-keys="expandRowKeys"
                  :selection="selection"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"
                  @sort-change="onSortChange">
             <v-table-column type="expand">
-                <template v-slot="slotProps">
-                    <v-button>查看{{ slotProps.a }}详情</v-button>
+                <template v-slot="parentSlotProps">
+                    <v-table :data="data2" bordered>
+                        <v-table-column label="姓名" field="name"></v-table-column>
+                        <v-table-column label="年龄" field="age"></v-table-column>
+                        <v-table-column label="操作" align="center" width="130">
+                            <template v-slot="slotProps">
+                                <v-button @click="test2(parentSlotProps, slotProps)">查看</v-button>
+                            </template>
+                        </v-table-column>
+                    </v-table>
                 </template>
             </v-table-column>
             <v-table-column type="selection" width="60" />
@@ -37,19 +77,20 @@
         <br>
         <br>
         <br>
-<!--        <v-table :data="data2"-->
-<!--                 @selection-change="onSelectionChange"-->
-<!--                 @select="onSelect"-->
-<!--                 @select-all="onSelectAll"-->
-<!--                 @sort-change="onSortChange">-->
-<!--            <v-table-column-->
-<!--                v-for="item in columns"-->
-<!--                :key="item.field"-->
-<!--                :label="item.label"-->
-<!--                :field="item.field"-->
-<!--                :width="item.width"-->
-<!--                :min-width="item.minWidth"></v-table-column>-->
-<!--        </v-table>-->
+        <v-table :data="data2"
+                 height="200"
+                 @selection-change="onSelectionChange"
+                 @select="onSelect"
+                 @select-all="onSelectAll"
+                 @sort-change="onSortChange">
+            <v-table-column
+                v-for="item in columns"
+                :key="item.field"
+                :label="item.label"
+                :field="item.field"
+                :width="item.width"
+                :min-width="item.minWidth"></v-table-column>
+        </v-table>
 <!--        <v-table :columns="columns"-->
 <!--                 :data="data2"-->
 <!--                 bordered-->
@@ -117,6 +158,7 @@ export default {
     name: 'App',
     data () {
         return {
+            expandRowKeys: ['3', '5'],
             columns: [
                 {
                     label: '姓名',
@@ -153,14 +195,17 @@ export default {
         }
     },
     created () {
+        setTimeout(() => {
+            this.expandRowKeys = ['1']
+        }, 1000)
         // setTimeout(() => {
         //     this.data2.push({
-        //         key: '5',
+        //         key: '532',
         //         name: '王五',
         //         age: 31,
         //         date: '1984-10-08'
         //     })
-        // }, 1000)
+        // }, 2000)
         // let i = 1
         // setTimeout(() => {
         //     this.columns.push({
@@ -176,6 +221,10 @@ export default {
     methods: {
         test (val) {
             console.log(val)
+        },
+        test2 (val, val2) {
+            console.log(val)
+            console.log(val2)
         },
         onSortChange ({ field, order }) {
             this.loading = true
