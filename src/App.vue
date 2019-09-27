@@ -1,8 +1,8 @@
 <template>
     <div style="padding: 20px">
         <v-table :data="data2"
-                 bordered
                  height="200"
+                 bordered
                  :selection="selection"
                  @selection-change="onSelectionChange"
                  @select="onSelect"
@@ -32,80 +32,66 @@
         </v-table>
         <br>
         <br>
-<!--        <v-table :data="data2"-->
-<!--                 bordered-->
-<!--                 default-expand-all-->
-<!--                 :expand-row-keys="expandRowKeys"-->
-<!--                 :selection="selection"-->
-<!--                 @selection-change="onSelectionChange"-->
-<!--                 @select="onSelect"-->
-<!--                 @select-all="onSelectAll"-->
-<!--                 @sort-change="onSortChange">-->
-<!--            <v-table-column type="expand">-->
-<!--                <template v-slot="parentSlotProps">-->
-<!--                    <v-table :data="data2" bordered>-->
-<!--                        <v-table-column label="姓名" field="name"></v-table-column>-->
-<!--                        <v-table-column label="年龄" field="age"></v-table-column>-->
-<!--                        <v-table-column label="操作" align="center" width="130">-->
-<!--                            <template v-slot="slotProps">-->
-<!--                                <v-button @click="test2(parentSlotProps, slotProps)">查看</v-button>-->
-<!--                            </template>-->
-<!--                        </v-table-column>-->
-<!--                    </v-table>-->
-<!--                </template>-->
-<!--            </v-table-column>-->
-<!--            <v-table-column type="selection" width="60" />-->
-<!--            <v-table-column-->
-<!--                v-for="item in columns"-->
-<!--                :key="item.field"-->
-<!--                :label="item.label"-->
-<!--                :align="item.align"-->
-<!--                :field="item.field"-->
-<!--                :width="item.width"-->
-<!--                :min-width="item.minWidth"></v-table-column>-->
-<!--            <v-table-column label="操作" align="center" min-width="130">-->
-<!--                <template v-slot="slotProps">-->
-<!--                    <v-button @click="test(slotProps)">查看详情</v-button>-->
-<!--                    <v-button @click="test(slotProps)">删除</v-button>-->
-<!--                </template>-->
-<!--            </v-table-column>-->
-<!--            <v-table-column label="操作2" align="center" min-width="200">-->
-<!--                <template v-slot="{ row }">-->
-<!--                    <v-input v-model="row.name"></v-input>-->
-<!--                </template>-->
-<!--            </v-table-column>-->
-<!--        </v-table>-->
-<!--        <br>-->
-<!--        <br>-->
-<!--        <br>-->
-<!--        <v-table :data="data2"-->
-<!--                 height="200"-->
-<!--                 @selection-change="onSelectionChange"-->
-<!--                 @select="onSelect"-->
-<!--                 @select-all="onSelectAll"-->
-<!--                 @sort-change="onSortChange">-->
-<!--            <v-table-column-->
-<!--                v-for="item in columns"-->
-<!--                :key="item.field"-->
-<!--                :label="item.label"-->
-<!--                :field="item.field"-->
-<!--                :width="item.width"-->
-<!--                :min-width="item.minWidth"></v-table-column>-->
-<!--        </v-table>-->
-<!--        <v-table :columns="columns"-->
-<!--                 :data="data2"-->
-<!--                 bordered-->
-<!--                 :selection="selection"-->
-<!--                 @selection-change="onSelectionChange"-->
-<!--                 @select="onSelect"-->
-<!--                 @select-all="onSelectAll"-->
-<!--                 @sort-change="onSortChange" />-->
-<!--        <br>-->
-<!--        <br><br>-->
-<!--        <br>-->
-<!--        <v-table :columns="columns" :data="data" :sorter="sorter" bordered :loading="loading" @sort-change="onSortChange" />-->
-<!--        <br>-->
+        <v-table :data="data2"
+                 bordered
+                 default-expand-all
+                 :expand-row-keys="expandRowKeys"
+                 :selection="selection"
+                 @selection-change="onSelectionChange"
+                 @select="onSelect"
+                 @select-all="onSelectAll"
+                 @sort-change="onSortChange">
+            <v-table-column type="expand">
+                <template v-slot="parentSlotProps">
+                    <v-table :data="data2" bordered>
+                        <v-table-column label="姓名" field="name"></v-table-column>
+                        <v-table-column label="年龄" field="age"></v-table-column>
+                        <v-table-column label="操作" align="center" width="130">
+                            <template v-slot="slotProps">
+                                <v-button @click="test2(parentSlotProps, slotProps)">查看</v-button>
+                            </template>
+                        </v-table-column>
+                    </v-table>
+                </template>
+            </v-table-column>
+            <v-table-column type="selection" width="60" />
+            <v-table-column
+                v-for="item in columns"
+                :key="item.field"
+                :label="item.label"
+                :align="item.align"
+                :field="item.field"
+                :width="item.width"
+                :min-width="item.minWidth"></v-table-column>
+            <v-table-column label="操作" align="center" min-width="130">
+                <template v-slot="slotProps">
+                    <v-button @click="test(slotProps)">查看详情</v-button>
+                    <v-button @click="test(slotProps)">删除</v-button>
+                </template>
+            </v-table-column>
+            <v-table-column label="操作2" align="center" min-width="200">
+                <template v-slot="{ row }">
+                    <v-input v-model="row.name"></v-input>
+                </template>
+            </v-table-column>
+        </v-table>
         <br>
+        <br>
+        <br>
+        <v-table :data="data2"
+                 height="200"
+                 @selection-change="onSelectionChange"
+                 @select="onSelect"
+                 @select-all="onSelectAll"
+                 @sort-change="onSortChange">
+            <v-table-column
+                v-for="item in columns"
+                :key="item.field"
+                :label="item.label"
+                :field="item.field"
+                :width="item.width"
+                :min-width="item.minWidth"></v-table-column>
+        </v-table>
     </div>
 </template>
 
@@ -164,8 +150,7 @@ export default {
                 {
                     label: '姓名',
                     field: 'name',
-                    width: '200px',
-                    align: 'right',
+                    width: '100px',
                     fixed: true
                 },
                 {
