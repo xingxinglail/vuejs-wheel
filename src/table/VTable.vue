@@ -58,7 +58,9 @@
                         v-for="(row, index) in data"
                         :key="row[rowKey]"
                         ref="bodyRows"
-                        :class="{ 'v-table-row-expanded': row.$expand }">
+                        :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
+                        @mouseenter="onMouseenterRow(row)"
+                        @mouseleave="onMouseleaveRow(row)">
                         <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                             <template v-if="col.type === 'selection'">
                                 <div class="v-table-column">
@@ -144,10 +146,12 @@
                     </colgroup>
                     <tbody>
                         <tr class="v-table-row"
+                            ref="fixedRows"
                             v-for="(row, index) in data"
                             :key="row[rowKey]"
-                            ref="bodyRows"
-                            :class="{ 'v-table-row-expanded': row.$expand }">
+                            :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
+                            @mouseenter="onMouseenterRow(row)"
+                            @mouseleave="onMouseleaveRow(row)">
                             <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                                 <template v-if="col.type === 'selection'">
                                     <div class="v-table-column">
@@ -193,35 +197,35 @@
                                  :style="{ width: item.realWidth + 'px' }" />
                         </colgroup>
                         <thead>
-                        <tr>
-                            <th v-for="item in columns"
-                                :key="item.field"
-                                class="v-table-col"
-                                :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
-                                <div class="v-table-column"
-                                     v-if="item.type === 'selection'">
-                                    <input class="checkbox"
-                                           :class="{ disabled: data.length === 0 }"
-                                           type="checkbox"
-                                           ref="checkboxes"
-                                           :checked="allChecked"
-                                           :disabled="data.length === 0"
-                                           @click="onSelectAll"
-                                           @change="onAllCheckedChange">
-                                </div>
-                                <div class="v-table-column"
-                                     v-else
-                                     :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
-                                     @click="onTableColumnClick(item)">
-                                    <span>{{ item.label }}</span>
-                                    <div class="v-table-column-sorters"
-                                         :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
-                                        <v-icon name="caret-up" />
-                                        <v-icon name="caret-down" />
+                            <tr>
+                                <th v-for="item in columns"
+                                    :key="item.field"
+                                    class="v-table-col"
+                                    :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
+                                    <div class="v-table-column"
+                                         v-if="item.type === 'selection'">
+                                        <input class="checkbox"
+                                               :class="{ disabled: data.length === 0 }"
+                                               type="checkbox"
+                                               ref="checkboxes"
+                                               :checked="allChecked"
+                                               :disabled="data.length === 0"
+                                               @click="onSelectAll"
+                                               @change="onAllCheckedChange">
                                     </div>
-                                </div>
-                            </th>
-                        </tr>
+                                    <div class="v-table-column"
+                                         v-else
+                                         :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
+                                         @click="onTableColumnClick(item)">
+                                        <span>{{ item.label }}</span>
+                                        <div class="v-table-column-sorters"
+                                             :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
+                                            <v-icon name="caret-up" />
+                                            <v-icon name="caret-down" />
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
                         </thead>
                     </table>
                 </div>
@@ -238,10 +242,12 @@
                         </colgroup>
                         <tbody>
                             <tr class="v-table-row"
+                                ref="fixedRightRows"
                                 v-for="(row, index) in data"
                                 :key="row[rowKey]"
-                                ref="bodyRows"
-                                :class="{ 'v-table-row-expanded': row.$expand }">
+                                :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
+                                @mouseenter="onMouseenterRow(row)"
+                                @mouseleave="onMouseleaveRow(row)">
                                 <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                                     <template v-if="col.type === 'selection'">
                                         <div class="v-table-column">
@@ -599,6 +605,7 @@ export default {
                 maxWidth += columns[i].realWidth
             }
             if (lastColumnWidth > 0) {
+                // 找到最后一个没有设置width的列补全宽度
                 let minWidthLastIndex = -1
                 for (let i = columnLen - 1; i >= 0; i--) {
                     const { width, minWidth } = columns[i]
@@ -611,6 +618,7 @@ export default {
                         break
                     }
                 }
+                // 如果没有找到就找最后一个带有minWidth的列补全宽度
                 if (minWidthLastIndex !== -1) {
                     columns[minWidthLastIndex].realWidth += lastColumnWidth
                 }
@@ -681,6 +689,12 @@ export default {
                 this.$set(row, '$expand', false)
                 row.$expandDom.style.display = 'none'
             }
+        },
+        onMouseenterRow (row) {
+            this.$set(row, 'isHover', true)
+        },
+        onMouseleaveRow (row) {
+            this.$set(row, 'isHover', false)
         }
     },
     watch: {
@@ -947,7 +961,7 @@ export default {
         tbody tr {
             transition: background-color .3s;
 
-            &:hover {
+            &.hover-row {
                 background-color: #f5f7fa;
             }
         }
