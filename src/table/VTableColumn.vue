@@ -14,17 +14,25 @@ export default {
         },
         field: String,
         width: String,
-        minWidth: String
+        minWidth: String,
+        fixed: {
+            type: [Boolean, String],
+            default: false,
+            validator (value) {
+                return [true, false].includes(value) || ['left', 'right'].includes(value)
+            }
+        }
     },
     created () {
-        const { type, label, field, width, minWidth, align } = this
+        const { type, label, field, width, minWidth, align, fixed } = this
         const data = {
             type,
             label,
             field,
             width,
             minWidth,
-            align
+            align,
+            fixed
         }
         if (type === 'selection' || type === 'expand') {
             if (!align) data.align = 'center'

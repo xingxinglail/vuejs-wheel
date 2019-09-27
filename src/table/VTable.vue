@@ -86,6 +86,188 @@
                 </tbody>
             </table>
         </div>
+        <div v-if="fixedLeftCount > 0"
+             class="v-table-header v-table-header-fixed"
+             ref="fixedHeaderWrapper"
+             :style="{ width: fixedLeftWidth + 'px', height: fixedHeaderHeight + 'px' }">
+            <table :style="{ width: maxWidth }">
+                <colgroup>
+                    <col v-for="item in columns"
+                         :key="item.field"
+                         :style="{ width: item.realWidth + 'px' }" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th v-for="item in columns"
+                        :key="item.field"
+                        class="v-table-col"
+                        :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
+                        <div class="v-table-column"
+                             v-if="item.type === 'selection'">
+                            <input class="checkbox"
+                                   :class="{ disabled: data.length === 0 }"
+                                   type="checkbox"
+                                   ref="checkboxes"
+                                   :checked="allChecked"
+                                   :disabled="data.length === 0"
+                                   @click="onSelectAll"
+                                   @change="onAllCheckedChange">
+                        </div>
+                        <div class="v-table-column"
+                             v-else
+                             :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
+                             @click="onTableColumnClick(item)">
+                            <span>{{ item.label }}</span>
+                            <div class="v-table-column-sorters"
+                                 :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
+                                <v-icon name="caret-up" />
+                                <v-icon name="caret-down" />
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div v-if="fixedLeftCount > 0"
+             class="v-table-body v-table-body-fixed"
+             ref="fixedBodyWrapper"
+             :style="{ height: parseFloat(height) + 'px', width: fixedLeftWidth + 'px', height: fixedBodyHeight + 'px', top: fixedHeaderHeight + 'px' }">
+            <table :style="{ width: maxWidth }">
+                <colgroup>
+                    <col v-for="item in columns"
+                         :key="item.field"
+                         :style="{ width: item.realWidth + 'px' }" />
+                </colgroup>
+                <tbody ref="tbody">
+                <tr class="v-table-row"
+                    v-for="(row, index) in data"
+                    :key="row[rowKey]"
+                    ref="bodyRows"
+                    :class="{ 'v-table-row-expanded': row.$expand }">
+                    <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
+                        <template v-if="col.type === 'selection'">
+                            <div class="v-table-column">
+                                <input class="checkbox"
+                                       type="checkbox"
+                                       :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
+                                       @click="onSelect(row, row[rowKey], $event)"
+                                       @change="onCheckboxChange(row, row[rowKey], $event)">
+                            </div>
+                        </template>
+                        <template v-if="col.type === 'expand'">
+                            <div class="v-table-column v-table-column-expand"
+                                 :class="{ 'expand-icon': row.$expand }"
+                                 @click="toggleExpandRow(row, col, index)">
+                                <v-icon class="v-table-expand-icon" name="right" />
+                            </div>
+                        </template>
+                        <template v-else>
+                            <div class="v-table-column" v-if="col.render">
+                                <vnodes :vnodes="col.render({ $index: index, column: col, row })" />
+                            </div>
+                            <div class="v-table-column">
+                                {{ row[col.field] }}
+                            </div>
+                        </template>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div v-if="fixedRightCount > 0"
+             class="v-table-header v-table-header-fixed v-table-header-fixed-right"
+             ref="fixedRightHeaderWrapper"
+             :style="{ width: fixedRightWidth + 'px', height: fixedHeaderHeight + 'px' }">
+            <div class="inner-wrapper">
+                <table :style="{ width: maxWidth }">
+                    <colgroup>
+                        <col v-for="item in columns"
+                             :key="item.field"
+                             :style="{ width: item.realWidth + 'px' }" />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th v-for="item in columns"
+                            :key="item.field"
+                            class="v-table-col"
+                            :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
+                            <div class="v-table-column"
+                                 v-if="item.type === 'selection'">
+                                <input class="checkbox"
+                                       :class="{ disabled: data.length === 0 }"
+                                       type="checkbox"
+                                       ref="checkboxes"
+                                       :checked="allChecked"
+                                       :disabled="data.length === 0"
+                                       @click="onSelectAll"
+                                       @change="onAllCheckedChange">
+                            </div>
+                            <div class="v-table-column"
+                                 v-else
+                                 :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
+                                 @click="onTableColumnClick(item)">
+                                <span>{{ item.label }}</span>
+                                <div class="v-table-column-sorters"
+                                     :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
+                                    <v-icon name="caret-up" />
+                                    <v-icon name="caret-down" />
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div v-if="fixedRightCount > 0"
+             class="v-table-body v-table-body-fixed v-table-body-fixed-right"
+             ref="fixedRightBodyWrapper"
+             :style="{ height: parseFloat(height) + 'px', width: fixedRightWidth + 'px', height: fixedBodyHeight + 'px', top: fixedHeaderHeight + 'px' }">
+            <div class="inner-wrapper">
+                <table :style="{ width: maxWidth }">
+                    <colgroup>
+                        <col v-for="item in columns"
+                             :key="item.field"
+                             :style="{ width: item.realWidth + 'px' }" />
+                    </colgroup>
+                    <tbody ref="tbody">
+                    <tr class="v-table-row"
+                        v-for="(row, index) in data"
+                        :key="row[rowKey]"
+                        ref="bodyRows"
+                        :class="{ 'v-table-row-expanded': row.$expand }">
+                        <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
+                            <template v-if="col.type === 'selection'">
+                                <div class="v-table-column">
+                                    <input class="checkbox"
+                                           type="checkbox"
+                                           :checked="selection.selectedKeys.indexOf(row[rowKey]) >= 0"
+                                           @click="onSelect(row, row[rowKey], $event)"
+                                           @change="onCheckboxChange(row, row[rowKey], $event)">
+                                </div>
+                            </template>
+                            <template v-if="col.type === 'expand'">
+                                <div class="v-table-column v-table-column-expand"
+                                     :class="{ 'expand-icon': row.$expand }"
+                                     @click="toggleExpandRow(row, col, index)">
+                                    <v-icon class="v-table-expand-icon" name="right" />
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div class="v-table-column" v-if="col.render">
+                                    <vnodes :vnodes="col.render({ $index: index, column: col, row })" />
+                                </div>
+                                <div class="v-table-column">
+                                    {{ row[col.field] }}
+                                </div>
+                            </template>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <transition name="fade">
             <div v-if="loading" class="v-table-loading">
                 <v-icon name="loading" />
@@ -161,7 +343,37 @@ export default {
             innerSorter: Object.create(null),
             sortRule,
             allChecked: false,
-            maxWidth: null
+            maxWidth: null,
+            fixedLeftCount: 0,
+            fixedRightCount: 0,
+            fixedHeaderHeight: 44,
+            fixedBodyHeight: 300
+        }
+    },
+    computed: {
+        fixedLeftWidth ({ columns, fixedLeftCount }) {
+            if (fixedLeftCount > 0) {
+                const fixedColumns = columns.filter(col => col.fixed === true || col.fixed === 'left')
+                let width = 0
+                fixedColumns.forEach(col => {
+                    width += col.realWidth
+                })
+                return width
+            } else {
+                return 0
+            }
+        },
+        fixedRightWidth ({ columns, fixedRightCount }) {
+            if (fixedRightCount > 0) {
+                const fixedColumns = columns.filter(col => col.fixed === 'right')
+                let width = 0
+                fixedColumns.forEach(col => {
+                    width += col.realWidth
+                })
+                return width
+            } else {
+                return 0
+            }
         }
     },
     beforeCreate () {
@@ -178,7 +390,14 @@ export default {
         this._headerWrapper = headerWrapper
         this._bodyWrapper = bodyWrapper
         this.$nextTick(() => {
-            this._checkboxes = this.$refs.checkboxes
+            const headerHeight = headerWrapper.clientHeight
+            const containerHeight = tableWrapper.clientHeight
+            this.fixedHeaderHeight = headerHeight
+            this.fixedBodyHeight = containerHeight - headerHeight
+            const { checkboxes, fixedBodyWrapper, fixedRightBodyWrapper } = this.$refs
+            this._checkboxes = checkboxes
+            this._fixedBodyWrapper = fixedBodyWrapper
+            this._fixedRightBodyWrapper = fixedRightBodyWrapper
         })
         window.addEventListener('resize', this.onResizeHandle)
         headerWrapper.addEventListener('scroll', this.onHeaderWrapperScrollHandle)
@@ -318,6 +537,8 @@ export default {
             this._bodyWrapper.scrollLeft = target.scrollLeft
         },
         onBodyWrapperScrollHandle ({ target }) {
+            if (this.fixedLeftCount > 0) this._fixedBodyWrapper.scrollTop = target.scrollTop
+            if (this.fixedRightCount > 0) this._fixedRightBodyWrapper.scrollTop = target.scrollTop
             this._headerWrapper.scrollLeft = target.scrollLeft
         },
         onResizeHandle () {
@@ -347,14 +568,25 @@ export default {
             this.maxWidth = `${maxWidth}px`
         },
         insertColumn (data, scopedSlots, index) {
+            const { columns } = this
             if (scopedSlots.default) data.render = scopedSlots.default
-            this.columns.splice(index, 0, data)
+            if (data.fixed) {
+                if (data.fixed === 'right') {
+                    columns.push(data)
+                    this.fixedRightCount += 1
+                } else {
+                    columns.splice(this.fixedLeftCount, 0, data)
+                    this.fixedLeftCount += 1
+                }
+            } else {
+                columns.splice(index - this.fixedRightCount, 0, data)
+            }
             const { _sizeData } = this
             if (data.realWidth) {
                 _sizeData.maxColumnWidth += data.realWidth
                 _sizeData.hasWidthColumnCount += 1
             }
-            _sizeData.minTableWidth = _sizeData.maxColumnWidth + ((this.columns.length - _sizeData.hasWidthColumnCount) * _sizeData.minWidth)
+            _sizeData.minTableWidth = _sizeData.maxColumnWidth + ((columns.length - _sizeData.hasWidthColumnCount) * _sizeData.minWidth)
             this.$nextTick(this.calcColumnsWidth)
         },
         toggleExpandRow (row, col, rowIndex, isExpand) {
@@ -461,6 +693,7 @@ export default {
                 width: 100%;
                 height: 1px;
                 background-color: #e8e8e8;
+                z-index: 3;
             }
 
             .v-table-row {
@@ -484,6 +717,51 @@ export default {
                 display: none;
                 width: 0;
                 height: 0;
+            }
+        }
+
+        &.v-table-body-fixed {
+            position: absolute;
+            top: 44px;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+            background-color: #fff;
+
+            &.v-table-body-fixed-right {
+                left: auto;
+                right: 0;
+
+                .inner-wrapper {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+            }
+
+            &::after {
+                display: none;
+            }
+        }
+
+        &.v-table-header-fixed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            height: 44px;
+            overflow: hidden;
+            background-color: #fff;
+
+            &.v-table-header-fixed-right {
+                left: auto;
+                right: 0;
+
+                .inner-wrapper {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
             }
         }
     }
@@ -615,6 +893,7 @@ export default {
             top: 0;
             width: 1px;
             height: 100%;
+            z-index: 3;
             background-color: #e8e8e8;
         }
 
