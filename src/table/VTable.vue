@@ -852,12 +852,24 @@ export default {
             box-shadow: none;
 
             &.v-table-fixed-right {
-                box-shadow: 0 0 10px rgba(0, 0, 0, .12);
+                box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
             }
         }
 
-        &.is-scrolling-right~.v-table-fixed-right {
-            box-shadow: none;
+        &.is-scrolling-center~.v-table-fixed {
+            box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+
+            &.v-table-fixed-right {
+                box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        &.is-scrolling-right~.v-table-fixed {
+            box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+
+            &.v-table-fixed-right {
+                box-shadow: none;
+            }
         }
 
         &.is-scrolling-none~.v-table-fixed {
@@ -872,7 +884,7 @@ export default {
         z-index: 1;
         height: 100%;
         background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .12);
+        transition: box-shadow .3s ease;
 
         .v-table-body {
             overflow: hidden;
