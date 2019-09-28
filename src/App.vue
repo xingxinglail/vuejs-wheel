@@ -82,7 +82,7 @@
         <br>
         <v-table :data="data2"
                  stripe
-                 height="200"
+                 bordered
                  @selection-change="onSelectionChange"
                  @select="onSelect"
                  @select-all="onSelectAll"
