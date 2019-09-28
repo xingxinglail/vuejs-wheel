@@ -2,6 +2,7 @@
     <div style="padding: 20px">
         <v-table :data="data2"
                  height="200"
+                 stripe
                  bordered
                  :selection="selection"
                  @selection-change="onSelectionChange"
@@ -34,6 +35,7 @@
         <br>
         <v-table :data="data2"
                  bordered
+                 stripe
                  default-expand-all
                  :expand-row-keys="expandRowKeys"
                  :selection="selection"
@@ -79,6 +81,7 @@
         <br>
         <br>
         <v-table :data="data2"
+                 stripe
                  height="200"
                  @selection-change="onSelectionChange"
                  @select="onSelect"

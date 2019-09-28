@@ -1,7 +1,7 @@
 <template>
     <div class="v-table"
          ref="tableWrapper"
-         :class="{ 'v-table-bordered': bordered }">
+         :class="{ 'v-table-bordered': bordered, 'v-table-stripe': stripe }">
         <div class="hidden-columns" ref="hiddenColumns"><slot /></div>
         <div class="v-table-header" ref="headerWrapper">
             <table :style="{ width: maxWidth }">
@@ -58,7 +58,7 @@
                         v-for="(row, index) in innerData"
                         :key="row[rowKey]"
                         ref="bodyRows"
-                        :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
+                        :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1, 'hover-row': row.isHover }"
                         @mouseenter="onMouseenterRow(row)"
                         @mouseleave="onMouseleaveRow(row)">
                         <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
@@ -149,7 +149,7 @@
                             ref="fixedRows"
                             v-for="(row, index) in innerData"
                             :key="row[rowKey]"
-                            :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
+                            :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1, 'hover-row': row.isHover }"
                             @mouseenter="onMouseenterRow(row)"
                             @mouseleave="onMouseleaveRow(row)">
                             <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
@@ -245,7 +245,7 @@
                                 ref="fixedRightRows"
                                 v-for="(row, index) in innerData"
                                 :key="row[rowKey]"
-                                :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
+                                :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1, 'hover-row': row.isHover }"
                                 @mouseenter="onMouseenterRow(row)"
                                 @mouseleave="onMouseleaveRow(row)">
                                 <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
@@ -303,6 +303,10 @@ const sortRule = {
 export default {
     name: 'VTable',
     props: {
+        stripe: {
+            type: Boolean,
+            default: false
+        },
         height: {
             type: String
         },
@@ -748,6 +752,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '../var';
+
+.v-table-stripe {
+
+    .striped {
+        background-color: #fafafa;
+    }
+}
 
 .v-table {
     position: relative;
