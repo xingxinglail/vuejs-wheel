@@ -19,11 +19,11 @@
                             <div class="v-table-column"
                                  v-if="item.type === 'selection'">
                                 <input class="checkbox"
-                                       :class="{ disabled: data.length === 0 }"
+                                       :class="{ disabled: innerData.length === 0 }"
                                        type="checkbox"
                                        ref="checkboxes"
                                        :checked="allChecked"
-                                       :disabled="data.length === 0"
+                                       :disabled="innerData.length === 0"
                                        @click="onSelectAll"
                                        @change="onAllCheckedChange">
                             </div>
@@ -55,7 +55,7 @@
                 </colgroup>
                 <tbody ref="tbody">
                     <tr class="v-table-row"
-                        v-for="(row, index) in data"
+                        v-for="(row, index) in innerData"
                         :key="row[rowKey]"
                         ref="bodyRows"
                         :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
@@ -80,7 +80,7 @@
                             </template>
                             <template v-else>
                                 <div class="v-table-column" v-if="col.render">
-                                    <vnodes :vnodes="col.render({ $index: index, column: col, row })" />
+                                    <vnodes :vnodes="col.render({ $index: index, column: col, row: data[index] })" />
                                 </div>
                                 <div class="v-table-column">
                                     {{ row[col.field] }}
@@ -111,11 +111,11 @@
                             <div class="v-table-column"
                                  v-if="item.type === 'selection'">
                                 <input class="checkbox"
-                                       :class="{ disabled: data.length === 0 }"
+                                       :class="{ disabled: innerData.length === 0 }"
                                        type="checkbox"
                                        ref="checkboxes"
                                        :checked="allChecked"
-                                       :disabled="data.length === 0"
+                                       :disabled="innerData.length === 0"
                                        @click="onSelectAll"
                                        @change="onAllCheckedChange">
                             </div>
@@ -147,7 +147,7 @@
                     <tbody>
                         <tr class="v-table-row"
                             ref="fixedRows"
-                            v-for="(row, index) in data"
+                            v-for="(row, index) in innerData"
                             :key="row[rowKey]"
                             :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
                             @mouseenter="onMouseenterRow(row)"
@@ -205,11 +205,11 @@
                                     <div class="v-table-column"
                                          v-if="item.type === 'selection'">
                                         <input class="checkbox"
-                                               :class="{ disabled: data.length === 0 }"
+                                               :class="{ disabled: innerData.length === 0 }"
                                                type="checkbox"
                                                ref="checkboxes"
                                                :checked="allChecked"
-                                               :disabled="data.length === 0"
+                                               :disabled="innerData.length === 0"
                                                @click="onSelectAll"
                                                @change="onAllCheckedChange">
                                     </div>
@@ -243,7 +243,7 @@
                         <tbody>
                             <tr class="v-table-row"
                                 ref="fixedRightRows"
-                                v-for="(row, index) in data"
+                                v-for="(row, index) in innerData"
                                 :key="row[rowKey]"
                                 :class="{ 'v-table-row-expanded': row.$expand, 'hover-row': row.isHover }"
                                 @mouseenter="onMouseenterRow(row)"
@@ -351,6 +351,7 @@ export default {
     },
     data () {
         return {
+            innerData: Object.create(null),
             columns: [],
             innerSorter: Object.create(null),
             sortRule,
@@ -426,6 +427,7 @@ export default {
         if (_bodyWrapper) _bodyWrapper.removeEventListener('scroll', this.onBodyWrapperScrollHandle)
     },
     updated () {
+        // 表格内容变化，重新计算高度
         if (this.fixedLeftCount > 0 || this.fixedRightCount > 0) {
             const { _tableWrapper, _headerWrapper, _bodyWrapper } = this
             const headerHeight = _headerWrapper.offsetHeight
@@ -439,7 +441,7 @@ export default {
         expandAll () {
             if (!this.defaultExpandAll) return
             this.$nextTick(() => {
-                this.data.forEach((row, rowIndex) => {
+                this.innerData.forEach((row, rowIndex) => {
                     this.columns.forEach((col) => {
                         if (col.type === 'expand') {
                             this.toggleExpandRow(row, col, rowIndex, true)
@@ -451,7 +453,7 @@ export default {
         expandByRowKeys () {
             this.$nextTick(() => {
                 const { columns, rowKey, expandRowKeys } = this
-                this.data.forEach((row, rowIndex) => {
+                this.innerData.forEach((row, rowIndex) => {
                     columns.forEach((col) => {
                         if (col.type === 'expand') {
                             if (expandRowKeys.indexOf(row[rowKey]) >= 0) {
@@ -469,7 +471,7 @@ export default {
         },
         onCheckboxChange (row, key, e, select) {
             const { checked } = e.target
-            const { data, rowKey, _innerSelectedKeys } = this
+            const { innerData, rowKey, _innerSelectedKeys } = this
             if (select) {
                 if (checked) {
                     _innerSelectedKeys.push(key)
@@ -479,14 +481,14 @@ export default {
                 }
                 const rows = []
                 _innerSelectedKeys.forEach(key => {
-                    const row = data.find(c => c[rowKey] === key)
+                    const row = innerData.find(c => c[rowKey] === key)
                     if (row) rows.push(row)
                 })
                 this.$emit('select', row, checked, rows, e)
             } else {
                 const rows = []
                 _innerSelectedKeys.forEach(key => {
-                    const row = data.find(c => c[rowKey] === key)
+                    const row = innerData.find(c => c[rowKey] === key)
                     if (row) rows.push(row)
                 })
                 this.$emit('selection-change', _innerSelectedKeys, rows)
@@ -498,12 +500,12 @@ export default {
         onAllCheckedChange ({ target }, select) {
             const checked = target.checked
             this.allChecked = checked
-            const { data, rowKey } = this
+            const { innerData, rowKey } = this
             let keys = []
             let _data = []
             if (checked) {
-                keys = data.map(c => c[rowKey])
-                _data = data
+                keys = innerData.map(c => c[rowKey])
+                _data = innerData
             }
             this.$emit('selection-change', keys, _data)
             if (select) this.$emit('select-all', checked, _data)
@@ -669,7 +671,7 @@ export default {
                                             colspan: this.columns.length
                                         }
                                     },
-                                    col.render({ $index: rowIndex, column: col, row })
+                                    col.render({ $index: rowIndex, column: col, row: this.data[rowIndex] })
                                 )
                             ]
                         )
@@ -720,14 +722,18 @@ export default {
             handler (v) {
                 this._innerSelectedKeys = Array.isArray(v) ? [...v] : []
                 setTimeout(() => {
-                    this.checkAllCheckedState(this.data, v)
+                    this.checkAllCheckedState(this.innerData, v)
                 }, 50)
             }
         },
-        data (v) {
-            this.$nextTick(() => {
-                this.checkAllCheckedState(v, this._innerSelectedKeys)
-            })
+        data: {
+            immediate: true,
+            handler (v) {
+                this.innerData = deepClone(v)
+                this.$nextTick(() => {
+                    this.checkAllCheckedState(v, this._innerSelectedKeys)
+                })
+            }
         }
     },
     components: {
