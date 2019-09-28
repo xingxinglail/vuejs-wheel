@@ -267,7 +267,7 @@
                                     </template>
                                     <template v-else>
                                         <div class="v-table-column" v-if="col.render">
-                                            <vnodes :vnodes="col.render({ $index: index, column: col, row })" />
+                                            <vnodes :vnodes="col.render({ $index: index, column: col, row: data[index] })" />
                                         </div>
                                         <div class="v-table-column">
                                             {{ row[col.field] }}
