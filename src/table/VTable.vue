@@ -15,7 +15,8 @@
                         <th v-for="item in columns"
                             :key="item.field"
                             class="v-table-col"
-                            :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
+                            :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right', 'v-table-column-has-sorters': item.field in innerSorter }"
+                            @click="onTableColumnClick(item)">
                             <div class="v-table-column"
                                  v-if="item.type === 'selection'">
                                 <input class="checkbox"
@@ -28,9 +29,7 @@
                                        @change="onAllCheckedChange">
                             </div>
                             <div class="v-table-column"
-                                 v-else
-                                 :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
-                                 @click="onTableColumnClick(item)">
+                                 v-else>
                                 <span>{{ item.label }}</span>
                                 <div class="v-table-column-sorters"
                                      :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
@@ -107,7 +106,8 @@
                         <th v-for="item in columns"
                             :key="item.field"
                             class="v-table-col"
-                            :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
+                            :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right', 'v-table-column-has-sorters': item.field in innerSorter }"
+                            @click="onTableColumnClick(item)">
                             <div class="v-table-column"
                                  v-if="item.type === 'selection'">
                                 <input class="checkbox"
@@ -120,9 +120,7 @@
                                        @change="onAllCheckedChange">
                             </div>
                             <div class="v-table-column"
-                                 v-else
-                                 :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
-                                 @click="onTableColumnClick(item)">
+                                 v-else>
                                 <span>{{ item.label }}</span>
                                 <div class="v-table-column-sorters"
                                      :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
@@ -201,7 +199,8 @@
                                 <th v-for="item in columns"
                                     :key="item.field"
                                     class="v-table-col"
-                                    :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right' }">
+                                    :class="{ 'column-center': item.align === 'center', 'column-right': item.align === 'right', 'v-table-column-has-sorters': item.field in innerSorter }"
+                                    @click="onTableColumnClick(item)">
                                     <div class="v-table-column"
                                          v-if="item.type === 'selection'">
                                         <input class="checkbox"
@@ -214,9 +213,7 @@
                                                @change="onAllCheckedChange">
                                     </div>
                                     <div class="v-table-column"
-                                         v-else
-                                         :class="{ 'v-table-column-has-sorters': item.field in innerSorter }"
-                                         @click="onTableColumnClick(item)">
+                                         v-else>
                                         <span>{{ item.label }}</span>
                                         <div class="v-table-column-sorters"
                                              :class="{ [sortRule.ascend]: innerSorter[item.field] === sortRule.ascend, [sortRule.descend]: innerSorter[item.field] === sortRule.descend }">
@@ -912,14 +909,37 @@ export default {
                 display: none;
             }
 
-            &.v-table-column-has-sorters {
+            .checkbox {
+                font-size: 16px;
                 cursor: pointer;
-                transition: background-color .3s;
-                user-select: none;
 
-                &:hover {
-                    background-color: #f5f5f5;
+                &.disabled {
+                    cursor: not-allowed;
                 }
+            }
+
+            &.v-table-column-expand {
+                cursor: pointer;
+                padding: 6px;
+
+                .v-table-expand-icon {
+                    color: #666;
+                    width: 10px;
+                    height: 10px;
+                    transition: transform .3s;
+                }
+
+                &.expand-icon .v-table-expand-icon {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+
+        th.v-table-column-has-sorters {
+            cursor: pointer;
+
+            .v-table-column {
+                user-select: none;
 
                 .v-table-column-sorters {
                     display: flex;
@@ -954,31 +974,6 @@ export default {
                             color: #409eff;
                         }
                     }
-                }
-            }
-
-            .checkbox {
-                font-size: 16px;
-                cursor: pointer;
-
-                &.disabled {
-                    cursor: not-allowed;
-                }
-            }
-
-            &.v-table-column-expand {
-                cursor: pointer;
-                padding: 6px;
-
-                .v-table-expand-icon {
-                    color: #666;
-                    width: 10px;
-                    height: 10px;
-                    transition: transform .3s;
-                }
-
-                &.expand-icon .v-table-expand-icon {
-                    transform: rotate(90deg);
                 }
             }
         }
