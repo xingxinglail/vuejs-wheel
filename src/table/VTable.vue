@@ -57,9 +57,9 @@
                         v-for="(row, index) in innerData"
                         :key="row[rowKey]"
                         ref="bodyRows"
-                        :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1, 'hover-row': row.isHover }"
-                        @mouseenter="onMouseenterRow(row)"
-                        @mouseleave="onMouseleaveRow(row)">
+                        :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1 }"
+                        @mouseenter="onMouseenterRow(index, 'original')"
+                        @mouseleave="onMouseleaveRow(index, 'original')">
                         <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                             <template v-if="col.type === 'selection'">
                                 <div class="v-table-column">
@@ -147,9 +147,9 @@
                             ref="fixedRows"
                             v-for="(row, index) in innerData"
                             :key="row[rowKey]"
-                            :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1, 'hover-row': row.isHover }"
-                            @mouseenter="onMouseenterRow(row)"
-                            @mouseleave="onMouseleaveRow(row)">
+                            :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1 }"
+                            @mouseenter="onMouseenterRow(index, 'left')"
+                            @mouseleave="onMouseleaveRow(index, 'left')">
                             <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                                 <template v-if="col.type === 'selection'">
                                     <div class="v-table-column">
@@ -242,9 +242,9 @@
                                 ref="fixedRightRows"
                                 v-for="(row, index) in innerData"
                                 :key="row[rowKey]"
-                                :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1, 'hover-row': row.isHover }"
-                                @mouseenter="onMouseenterRow(row)"
-                                @mouseleave="onMouseleaveRow(row)">
+                                :class="{ 'v-table-row-expanded': row.$expand, striped: stripe && index % 2 === 1 }"
+                                @mouseenter="onMouseenterRow(index, 'right')"
+                                @mouseleave="onMouseleaveRow(index, 'right')">
                                 <td v-for="col in columns" :key="col.field" class="v-table-col" :class="{ 'column-center': col.align === 'center', 'column-right': col.align === 'right' }">
                                     <template v-if="col.type === 'selection'">
                                         <div class="v-table-column">
@@ -392,6 +392,9 @@ export default {
         }
     },
     beforeCreate () {
+        this._rows = []
+        this._fixedRows = []
+        this._fixedRightRows = []
         this._maxScrollY = 0
         this._sizeData = {
             minWidth: 80,
@@ -410,6 +413,7 @@ export default {
             this._checkboxes = checkboxes
             this._fixedBodyWrapper = fixedBodyWrapper
             this._fixedRightBodyWrapper = fixedRightBodyWrapper
+            this.updateFixedRows()
         })
         setTimeout(this.onBodyWrapperScrollHandle, 0, { target: bodyWrapper })
         window.addEventListener('resize', this.onResizeHandle)
@@ -439,6 +443,12 @@ export default {
         }
     },
     methods: {
+        updateFixedRows () {
+            const { bodyRows, fixedRows, fixedRightRows } = this.$refs
+            this._rows = bodyRows ? bodyRows : []
+            this._fixedRows = fixedRows ? fixedRows : []
+            this._fixedRightRows = fixedRightRows ? fixedRightRows : []
+        },
         expandAll () {
             if (!this.defaultExpandAll) return
             this.$nextTick(() => {
@@ -693,11 +703,25 @@ export default {
                 row.$expandDom.style.display = 'none'
             }
         },
-        onMouseenterRow (row) {
-            this.$set(row, 'isHover', true)
+        onMouseenterRow (index, type) {
+            this.hoverRowHandle(index, type, 'add')
         },
-        onMouseleaveRow (row) {
-            this.$set(row, 'isHover', false)
+        onMouseleaveRow (index, type) {
+            this.hoverRowHandle(index, type, 'remove')
+        },
+        hoverRowHandle (index, type, fnName) {
+            const { fixedLeftCount, fixedRightCount, _rows, _fixedRows, _fixedRightRows } = this
+            if (fixedLeftCount < 0 && fixedRightCount < 0) return
+            if (type === 'original') {
+                if (_fixedRows.length > 0) _fixedRows[index].classList[fnName]('hover-row')
+                if (_fixedRightRows.length > 0) _fixedRightRows[index].classList[fnName]('hover-row')
+            } else if (type === 'left') {
+                _rows[index].classList[fnName]('hover-row')
+                if (_fixedRightRows.length > 0) _fixedRightRows[index].classList[fnName]('hover-row')
+            } else {
+                _rows[index].classList[fnName]('hover-row')
+                if (_fixedRows.length > 0) _fixedRows[index].classList[fnName]('hover-row')
+            }
         }
     },
     watch: {
@@ -733,6 +757,7 @@ export default {
                 this.innerData = deepClone(v)
                 this.$nextTick(() => {
                     this.checkAllCheckedState(v, this._innerSelectedKeys)
+                    this.updateFixedRows()
                 })
             }
         }
@@ -984,6 +1009,10 @@ export default {
 
         tbody tr {
             transition: background-color .3s;
+
+            &.v-table-row:hover {
+                background-color: #f5f7fa;
+            }
 
             &.hover-row {
                 background-color: #f5f7fa;
