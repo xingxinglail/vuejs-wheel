@@ -102,7 +102,9 @@
 </template>
 
 <script>
-const data = new Array(1000)
+// todo hover-row 测试用例
+
+const data = new Array(500)
 for (let i = 0; i < data.length; i++) {
     data[i] = {
         key: `${i + 1}`,

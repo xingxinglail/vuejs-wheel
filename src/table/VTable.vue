@@ -44,7 +44,6 @@
         </div>
         <div class="v-table-body"
              ref="bodyWrapper"
-             :class="scrollingClassName"
              :style="{ height: parseFloat(height) + 'px' }">
             <table :style="{ width: maxWidth }">
                 <colgroup>
@@ -361,8 +360,7 @@ export default {
             fixedLeftCount: 0,
             fixedRightCount: 0,
             fixedHeaderHeight: 45,
-            fixedBodyHeight: 300,
-            scrollingClassName: 'is-scrolling-none'
+            fixedBodyHeight: 300
         }
     },
     computed: {
@@ -395,6 +393,7 @@ export default {
         this._rows = []
         this._fixedRows = []
         this._fixedRightRows = []
+        this._maxScrollX = 0
         this._maxScrollY = 0
         this._sizeData = {
             minWidth: 80,
@@ -439,7 +438,7 @@ export default {
             const containerHeight = _tableWrapper.offsetHeight
             this.fixedHeaderHeight = headerHeight
             this.fixedBodyHeight = containerHeight - headerHeight
-            this._maxScrollY = _bodyWrapper.children[0].offsetWidth - _bodyWrapper.offsetWidth
+            this._maxScrollX = _bodyWrapper.children[0].offsetWidth - _bodyWrapper.offsetWidth
         }
     },
     methods: {
@@ -575,24 +574,25 @@ export default {
             this._headerWrapper.scrollLeft = scrollLeft
             if (this.fixedLeftCount > 0) this._fixedBodyWrapper.scrollTop = target.scrollTop
             if (this.fixedRightCount > 0) this._fixedRightBodyWrapper.scrollTop = target.scrollTop
-            const { _maxScrollY } = this
+            const { _maxScrollX } = this
             let className = 'is-scrolling-none'
-            if (_maxScrollY > 0) {
+            if (_maxScrollX > 0) {
                 if (scrollLeft === 0) {
                     className = 'is-scrolling-left'
-                } else if (scrollLeft === _maxScrollY) {
+                } else if (scrollLeft === _maxScrollX) {
                     className = 'is-scrolling-right'
-                } else if (scrollLeft > 0 && scrollLeft < _maxScrollY) {
+                } else if (scrollLeft > 0 && scrollLeft < _maxScrollX) {
                     className = 'is-scrolling-center'
                 }
+                className = `v-table-body ${className}`
+                this._bodyWrapper.className = className
             }
-            this.scrollingClassName = className
         },
         onResizeHandle () {
             this.calcColumnsWidth()
             this.$nextTick(() => {
                 const { _bodyWrapper } = this
-                this._maxScrollY = _bodyWrapper.children[0].offsetWidth - _bodyWrapper.offsetWidth
+                this._maxScrollX = _bodyWrapper.children[0].offsetWidth - _bodyWrapper.offsetWidth
                 this.onBodyWrapperScrollHandle({ target: _bodyWrapper })
             })
         },
