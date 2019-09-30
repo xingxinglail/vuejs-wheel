@@ -91,7 +91,8 @@
         </div>
         <div class="v-table-fixed"
              v-if="fixedLeftCount > 0"
-             :style="{ width: fixedLeftWidth + 'px' }">
+             :style="{ width: fixedLeftWidth + 'px' }"
+             v-mousewheel="onMousewheelFixedHandle">
             <div class="v-table-header"
                  ref="fixedHeaderWrapper">
                 <table :style="{ width: maxWidth }">
@@ -182,7 +183,8 @@
         </div>
         <div class="v-table-fixed v-table-fixed-right"
              v-if="fixedRightCount > 0"
-             :style="{ width: fixedRightWidth + 'px' }">
+             :style="{ width: fixedRightWidth + 'px' }"
+             v-mousewheel="onMousewheelFixedHandle">
             <div class="v-table-header v-table-header-fixed v-table-header-fixed-right"
                  ref="fixedRightHeaderWrapper"
                  :style="{ height: fixedHeaderHeight + 'px' }">
@@ -289,6 +291,7 @@
 import Vue from 'vue'
 import { deepClone } from '../helper'
 import Icon from '../icon/VIcon'
+import mousewheel from '../directives/mousewheel'
 
 const sortRule = {
     ascend: 'ascend',
@@ -298,6 +301,9 @@ const sortRule = {
 
 export default {
     name: 'VTable',
+    directives: {
+        mousewheel
+    },
     props: {
         stripe: {
             type: Boolean,
@@ -439,9 +445,32 @@ export default {
             this.fixedHeaderHeight = headerHeight
             this.fixedBodyHeight = containerHeight - headerHeight
             this._maxScrollX = _bodyWrapper.children[0].offsetWidth - _bodyWrapper.offsetWidth
+            this._maxScrollY = _bodyWrapper.children[0].offsetHeight - _bodyWrapper.offsetHeight
         }
     },
     methods: {
+        onMousewheelFixedHandle (e, { spinY, pixelY, pixelX }) {
+            const { _bodyWrapper } = this
+            if (Math.abs(spinY) > 0) {
+                const currentScrollTop = _bodyWrapper.scrollTop
+                if (pixelY < 0 && currentScrollTop !== 0) {
+                    e.preventDefault()
+                }
+                if (pixelY > 0 && currentScrollTop < _bodyWrapper.scrollHeight - _bodyWrapper.offsetHeight) {
+                    e.preventDefault()
+                }
+                _bodyWrapper.scrollTop += Math.ceil(pixelY / 5)
+            } else {
+                const currentScrollLeft = _bodyWrapper.scrollLeft
+                if (pixelX < 0 && currentScrollLeft !== 0) {
+                    e.preventDefault()
+                }
+                if (pixelX > 0 && currentScrollLeft < _bodyWrapper.scrollWidth - _bodyWrapper.offsetWidth) {
+                    e.preventDefault()
+                }
+                _bodyWrapper.scrollLeft += Math.ceil(pixelX / 5)
+            }
+        },
         updateFixedRows () {
             const { bodyRows, fixedRows, fixedRightRows } = this.$refs
             this._rows = bodyRows ? bodyRows : []

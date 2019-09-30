@@ -1,5 +1,35 @@
 <template>
     <div style="padding: 20px">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 <!--        <v-table :data="data2"-->
 <!--                 height="200"-->
 <!--                 stripe-->
@@ -98,13 +128,43 @@
             <v-table-column type="selection" fixed="right" width="160" />
             <v-table-column type="selection" fixed="right" width="160" />
         </v-table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
 </template>
 
 <script>
 // todo hover-row 测试用例
 
-const data = new Array(500)
+const data = new Array(10)
 for (let i = 0; i < data.length; i++) {
     data[i] = {
         key: `${i + 1}`,
