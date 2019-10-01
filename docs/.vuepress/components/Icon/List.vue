@@ -29,7 +29,9 @@ export default {
                 'setting',
                 'ellipsis',
                 'doubleleft',
-                'doubleright'
+                'doubleright',
+                'caret-up',
+                'caret-down'
             ]
         }
     },
