@@ -777,7 +777,7 @@ export default {
                 this._innerSelectedKeys = Array.isArray(v) ? [...v] : []
                 setTimeout(() => {
                     this.checkAllCheckedState(this.innerData, v)
-                }, 50)
+                })
             }
         },
         data: {
