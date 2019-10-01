@@ -165,6 +165,25 @@ describe('Table', () => {
         }, true)
         await wait()
         expect(vm.$el.querySelectorAll('.v-table-fixed').length).to.eq(2)
+        const trs = vm.$el.querySelector('.v-table-body').querySelectorAll('tr.v-table-row')
+        const fixedTrs = vm.$el.querySelectorAll('.v-table-fixed')[0].querySelectorAll('tr.v-table-row')
+        const fixedRightTrs = vm.$el.querySelectorAll('.v-table-fixed')[1].querySelectorAll('tr.v-table-row')
+        const mouseenterEvent = new Event('mouseenter')
+        const mouseleaveEvent = new Event('mouseleave')
+        trs[1].dispatchEvent(mouseenterEvent)
+        expect(fixedTrs[1].classList.contains('hover-row')).to.true
+        expect(fixedRightTrs[1].classList.contains('hover-row')).to.true
+        trs[1].dispatchEvent(mouseleaveEvent)
+        expect(fixedTrs[1].classList.contains('hover-row')).to.false
+        expect(fixedRightTrs[1].classList.contains('hover-row')).to.false
+        fixedTrs[3].dispatchEvent(mouseenterEvent)
+        expect(trs[3].classList.contains('hover-row')).to.true
+        expect(fixedRightTrs[3].classList.contains('hover-row')).to.true
+        fixedTrs[3].dispatchEvent(mouseleaveEvent)
+        fixedRightTrs[0].dispatchEvent(mouseenterEvent)
+        expect(trs[0].classList.contains('hover-row')).to.true
+        expect(fixedTrs[0].classList.contains('hover-row')).to.true
+        fixedRightTrs[0].dispatchEvent(mouseleaveEvent)
     })
 
     it('可以多选', async () => {
