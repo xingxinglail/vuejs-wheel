@@ -38,9 +38,6 @@ export default {
         this._initContainerHeight = 0
     },
     mounted () {
-        this.$nextTick(() => {
-            console.log(this.container)
-        })
         const { wrapper, inner } = this.$refs
         this._innerDom = inner
         this._initTop = getPosition(wrapper).top
