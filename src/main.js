@@ -32,6 +32,7 @@ import VSubMenu from './menu/VSubMenu'
 import VPagination from './pagination/VPagination'
 import VTable from './table/VTable'
 import VTableColumn from './table/VTableColumn'
+import VSticky from './sticky/Sticky'
 
 Vue.use(VueRouter)
 
@@ -71,6 +72,7 @@ Vue.component('v-sub-menu', VSubMenu)
 Vue.component('v-pagination', VPagination)
 Vue.component('v-table', VTable)
 Vue.component('v-table-column', VTableColumn)
+Vue.component('v-sticky', VSticky)
 Vue.use(Toast)
 
 new Vue({
