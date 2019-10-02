@@ -8,7 +8,7 @@
         <p>bmsdf423435kjhdskjf</p>
         <p>bmsdf345kjhdskjf</p>
         <div style="height: 500px;background-color: #eaeaea" ref="container">
-            <v-sticky :container="container" @change="change(1, $event)">
+            <v-sticky :container="container" :distance="0" @change="change(1, $event)">
                 <h1 class="title" style="width: 200px;height: 50px;">hello world</h1>
             </v-sticky>
         </div>

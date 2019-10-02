@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { getPosition } from '../helper/dom'
-
 export default {
     name: 'Sticky',
     props: {
@@ -34,13 +32,12 @@ export default {
         }
     },
     created () {
-        this._initTop = 0
         this._initContainerHeight = 0
     },
     mounted () {
         const { wrapper, inner } = this.$refs
+        this._wrapperDom = wrapper
         this._innerDom = inner
-        this._initTop = getPosition(wrapper).top
         window.addEventListener('scroll', this.onScrollHandle)
     },
     beforeDestroy () {
@@ -49,8 +46,9 @@ export default {
     methods: {
         onScrollHandle () {
             const scrollY = window.scrollY
-            const { distance, _initTop, _initContainerHeight } = this
-            if (scrollY + distance >= _initTop) {
+            const { distance, _wrapperDom, _initContainerHeight } = this
+            const realTop = _wrapperDom.getBoundingClientRect().top + scrollY
+            if (scrollY + distance >= realTop) {
                 const { width, left, height } = this._innerDom.getBoundingClientRect()
                 this.width = `${width}px`
                 this.left = `${left}px`
@@ -58,13 +56,16 @@ export default {
                 this.height = `${height}px`
                 this.sticky = true
                 let y
-                if (_initContainerHeight > 0 && _initContainerHeight - (scrollY - _initTop) - distance <= height) {
-                    y = height - (_initContainerHeight - (scrollY - _initTop))
-                    if (y < height) {
-                        y = `translate3d(0, ${-y - distance}px, 0)`
-                    } else {
-                        this.sticky = false
-                        y = undefined
+                if (_initContainerHeight > 0) {
+                    const position = _initContainerHeight - (scrollY - realTop)
+                    if (position - distance <= height) {
+                        y = height - (_initContainerHeight - (scrollY - realTop))
+                        if (y < height) {
+                            y = `translate3d(0, ${-y - distance}px, 0)`
+                        } else {
+                            this.sticky = false
+                            y = undefined
+                        }
                     }
                 }
                 this.translateY = y
