@@ -12,6 +12,8 @@
 </template>
 
 <script>
+const containerType = typeof window === 'undefined' ? Object : window.HTMLElement
+
 export default {
     name: 'Sticky',
     props: {
@@ -19,7 +21,7 @@ export default {
             type: Number,
             default: 0
         },
-        container: HTMLElement
+        container: containerType
     },
     data () {
         return {
