@@ -10,6 +10,7 @@ describe('Sticky', () => {
     let vm
 
     afterEach(() => {
+        window.scrollTo(0, 0)
         destroyVM(vm)
     })
 
@@ -67,6 +68,41 @@ describe('Sticky', () => {
         expect(getComputedStyle(inner).top).to.eq('auto')
     })
 
+    it('可以指定容器', async () => {
+        vm = createVue({
+            template: `
+                <div style="height: 3000px;">
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <div style="height: 600px;" ref="container">
+                        <v-sticky :container="container">
+                            <h1 class="title" style="width: 200px;height: 50px;">hello world</h1>
+                        </v-sticky>
+                    </div>
+                </div>
+            `,
+            data: {
+                container: null
+            },
+            mounted () {
+                this.container = this.$refs.container
+            }
+        }, true)
+        await wait()
+        const inner = vm.$el.querySelector('.v-sticky-inner')
+        const { top, height } = vm.container.getBoundingClientRect()
+        window.scrollTo(0, top)
+        await wait()
+        expect(inner.classList.contains('sticky')).to.true
+        window.scrollTo(0, top + height)
+        await wait()
+        expect(inner.classList.contains('sticky')).to.false
+        window.scrollTo(0, top + height - 10)
+        await wait()
+        expect(inner.classList.contains('sticky')).to.true
+    })
 
     it('可以触发change事件', async () => {
         const callback = sinon.fake();
