@@ -1,15 +1,11 @@
 <template>
     <div style="padding: 20px">
-        <p>bmsdfkjhdskjf</p>
-        <p>bmsdfkjhdskjf</p>
-        <p>bmsdf23kasdjhdskjf</p>
-        <p>bmsdf3545kjhdskjf</p><br>
-        <br>
-        <br>
-        <div style="position: absolute;top: 100px;left: 50px;">
-            <v-sticky>
-                <h1 class="title">hello world</h1>
-            </v-sticky>
+        <div style="height: 2000px">
+            <div style="position: absolute;top: 200px;left: 50px;">
+                <v-sticky :distance="50">
+                    <h1 class="title" style="width: 200px;height: 50px;">hello world</h1>
+                </v-sticky>
+            </div>
         </div>
         <br>
         <br>

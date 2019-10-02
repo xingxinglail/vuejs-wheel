@@ -27,6 +27,7 @@ import VSubMenu from '../../src/menu/VSubMenu'
 import VPagination from '../../src/pagination/VPagination'
 import VTable from '../../src/table/VTable'
 import VTableColumn from '../../src/table/VTableColumn'
+import VSticky from '../../src/sticky/Sticky'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -59,6 +60,7 @@ Vue.component('v-sub-menu', VSubMenu)
 Vue.component('v-pagination', VPagination)
 Vue.component('v-table', VTable)
 Vue.component('v-table-column', VTableColumn)
+Vue.component('v-sticky', VSticky)
 Vue.use(ToastPlugin)
 
 let id = 0
