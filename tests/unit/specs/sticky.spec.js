@@ -29,7 +29,7 @@ describe('Sticky', () => {
         await wait()
         const wrapper = vm.$el.querySelector('.v-sticky')
         const inner = vm.$el.querySelector('.v-sticky-inner')
-        const moveTop = wrapper.getBoundingClientRect().top
+        const moveTop = wrapper.getBoundingClientRect().top + 1
         window.scrollTo(0, moveTop)
         await wait()
         expect(getComputedStyle(wrapper).height).to.eq('50px')
@@ -92,7 +92,8 @@ describe('Sticky', () => {
         }, true)
         await wait()
         const inner = vm.$el.querySelector('.v-sticky-inner')
-        const { top, height } = vm.container.getBoundingClientRect()
+        let { top, height } = vm.container.getBoundingClientRect()
+        top += 1
         window.scrollTo(0, top)
         await wait()
         expect(inner.classList.contains('sticky')).to.true
@@ -125,7 +126,7 @@ describe('Sticky', () => {
         await wait()
         const wrapper = vm.$el.querySelector('.v-sticky')
         const inner = vm.$el.querySelector('.v-sticky-inner')
-        const moveTop = wrapper.getBoundingClientRect().top
+        const moveTop = wrapper.getBoundingClientRect().top + 1
         window.scrollTo(0, moveTop)
         await wait()
         expect(callback).to.have.been.calledWith(true)
