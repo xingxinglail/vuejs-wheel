@@ -32,7 +32,7 @@ import VSubMenu from './menu/VSubMenu'
 import VPagination from './pagination/VPagination'
 import VTable from './table/VTable'
 import VTableColumn from './table/VTableColumn'
-import VSticky from './sticky/Sticky'
+import VSticky from './sticky/VSticky'
 
 Vue.use(VueRouter)
 

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Sticky from '../../../../src/sticky/Sticky'
+import Sticky from '../../../../src/sticky/VSticky'
 import Button from '../../../../src/button/VButton'
 
 export default {

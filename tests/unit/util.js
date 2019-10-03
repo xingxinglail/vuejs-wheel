@@ -27,7 +27,7 @@ import VSubMenu from '../../src/menu/VSubMenu'
 import VPagination from '../../src/pagination/VPagination'
 import VTable from '../../src/table/VTable'
 import VTableColumn from '../../src/table/VTableColumn'
-import VSticky from '../../src/sticky/Sticky'
+import VSticky from '../../src/sticky/VSticky'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
