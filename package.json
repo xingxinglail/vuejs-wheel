@@ -1,11 +1,11 @@
 {
   "name": "vuejs-wheel",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A vuejs ui wheel",
-  "main": "dist/index.js",
+  "main": "dist/vuejs-wheel.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name vuejs-wheel src/index.js",
     "lint": "vue-cli-service lint",
     "test": "karma start --single-run",
     "test:unit": "vue-cli-service test:unit -w",
