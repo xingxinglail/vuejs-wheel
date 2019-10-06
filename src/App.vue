@@ -1,76 +1,48 @@
 <template>
-    <div style="padding: 20px">
-        <p>bmsdf423435kjhdskjf</p>
-        <p>bmsdf345kjhdskjf</p>
-        <br>
-        <br>
-        <br>
-        <p>bmsdf423435kjhdskjf</p>
-        <p>bmsdf345kjhdskjf</p>
-        <div style="height: 500px;background-color: #eaeaea" ref="container">
-            <v-sticky :container="container" :distance="0" @change="change(1, $event)">
-                <h1 class="title" style="width: 200px;height: 50px;">hello world</h1>
-            </v-sticky>
-        </div>
-        <div style="height: 500px;position: relative">
-            <div style="position: absolute;top: 200px;left: 50px;">
-                <v-sticky :distance="50" @change="change(2, $event)">
-                    <h1 class="title" style="width: 200px;height: 50px;background-color: #4a90e2">hello world</h1>
-                </v-sticky>
+    <div style="margin-top: 200px;margin-left: 200px;padding: 20px">
+        <v-scrollbar wrapper-class="wrapper" view-class="view">
+            <div class="content">
+                <p>第一行</p>
+                <p>asdsflks2djflk水电费水电费是否水电费水电费</p>
+                <p>asdsf3lk12sdjflk</p>
+                <p>asdsf34lksdjflk</p>
+                <p>asdsertflewrksdjflk</p>
+                <p>asdsft3hrtylksdjflk</p>
+                <p>asdsflktyutyuisdjflk</p>
+                <p>asdsertertflksdjflk</p>
+                <p>asdsfltyuty1uiksdjflk</p>
+                <p>asdsft3hrtylksdjflk</p>
+                <p>asdsflktyutyuisdjflk</p>
+                <p>asdsertertflksdjflk</p>
+                <p>asdsft3hrtylksdjflk</p>
+                <p>asdsflktyutyuisdjflk</p>
+                <p>asdsertertflksdjflk</p>
+                <p>最后一行</p>
             </div>
-        </div>
+        </v-scrollbar>
         <br>
         <br>
         <br>
-        <p>bmsdf423435kjhdskjf</p>
-        <p>bmsdf345kjhdskjf</p>
-        <v-sticky :distance="130" @change="change(3, $event)">
-            <h1 class="title">hello world</h1>
-        </v-sticky>
-        <p>bmsdfkj123hdskjf</p>
-        <p>bmsd435fkjhdskjf</p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p>bmsdf423423435kjhdskjf</p>
-        <p>bmsdf345kjhdskjf</p>
-        <p>bmsdfkjhdskjf</p>
-        <p>bmsd435fkjhdskjf</p>
-        <br>
-        <br>
-        <br>
-        <p>bmsdfkjhdskjf</p>
-        <p>bmsdfka1sdjhdskjf</p>
-        <p>bmsdf123kjhdskjf</p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p>bmsdfasdkjhdskjf</p>
-        <p>bmsd543kjhdskjf</p>
-        <p>bmsdfk234jhdskjf</p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p>bmsdf423435kjhdskjf</p>
-        <p>bmsdf345kjhdskjf</p>
-        <p>bmsdfkjhdskjf</p>
-        <p>bmsd435fkjhdskjf</p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p>bmsdf423435kjhdskjf</p>
-        <p>bmsdf345kjhdskjf</p>
-        <p>bmsdfkjhdskjf</p>
-        <p>bmsd435fkjhdskjf</p>
+        <v-scrollbar wrapper-class="wrapper" view-class="view">
+            <div class="content">
+                <p>第一行</p>
+                <p class="ddd">asdsflks2djflk水电费水电费是否水电费水电费</p>
+                <p>asdsf3lk12sdjflk</p>
+                <p>asdsf34lksdjflk</p>
+                <p>asdsertflewrksdjflk</p>
+                <p>asdsft3hrtylksdjflk</p>
+                <p>asdsflktyutyuisdjflk</p>
+                <p>asdsertertflksdjflk</p>
+                <p>asdsfltyuty1uiksdjflk</p>
+                <p>asdsft3hrtylksdjflk</p>
+                <p>asdsflktyutyuisdjflk</p>
+                <p>asdsertertflksdjflk</p>
+                <p>asdsft3hrtylksdjflk</p>
+                <p>asdsflktyutyuisdjflk</p>
+                <p>asdsertertflksdjflk</p>
+                <p>最后一行</p>
+            </div>
+        </v-scrollbar>
     </div>
 </template>
 
@@ -98,10 +70,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-    width: 60vh;
-    padding: 40px;
-    background-color: #f68;
-    color: #fff;
+.wrapper {
+    width: 330px;
+    background-color: #fff4c2;
+
+    /deep/ .view {
+        max-height: 274px;
+    }
+
+    .content {
+        font-size: 28px;
+        line-height: 2;
+
+        p.ddd {
+            width: 500px;
+        }
+    }
 }
 </style>

@@ -33,6 +33,7 @@ import VPagination from './pagination/VPagination'
 import VTable from './table/VTable'
 import VTableColumn from './table/VTableColumn'
 import VSticky from './sticky/VSticky'
+import VScrollbar from './scrollbar/VScrollbar'
 
 Vue.use(VueRouter)
 
@@ -73,6 +74,7 @@ Vue.component('v-pagination', VPagination)
 Vue.component('v-table', VTable)
 Vue.component('v-table-column', VTableColumn)
 Vue.component('v-sticky', VSticky)
+Vue.component('v-scrollbar', VScrollbar)
 Vue.use(Toast)
 
 new Vue({
