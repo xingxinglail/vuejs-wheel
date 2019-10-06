@@ -130,6 +130,11 @@ export default {
                 const y = (pageY - top) / this._maxHeight * this._scrollHeight
                 this._innerWrapperDom.scrollTop = y
             }
+        },
+        scrollTo (x, y) {
+            const { _innerWrapperDom } = this
+            if (x > 0) _innerWrapperDom.scrollLeft = x / this._maxWidth * this._scrollWidth
+            if (y > 0) _innerWrapperDom.scrollTop = y / this._maxHeight * this._scrollHeight
         }
     }
 }
