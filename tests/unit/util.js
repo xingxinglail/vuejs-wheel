@@ -28,6 +28,7 @@ import VPagination from '../../src/pagination/VPagination'
 import VTable from '../../src/table/VTable'
 import VTableColumn from '../../src/table/VTableColumn'
 import VSticky from '../../src/sticky/VSticky'
+import VScrollbar from '../../src/scrollbar/VScrollbar'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -61,6 +62,7 @@ Vue.component('v-pagination', VPagination)
 Vue.component('v-table', VTable)
 Vue.component('v-table-column', VTableColumn)
 Vue.component('v-sticky', VSticky)
+Vue.component('v-scrollbar', VScrollbar)
 Vue.use(ToastPlugin)
 
 let id = 0
