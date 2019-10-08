@@ -97,8 +97,8 @@ export default {
             }
         },
         _onMousemoveHandle (e) {
-            e.preventDefault()
             if (this._isCursorType) {
+                e.preventDefault()
                 const { pageX, pageY } = e
                 if (pageY < 0) return
                 const { _startPos, _maxHeight, _scrollHeight } = this
@@ -123,18 +123,19 @@ export default {
             const { pageX, pageY, target } = e
             const { top, left } = getPosition(target)
             if (type === 'horizontal') {
-                const x = (pageX - left) / this._maxWidth * this._scrollWidth
+                const x = (pageX - (left - 2)) / this._maxWidth * this._scrollWidth
                 this._innerWrapperDom.scrollLeft = x
+                this.scrollTo(x)
             }
             if (type === 'vertical') {
-                const y = (pageY - top) / this._maxHeight * this._scrollHeight
-                this._innerWrapperDom.scrollTop = y
+                const y = (pageY - (top - 2)) / this._maxHeight * this._scrollHeight
+                this.scrollTo(undefined, y)
             }
         },
         scrollTo (x, y) {
             const { _innerWrapperDom } = this
-            if (x > 0) _innerWrapperDom.scrollLeft = x / this._maxWidth * this._scrollWidth
-            if (y > 0) _innerWrapperDom.scrollTop = y / this._maxHeight * this._scrollHeight
+            if (typeof x === 'number') _innerWrapperDom.scrollLeft = x
+            if (typeof y === 'number') _innerWrapperDom.scrollTop = y
         }
     }
 }
