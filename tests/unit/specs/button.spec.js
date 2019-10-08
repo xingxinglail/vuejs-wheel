@@ -2,6 +2,7 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { createVue, destroyVM } from '../util'
+import Button from '../../../src/button/VButton'
 
 const expect = chai.expect
 chai.use(sinonChai)
@@ -57,5 +58,9 @@ describe('Button', () => {
         })
         vm.$el.click()
         expect(callback).to.have.been.called
+    })
+
+    it('iconPosition 错误验证', () => {
+        expect(Button.props.iconPosition.validator('xxx')).to.false
     })
 })
