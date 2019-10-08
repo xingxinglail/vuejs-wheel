@@ -264,4 +264,134 @@ describe('Scrollbar', () => {
         document.dispatchEvent(event)
         expect(innerWrap.scrollTop).to.eq(0)
     })
+
+    it('竖向拖动边界', async () => {
+        vm = createVue({
+            template: `
+                <v-scrollbar wrapper-class="wrapper" view-class="view" ref="scrollbar">
+                    <div class="content"></div>
+                </v-scrollbar>
+            `
+        }, true)
+        await wait()
+        const innerWrap = vm.$el.querySelector('.v-scrollbar-inner-wrapper')
+        const bar = vm.$el.querySelector('.v-scrollbar-bar.vertical')
+        const innerBar = bar.querySelector('.inner')
+        const event = document.createEvent('MouseEvents')
+        event.initMouseEvent(
+            'mousedown',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0)
+        innerBar.dispatchEvent(event)
+        event.initMouseEvent(
+            'mousemove',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            -80)
+        document.dispatchEvent(event)
+        const mouseupEvent = new Event('mouseup')
+        document.dispatchEvent(mouseupEvent)
+        expect(innerWrap.scrollTop).to.eq(0)
+        await wait()
+        event.initMouseEvent(
+            'mousedown',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0)
+        innerBar.dispatchEvent(event)
+        event.initMouseEvent(
+            'mousemove',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            9999)
+        document.dispatchEvent(event)
+        document.dispatchEvent(mouseupEvent)
+        expect(innerWrap.scrollTop).to.eq(900)
+    })
+
+    it('横向向拖动边界', async () => {
+        vm = createVue({
+            template: `
+                <v-scrollbar wrapper-class="wrapper" view-class="view" ref="scrollbar">
+                    <div class="content2"></div>
+                </v-scrollbar>
+            `
+        }, true)
+        await wait()
+        const innerWrap = vm.$el.querySelector('.v-scrollbar-inner-wrapper')
+        const bar = vm.$el.querySelector('.v-scrollbar-bar.horizontal')
+        const innerBar = bar.querySelector('.inner')
+        const event = document.createEvent('MouseEvents')
+        event.initMouseEvent(
+            'mousedown',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0)
+        innerBar.dispatchEvent(event)
+        event.initMouseEvent(
+            'mousemove',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            -80,
+            0)
+        document.dispatchEvent(event)
+        const mouseupEvent = new Event('mouseup')
+        document.dispatchEvent(mouseupEvent)
+        expect(innerWrap.scrollLeft).to.eq(0)
+        await wait()
+        event.initMouseEvent(
+            'mousedown',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0)
+        innerBar.dispatchEvent(event)
+        event.initMouseEvent(
+            'mousemove',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            9999,
+            0)
+        document.dispatchEvent(event)
+        document.dispatchEvent(mouseupEvent)
+        expect(innerWrap.scrollLeft).to.eq(900)
+    })
 })
