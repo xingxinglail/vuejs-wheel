@@ -34,6 +34,7 @@ import VTable from './table/VTable'
 import VTableColumn from './table/VTableColumn'
 import VSticky from './sticky/VSticky'
 import VScrollbar from './scrollbar/VScrollbar'
+import VDatePicker from './datePicker/VDatePicker'
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,7 @@ Vue.component('v-table', VTable)
 Vue.component('v-table-column', VTableColumn)
 Vue.component('v-sticky', VSticky)
 Vue.component('v-scrollbar', VScrollbar)
+Vue.component('v-date-picker', VDatePicker)
 Vue.use(Toast)
 
 new Vue({
