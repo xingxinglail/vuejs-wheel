@@ -118,8 +118,8 @@ export default {
         }
     },
     watch: {
-        defaultActive (v, oldV) {
-            if (v !== oldV) this.updateChildren(v)
+        defaultActive (v) {
+            this.updateChildren(v)
         }
     }
 }

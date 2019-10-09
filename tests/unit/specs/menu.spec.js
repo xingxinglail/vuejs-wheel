@@ -2,6 +2,7 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { createVue, destroyVM, wait } from '../util'
+import Menu from '../../../src/menu/VMenu'
 
 const expect = chai.expect
 chai.use(sinonChai)
@@ -58,6 +59,42 @@ describe('Menu', () => {
         await wait()
         expect(vm.$el.children[1].classList.contains('v-menu-item-active')).to.be.false
         expect(vm.$el.children[2].classList.contains('v-menu-item-active')).to.be.true
+    })
+
+    it('可以通过click展开子菜单，vertical 模式', async () => {
+        vm = createVue({
+            template: `
+                <v-menu menu-trigger="click">
+                    <v-menu-item name="/home">首页</v-menu-item>
+                    <v-sub-menu name="/programming-language" :show-timeout="50">
+                        <template v-slot:title>编程语言</template>
+                        <v-menu-item name="/java">Java</v-menu-item>
+                        <v-menu-item name="/javascript">Javascript</v-menu-item>
+                        <v-menu-item name="/go">Go</v-menu-item>
+                        <v-sub-menu name="/framework" :show-timeout="50">
+                            <template v-slot:title>框架</template>
+                            <v-menu-item name="/jquery">jQuery</v-menu-item>
+                            <v-menu-item name="/express">express</v-menu-item>
+                            <v-menu-item name="/vue">vue</v-menu-item>
+                        </v-sub-menu>
+                    </v-sub-menu>
+                    <v-menu-item name="/about">关于我</v-menu-item>
+                </v-menu>
+            `
+        }, true)
+        const titleDom = vm.$el.querySelector('.v-sub-menu').querySelector('.v-sub-menu-title')
+        titleDom.click()
+        await wait(100)
+        expect(getComputedStyle(vm.$el.querySelector('.v-sub-menu').querySelector('.v-sub-menu-popover')).display).to.eq('block')
+        const titleDom2 = vm.$el.querySelector('.v-sub-menu').querySelector('.v-sub-menu').querySelector('.v-sub-menu-title')
+        titleDom2.click()
+        await wait(100)
+        expect(getComputedStyle(vm.$el.querySelector('.v-sub-menu').querySelector('.v-sub-menu-popover').querySelector('.v-sub-menu').querySelector('.v-sub-menu-popover')).display).to.eq('block')
+        await wait(100)
+        document.body.click()
+        await wait(400)
+        expect(getComputedStyle(vm.$el.querySelector('.v-sub-menu').querySelector('.v-sub-menu-popover')).display).to.eq('block')
+        expect(getComputedStyle(vm.$el.querySelector('.v-sub-menu').querySelector('.v-sub-menu-popover').querySelector('.v-sub-menu').querySelector('.v-sub-menu-popover')).display).to.eq('block')
     })
 
     it('可以通过click展开子菜单', async () => {
@@ -171,31 +208,31 @@ describe('Menu', () => {
         const cb = sinon.fake()
         const cb2 = sinon.fake()
         vm = createVue({
-                template: `
-                    <v-menu @select="onSelect" :default-openeds="['/programming-language', '/framework']">
-                        <v-menu-item name="/home">首页</v-menu-item>
-                        <v-sub-menu name="/programming-language">
-                            <template v-slot:title>编程语言</template>
-                            <v-menu-item name="/java">Java</v-menu-item>
-                            <v-menu-item name="/javascript">Javascript</v-menu-item>
-                            <v-menu-item name="/go">Go</v-menu-item>
-                            <v-sub-menu name="/framework">
-                                <template v-slot:title>框架</template>
-                                <v-menu-item name="/jquery">jQuery</v-menu-item>
-                                <v-menu-item name="/express">express</v-menu-item>
-                                <v-menu-item name="/vue">vue</v-menu-item>
-                            </v-sub-menu>
+            template: `
+                <v-menu router @select="onSelect" :default-openeds="['/programming-language', '/framework']">
+                    <v-menu-item name="/home">首页</v-menu-item>
+                    <v-sub-menu name="/programming-language">
+                        <template v-slot:title>编程语言</template>
+                        <v-menu-item name="/java">Java</v-menu-item>
+                        <v-menu-item name="/javascript">Javascript</v-menu-item>
+                        <v-menu-item name="/go">Go</v-menu-item>
+                        <v-sub-menu name="/framework">
+                            <template v-slot:title>框架</template>
+                            <v-menu-item name="/jquery">jQuery</v-menu-item>
+                            <v-menu-item name="/express">express</v-menu-item>
+                            <v-menu-item name="/vue">vue</v-menu-item>
                         </v-sub-menu>
-                        <v-menu-item name="/about">关于我</v-menu-item>
-                    </v-menu>
-                `,
-                methods: {
-                    onSelect (name, namePath) {
-                        cb(name)
-                        cb2(namePath)
-                    }
+                    </v-sub-menu>
+                    <v-menu-item name="/about">关于我</v-menu-item>
+                </v-menu>
+            `,
+            methods: {
+                onSelect (name, namePath) {
+                    cb(name)
+                    cb2(namePath)
                 }
-            }, true)
+            }
+        }, true)
         await wait()
         const sub = vm.$el.querySelector('.v-sub-menu')
         const subPopover = sub.querySelector('.v-sub-menu-popover')
@@ -204,5 +241,16 @@ describe('Menu', () => {
         subPopover2.children[1].click()
         expect(cb).to.have.been.calledWith('/express')
         expect(cb2).to.have.been.calledWith(['/programming-language', '/framework', '/express'])
+        subPopover2.children[1].click()
+        expect(cb).to.have.been.calledWith('/express')
+        expect(cb2).to.have.been.calledWith(['/programming-language', '/framework', '/express'])
+    })
+
+    it('mode 错误验证', () => {
+        expect(Menu.props.mode.validator('xxx')).to.false
+    })
+
+    it('menuTrigger 错误验证', () => {
+        expect(Menu.props.menuTrigger.validator('xxx')).to.false
     })
 })
