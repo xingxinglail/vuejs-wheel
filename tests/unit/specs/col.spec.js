@@ -1,5 +1,6 @@
 import chai from 'chai'
 import { createVue, destroyVM } from '../util'
+import Col from '../../../src/layout/VCol'
 
 const expect = chai.expect
 
@@ -56,5 +57,20 @@ describe('Col', () => {
         })
         expect(vm.$el.classList.contains('v-col-wide-pc-4')).to.eq(true)
         expect(vm.$el.classList.contains('v-col-wide-pc-offset-4')).to.eq(true)
+    })
+
+    it('ipad 错误验证', () => {
+        expect(Col.props.ipad.validator({})).to.false
+        expect(Col.props.ipad.validator({ span: 12 })).to.true
+    })
+
+    it('narrowPc 错误验证', () => {
+        expect(Col.props.narrowPc.validator({})).to.false
+        expect(Col.props.narrowPc.validator({ a: 12 })).to.false
+    })
+
+    it('widePc 错误验证', () => {
+        expect(Col.props.widePc.validator({})).to.false
+        expect(Col.props.widePc.validator({ a: 12 })).to.false
     })
 })

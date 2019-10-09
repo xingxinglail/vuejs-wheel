@@ -1,5 +1,6 @@
 import chai from 'chai'
 import { createVue, destroyVM } from '../util'
+import Row from '../../../src/layout/VRow'
 
 const expect = chai.expect
 
@@ -37,5 +38,9 @@ describe('Row', () => {
             `
         })
         expect(vm.$el.classList.contains('v-row-align-center')).to.eq(true)
+    })
+
+    it('align 错误验证', () => {
+        expect(Row.props.align.validator('xxx')).to.false
     })
 })

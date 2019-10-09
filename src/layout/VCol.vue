@@ -64,12 +64,10 @@ export default {
         },
         colStyle ({ gutter }) {
             if (gutter) {
-                if (gutter) {
-                    const val = gutter / 2
-                    return {
-                        paddingLeft: `${val}px`,
-                        paddingRight: `${val}px`
-                    }
+                const val = gutter / 2
+                return {
+                    paddingLeft: `${val}px`,
+                    paddingRight: `${val}px`
                 }
             }
             return undefined
