@@ -1,7 +1,8 @@
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-import { createVue, destroyVM } from '../util'
+import { createVue, destroyVM, wait } from '../util'
+import Popover from '../../../src/popover/VPopover'
 
 const expect = chai.expect
 chai.use(sinonChai)
@@ -14,21 +15,39 @@ describe('Popover', () => {
     })
 
     it('可设置placement', done => {
-        vm = createVue({
-            template: `
-                <v-popover placement="left-end" ref="popover">
-                    <template slot="content">
-                        <p>水电是电饭费</p>
-                    </template>
-                    <button>设置</button>
-                </v-popover>
-            `
-        })
-        setTimeout(() => {
-            const { contentWrapper } = vm.$refs.popover.$refs
-            expect(contentWrapper.classList.contains('v-popover-placement-left-end')).to.be.equal(true)
-            done()
-        }, 100)
+        const placements = ['top-start', 'top', 'top-end', 'bottom-start', 'bottom', 'bottom-end', 'left-start', 'left', 'left-end', 'right-start', 'right', 'right-end']
+        let i = 0
+        ;(async function loop () {
+            if (i < placements.length) {
+                const placement = placements[i]
+                vm = createVue({
+                    template: `
+                        <v-popover :placement="placement" ref="popover">
+                            <template slot="content">
+                                <p>水电是电饭费</p>
+                            </template>
+                            <button>设置</button>
+                        </v-popover>
+                    `,
+                    data () {
+                        return {
+                            placement
+                        }
+                    }
+                })
+                await wait()
+                const { contentWrapper } = vm.$refs.popover.$refs
+                expect(contentWrapper.classList.contains(`v-popover-placement-${placement}`)).to.be.equal(true)
+                const popover = vm.$refs.popover
+                popover.$el.click()
+                await wait()
+                document.body.click()
+                i++
+                loop()
+            } else {
+                done()
+            }
+        }())
     })
 
     it('点击trigger显示隐藏', done => {
@@ -242,5 +261,13 @@ describe('Popover', () => {
                 }, 40)
             }, 100)
         }, 100)
+    })
+
+    it('placement 错误验证', () => {
+        expect(Popover.props.placement.validator('xxx')).to.false
+    })
+
+    it('trigger 错误验证', () => {
+        expect(Popover.props.trigger.validator('xxx')).to.false
     })
 })
