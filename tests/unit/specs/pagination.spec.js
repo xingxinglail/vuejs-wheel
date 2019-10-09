@@ -2,6 +2,7 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { createVue, destroyVM, wait } from '../util'
+import Pagination from '../../../src/pagination/VPagination'
 
 const expect = chai.expect
 chai.use(sinonChai)
@@ -76,13 +77,51 @@ describe('Pagination', () => {
         doublePrev.click()
         doublePrev.click()
         expect(vm.current).to.eq(1)
+        const items = vm.$el.querySelectorAll('.item')
+        items[4].click()
+        await wait()
+        expect(vm.current).to.eq(3)
+        items[4].click()
+        await wait()
+        expect(vm.current).to.eq(3)
+    })
+
+    it('可以点击切换页码段页码', async () => {
+        vm = createVue({
+            template: `
+                <v-pagination :total="10" :current.sync="current"></v-pagination>
+            `,
+            data () {
+                return {
+                    current: 1
+                }
+            }
+        }, true)
+        const prevAndNext = vm.$el.querySelectorAll('.icon')
+        const prev = prevAndNext[0]
+        const next = prevAndNext[1]
+        next.click()
+        next.click()
+        next.click()
+        next.click()
+        next.click()
+        next.click()
+        next.click()
+        next.click()
+        next.click()
+        next.click()
+        await wait()
+        expect(vm.current).to.eq(10)
+        next.click()
+        await wait()
+        expect(vm.current).to.eq(10)
     })
 
     it('触发change事件', async () => {
         const cb = sinon.fake()
         vm = createVue({
             template: `
-                <v-pagination :total="100" :current="current" @change="change"></v-pagination>
+                <v-pagination :total="10" :current="current" @change="change"></v-pagination>
             `,
             data () {
                 return {
@@ -101,5 +140,48 @@ describe('Pagination', () => {
         doubleNext.click()
         expect(vm.current).to.eq(6)
         expect(cb).to.have.been.calledWith(6)
+        doubleNext.click()
+        expect(vm.current).to.eq(10)
+    })
+
+    it('监听 total 变化', async () => {
+        vm = createVue({
+            template: `
+                <v-pagination :total="total" :current.sync="current"></v-pagination>
+            `,
+            data () {
+                return {
+                    current: 10,
+                    total: 10
+                }
+            }
+        }, true)
+        await wait(200)
+        vm.total = 5
+        await wait()
+        expect(vm.current).to.eq(5)
+        vm.current = 3
+        vm.total = 8
+        await wait()
+        expect(vm.current).to.eq(3)
+    })
+
+    it('边界判断', async () => {
+        vm = createVue({
+            template: `
+                <v-pagination :total="10" :current.sync="current"></v-pagination>
+            `,
+            data () {
+                return {
+                    current: 1
+                }
+            }
+        }, true)
+        vm.current = 11
+        await wait()
+        expect(vm.current).to.eq(10)
+        vm.current = -1
+        await wait()
+        expect(vm.current).to.eq(1)
     })
 })
