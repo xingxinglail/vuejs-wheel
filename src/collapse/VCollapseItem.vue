@@ -26,9 +26,6 @@ export default {
         name: {
             type: [String, Number]
         }
-    },
-    methods: {
-        onClick () {}
     }
 }
 </script>

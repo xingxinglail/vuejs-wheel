@@ -2,6 +2,7 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { createVue, destroyVM } from '../util'
+import Collapse from '../../../src/collapse/VCollapse'
 
 const expect = chai.expect
 chai.use(sinonChai)
@@ -159,5 +160,9 @@ describe('CollapseItem', () => {
                 }, 100)
             }, 100)
         }, 100)
+    })
+
+    it('value 错误验证', () => {
+        expect(Collapse.props.value.validator(1)).to.false
     })
 })
