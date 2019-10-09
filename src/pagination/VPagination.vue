@@ -55,11 +55,19 @@ export default {
     methods: {
         getPages (val) {
             const { total, cur } = this
-            if (val === cur) return
             let _cur = val
-            if (_cur > total) _cur = total
-            if (_cur < 0) _cur = 1
+            if (_cur > total) {
+                _cur = total
+                this.changeCurrent(_cur)
+                return
+            }
+            if (_cur < 0) {
+                _cur = 1
+                this.changeCurrent(_cur)
+                return
+            }
             this.cur = _cur
+            if (val === cur) return
             const pages = []
             if (total > 7) {
                 if (_cur <= 4) {
