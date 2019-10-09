@@ -4,7 +4,27 @@
         <div class="v-date-picker-panel">
             <div class="v-date-picker-date">
                 <div class="v-date-picker-date-head">
-
+                    <div class="left">
+                        <v-icon class="double"
+                                name="doubleleft"
+                                @mousedown.native.prevent></v-icon>
+                        <v-icon class="single"
+                                name="left"
+                                @click="changeMonth('prev')"
+                                @mousedown.native.prevent></v-icon>
+                    </div>
+                    <div class="center">
+                        <span>{{ panel.year }}&nbsp;年&nbsp;</span>
+                        <span>{{ panel.monthStr }}&nbsp;月</span>
+                    </div>
+                    <div class="right">
+                        <v-icon
+                            class="single"
+                            name="right"
+                            @click="changeMonth('next')"
+                            @mousedown.native.prevent></v-icon>
+                        <v-icon class="double" name="doubleright" @mousedown.native.prevent></v-icon>
+                    </div>
                 </div>
                 <div class="v-date-picker-date-body">
                     <div class="week-wrapper">
@@ -21,8 +41,8 @@
                              v-for="item in data"
                              :key="item.str"
                              :aa="item.date"
-                             :class="{ 'next-month': item.isNextMonth, 'prev-month': item.isPrevMonth }">
-                            <span>{{ item.date.getDate() }}</span>
+                             :class="{ current: item.isCurrent, today: item.isToday, 'next-month': item.isNextMonth, 'prev-month': item.isPrevMonth }">
+                            <span>{{ item.day }}</span>
                         </div>
 <!--                        <div class="item today">6</div>-->
 <!--                        <div class="item current"><span>7</span></div>-->
@@ -36,70 +56,121 @@
 <script>
 import dayjs from 'dayjs'
 import Input from '../input/VInput'
+import Icon from '../icon/VIcon'
 
 export default {
     name: 'VDatePicker',
     props: {
+        value: [String, Number, Date, Array],
         type: {
             type: String,
             default: 'date'
+        },
+        format: {
+            type: String,
+            default: 'YYYY-MM-DD'
         }
     },
     data () {
         return {
             inputValue: '',
-            now: dayjs().hour(0).minute(0).second(0).millisecond(0).toDate(),
-            data: []
+            current: {
+                year: 0,
+                month: 0,
+                date: 0
+            },
+            panel: {
+                year: 0,
+                month: 0,
+                monthStr: '0',
+                date: 0,
+                dateStr: '0'
+            }
         }
     },
-    created () {
-        this.getDate()
+    beforeCreate () {
+        this._currentDayjs = null
+        const now = new Date()
+        this._nowYear = now.getFullYear()
+        this._nowMonth = now.getMonth()
+        this._nowDate = now.getDate()
+        this._now = now
     },
-    methods: {
-        getDate () {
+    computed: {
+        data ({ panel }) {
+            const { year, month, date } = panel
             const dateArr = []
-            const firstDate = dayjs(this.now).date(1).hour(0).minute(0).second(0).millisecond(0)
-            const startIndex = this.getStartWeekIndex(firstDate)
-            if (startIndex > 0) {
-                for (let i = 1; i <= startIndex; i++) {
-                    const date = firstDate.subtract(i, 'day')
-                    dateArr.unshift({
-                        str: date.format('YYYY-MM-DD'),
-                        date: date.toDate(),
-                        isPrevMonth: true,
-                        isNextMonth: false
-                    })
-                }
-            }
-            const days = firstDate.daysInMonth()
-            for (let i = 0; i < days; i++) {
-                const date = firstDate.add(i, 'day')
+            const { _nowYear, _nowMonth, _nowDate } = this
+            const firstDateOfMonth = new Date(year, month, 1)
+            const firstWeek = firstDateOfMonth.getDay()
+            const firstDate = firstDateOfMonth - (firstWeek * 86400000)
+            for (let i = 0; i < 42; i++) {
+                const _dateObj = new Date(firstDate + i * 86400000)
+                const _year = _dateObj.getFullYear()
+                const _month = _dateObj.getMonth()
+                const _date = _dateObj.getDate()
                 dateArr.push({
-                    str: date.format('YYYY-MM-DD'),
-                    date: date.toDate()
+                    date: _dateObj,
+                    day: _date,
+                    str: dayjs(_dateObj).format('YYYY-MM-DD'),
+                    isCurrent: _year === year && _month === month && _date === date,
+                    isPrevMonth: _month < month,
+                    isNextMonth: _month > month,
+                    isToday: _year === _nowYear && _month === _nowMonth && _date === _nowDate
                 })
             }
-            if (dateArr.length < 42) {
-                const days = 42 - dateArr.length
-                const nextMonth = firstDate.add(1, 'month')
-                for (let i = 0; i < days; i++) {
-                    const date = nextMonth.add(i, 'day')
-                    dateArr.push({
-                        str: date.format('YYYY-MM-DD'),
-                        date: date.toDate(),
-                        isPrevMonth: false,
-                        isNextMonth: true
-                    })
+            return dateArr
+        }
+    },
+    methods: {
+        formatVal (val) {
+            if (Array.isArray(val)) {
+                if (this.type === 'daterange') {
+                    // todo
                 }
+            } else {
+                let date = dayjs(val)
+                if (!date.isValid()) date = dayjs()
+                this.inputValue = date.format(this.format)
+                const { current, panel } = this
+                current.year = date.year()
+                current.month = date.month()
+                current.date = date.date()
+                panel.year = current.year
+                panel.month = current.month
+                panel.date = current.date
+                this.changePanel(current)
+                this._currentDayjs = date
             }
-            this.data = dateArr
         },
-        getStartWeekIndex (date) {
-            return date.day()
+        changePanel ({ year, month, date }) {
+            const { panel } = this
+            panel.year = year
+            panel.month = month
+            panel.monthStr = (month + 1).toString().padStart(2, '0')
+            panel.date = date
+            panel.dateStr = date.toString().padStart(2, '0')
+        },
+        changeMonth (type) {
+            // todo bug
+            if (type === 'next') {
+                const nextDate = this._currentDayjs.add(1, 'month')
+                console.log(nextDate.format('YYYY-MM-DD'))
+                this.changePanel({ year: nextDate.year(), month: nextDate.month(), date: nextDate.date() })
+            }
+        }
+    },
+    watch: {
+        value: {
+            immediate: true,
+            handler (v) {
+                this.formatVal(v)
+            }
         }
     },
     components: {
-        'v-input': Input
+        'v-input': Input,
+        'v-icon': Icon
     }
 }
 </script>
@@ -125,7 +196,41 @@ $color: #409eff;
         .v-date-picker-date {
 
             .v-date-picker-date-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 margin: 12px;
+
+                .center {
+                    font-size: 16px;
+                    font-weight: 500;
+
+                    span {
+                        cursor: pointer;
+
+                        &:hover {
+                            color: $color;
+                        }
+                    }
+                }
+
+                .left, .right {
+
+                    .double, .single {
+                        vertical-align: middle;
+                        padding: 8px;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: $color;
+                        }
+                    }
+
+                    .single {
+                        width: 10px;
+                        height: 10px;
+                    }
+                }
             }
 
             .v-date-picker-date-body {

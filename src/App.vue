@@ -1,6 +1,6 @@
 <template>
     <div style="margin-top: 200px;margin-left: 200px;padding: 20px">
-        <v-date-picker type="date" />
+        <v-date-picker v-model="date" type="date" />
     </div>
 </template>
 
@@ -10,6 +10,7 @@ export default {
     name: 'App',
     data () {
         return {
+            date: '2018-12-08',
             container: null
         }
     },
