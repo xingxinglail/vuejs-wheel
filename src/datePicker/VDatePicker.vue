@@ -2,53 +2,11 @@
     <div class="v-date-picker">
         <v-input v-model="inputValue" placeholder="选择日期" />
         <div class="v-date-picker-panel">
-            <div class="v-date-picker-date">
-                <div class="v-date-picker-date-head">
-                    <div class="left">
-                        <v-icon class="double"
-                                name="doubleleft"
-                                @mousedown.native.prevent></v-icon>
-                        <v-icon class="single"
-                                name="left"
-                                @click="changeMonth('prev')"
-                                @mousedown.native.prevent></v-icon>
-                    </div>
-                    <div class="center">
-                        <span>{{ panel.year }}&nbsp;年&nbsp;</span>
-                        <span>{{ panel.monthStr }}&nbsp;月</span>
-                    </div>
-                    <div class="right">
-                        <v-icon
-                            class="single"
-                            name="right"
-                            @click="changeMonth('next')"
-                            @mousedown.native.prevent></v-icon>
-                        <v-icon class="double" name="doubleright" @mousedown.native.prevent></v-icon>
-                    </div>
-                </div>
-                <div class="v-date-picker-date-body">
-                    <div class="week-wrapper">
-                        <div class="item">日</div>
-                        <div class="item">一</div>
-                        <div class="item">二</div>
-                        <div class="item">三</div>
-                        <div class="item">四</div>
-                        <div class="item">五</div>
-                        <div class="item">六</div>
-                    </div>
-                    <div class="date-wrapper">
-                        <div class="item"
-                             v-for="item in data"
-                             :key="item.str"
-                             :aa="item.date"
-                             :class="{ current: item.isCurrent, today: item.isToday, 'next-month': item.isNextMonth, 'prev-month': item.isPrevMonth }">
-                            <span>{{ item.day }}</span>
-                        </div>
-<!--                        <div class="item today">6</div>-->
-<!--                        <div class="item current"><span>7</span></div>-->
-                    </div>
-                </div>
-            </div>
+            <v-date-panel :data="data"
+                          :current="current"
+                          :panel="panel"
+                          @select="onSelect"
+                          @change-date="onChangeDate" />
         </div>
     </div>
 </template>
@@ -56,10 +14,14 @@
 <script>
 import dayjs from 'dayjs'
 import Input from '../input/VInput'
-import Icon from '../icon/VIcon'
+import VDatePanel from './VDatePanel'
 
 export default {
     name: 'VDatePicker',
+    model: {
+        prop: 'value',
+        event: 'change'
+    },
     props: {
         value: [String, Number, Date, Array],
         type: {
@@ -69,10 +31,12 @@ export default {
         format: {
             type: String,
             default: 'YYYY-MM-DD'
-        }
+        },
+        valueFormat: String
     },
     data () {
         return {
+            data: [],
             inputValue: '',
             current: {
                 year: 0,
@@ -85,7 +49,8 @@ export default {
                 monthStr: '0',
                 date: 0,
                 dateStr: '0'
-            }
+            },
+            visible: false
         }
     },
     beforeCreate () {
@@ -96,9 +61,27 @@ export default {
         this._nowDate = now.getDate()
         this._now = now
     },
-    computed: {
-        data ({ panel }) {
-            const { year, month, date } = panel
+    methods: {
+        formatVal (val) {
+            if (Array.isArray(val)) {
+                if (this.type === 'daterange') {
+                    // todo
+                }
+            } else {
+                let date = dayjs(val)
+                if (!date.isValid()) date = dayjs()
+                this.inputValue = date.format(this.format)
+                const { current } = this
+                current.year = date.year()
+                current.month = date.month()
+                current.date = date.date()
+                this.changePanel(current)
+                this._currentDayjs = date
+            }
+        },
+        getDate (panel) {
+            const { year: cYear, month: cMonth, date: cDate } = this.current
+            const { year, month } = panel
             const dateArr = []
             const { _nowYear, _nowMonth, _nowDate } = this
             const firstDateOfMonth = new Date(year, month, 1)
@@ -113,35 +96,13 @@ export default {
                     date: _dateObj,
                     day: _date,
                     str: dayjs(_dateObj).format('YYYY-MM-DD'),
-                    isCurrent: _year === year && _month === month && _date === date,
+                    isCurrent: _year === cYear && _month === cMonth && _date === cDate,
                     isPrevMonth: _month < month,
                     isNextMonth: _month > month,
                     isToday: _year === _nowYear && _month === _nowMonth && _date === _nowDate
                 })
             }
-            return dateArr
-        }
-    },
-    methods: {
-        formatVal (val) {
-            if (Array.isArray(val)) {
-                if (this.type === 'daterange') {
-                    // todo
-                }
-            } else {
-                let date = dayjs(val)
-                if (!date.isValid()) date = dayjs()
-                this.inputValue = date.format(this.format)
-                const { current, panel } = this
-                current.year = date.year()
-                current.month = date.month()
-                current.date = date.date()
-                panel.year = current.year
-                panel.month = current.month
-                panel.date = current.date
-                this.changePanel(current)
-                this._currentDayjs = date
-            }
+            this.data = dateArr
         },
         changePanel ({ year, month, date }) {
             const { panel } = this
@@ -150,14 +111,23 @@ export default {
             panel.monthStr = (month + 1).toString().padStart(2, '0')
             panel.date = date
             panel.dateStr = date.toString().padStart(2, '0')
+            this.getDate(panel)
         },
-        changeMonth (type) {
-            // todo bug
+        onChangeDate (type, unit) {
+            const { year, month, date } = this.panel
+            let newDate = new Date(year, month, date)
             if (type === 'next') {
-                const nextDate = this._currentDayjs.add(1, 'month')
-                console.log(nextDate.format('YYYY-MM-DD'))
-                this.changePanel({ year: nextDate.year(), month: nextDate.month(), date: nextDate.date() })
+                newDate = dayjs(newDate).add(1, unit)
+            } else {
+                newDate = dayjs(newDate).subtract(1, unit)
             }
+            this.changePanel({ year: newDate.year(), month: newDate.month(), date: newDate.date() })
+        },
+        onSelect (data) {
+            let date = data.date
+            if (this.valueFormat) date = dayjs(date).format(this.valueFormat)
+            this.$emit('change', date)
+            this.visible = false
         }
     },
     watch: {
@@ -170,7 +140,7 @@ export default {
     },
     components: {
         'v-input': Input,
-        'v-icon': Icon
+        'v-date-panel': VDatePanel
     }
 }
 </script>
@@ -192,110 +162,6 @@ $color: #409eff;
         line-height: 30px;
         margin: 5px 0;
         font-size: 12px;
-
-        .v-date-picker-date {
-
-            .v-date-picker-date-head {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin: 12px;
-
-                .center {
-                    font-size: 16px;
-                    font-weight: 500;
-
-                    span {
-                        cursor: pointer;
-
-                        &:hover {
-                            color: $color;
-                        }
-                    }
-                }
-
-                .left, .right {
-
-                    .double, .single {
-                        vertical-align: middle;
-                        padding: 8px;
-                        cursor: pointer;
-
-                        &:hover {
-                            color: $color;
-                        }
-                    }
-
-                    .single {
-                        width: 10px;
-                        height: 10px;
-                    }
-                }
-            }
-
-            .v-date-picker-date-body {
-                width: 308px;
-                margin: 15px;
-
-                .item {
-                    text-align: center;
-                    width: 44px;
-                    height: 44px;
-                    line-height: 44px;
-                }
-
-                .date-wrapper, .week-wrapper {
-                    display: flex;
-
-                    &.week-wrapper {
-                        border-bottom: 1px solid #ebeef5;
-                    }
-                }
-
-                .date-wrapper {
-                    flex-wrap: wrap;
-
-                    .item {
-                        position: relative;
-                        cursor: pointer;
-
-                        span {
-                            display: block;
-                            position: absolute;
-                            width: 24px;
-                            height: 24px;
-                            z-index: 1;
-                            top: 50%;
-                            left: 50%;
-                            margin: -12px 0 0 -12px;
-                            line-height: 24px;
-                        }
-
-                        &:hover span {
-                            color: $color;
-                        }
-
-                        &.today span {
-                            color: $color;
-                            font-weight: 700;
-                        }
-
-                        &.current span {
-                            border-radius: 50%;
-                            color: #fff;
-                            background-color: $color;
-                        }
-
-                        &.prev-month, &.next-month {
-
-                            span {
-                                color: #c0c4cc;
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 </style>

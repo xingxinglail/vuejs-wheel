@@ -1,6 +1,6 @@
 <template>
     <div style="margin-top: 200px;margin-left: 200px;padding: 20px">
-        <v-date-picker v-model="date" type="date" />
+        <v-date-picker v-model="date" type="date" value-format="YYYY-MM-DD" @change="change" />
     </div>
 </template>
 
@@ -15,10 +15,17 @@ export default {
         }
     },
     created () {
+        setTimeout(() => {
+            this.date = '2018-12-11'
+        }, 2000)
     },
     mounted () {
     },
     methods: {
+        change (e) {
+            console.log(e)
+            console.log(this.date)
+        }
     }
 }
 </script>
