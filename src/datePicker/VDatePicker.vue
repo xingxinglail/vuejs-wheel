@@ -1,6 +1,6 @@
 <template>
     <div class="v-date-picker" ref="reference">
-        <v-input ref="input" v-model="inputValue" placeholder="选择日期" @input="onInput" @focus="onFocus" />
+        <v-input ref="input" v-model="inputValue" placeholder="选择日期" @change="onChange" @focus="onFocus" />
         <div class="v-date-picker-panel" v-if="popperVisible" v-show="visible" ref="popper">
             <v-date-panel :data="data"
                           :current="current"
@@ -70,7 +70,6 @@ export default {
         }
     },
     beforeCreate () {
-        this._currentDayjs = null
         const now = new Date()
         this._nowYear = now.getFullYear()
         this._nowMonth = now.getMonth()
@@ -83,9 +82,6 @@ export default {
         document.removeEventListener('click', this.handleDocumentClick)
     },
     methods: {
-        onInput () {
-            console.log(this.inputValue)
-        },
         initClickOutside () {
             document.addEventListener('click', this.handleDocumentClick)
         },
@@ -108,7 +104,6 @@ export default {
                 current.month = date.month()
                 current.date = date.date()
                 this.changePanel(current)
-                this._currentDayjs = date
             }
         },
         getDate (panel) {
@@ -156,11 +151,9 @@ export default {
             this.changePanel({ year: newDate.year(), month: newDate.month(), date: newDate.date() })
         },
         onSelect (data) {
-            let date = data.date
-            if (this.valueFormat) date = dayjs(date).format(this.valueFormat)
-            this.$emit('change', date)
-            this.visible = false
+            this.emitDate(data.date)
             this.$refs.input.$el.querySelector('input').blur()
+            this.close()
         },
         onFocus () {
             if (!this.popperVisible) {
@@ -174,6 +167,17 @@ export default {
         },
         close () {
             this.visible = false
+        },
+        onChange () {
+            const { inputValue } = this
+            this.formatVal(inputValue)
+            this.emitDate(inputValue)
+        },
+        emitDate (val) {
+            let date = val
+            const { valueFormat } = this
+            if (valueFormat) date = dayjs(val).format(valueFormat)
+            this.$emit('change', date)
         }
     },
     watch: {

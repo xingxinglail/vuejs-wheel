@@ -16,7 +16,7 @@ export default {
     },
     created () {
         setTimeout(() => {
-            this.date = '2018-12-11'
+            // this.date = '2018-12-11'
         }, 2000)
     },
     mounted () {
