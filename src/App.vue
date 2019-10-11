@@ -1,6 +1,10 @@
 <template>
-    <div style="margin-top: 200px;margin-left: 200px;padding: 20px">
+    <div style="margin-top: 50px;margin-left: 200px;padding: 20px">
         <v-date-picker v-model="date" type="date" value-format="YYYY-MM-DD" @change="change" />
+        <br>
+        <br>
+        <br>
+<!--        <v-date-picker v-model="date2" type="daterange" value-format="YYYY-MM-DD" @change="change" />-->
     </div>
 </template>
 
@@ -10,7 +14,8 @@ export default {
     name: 'App',
     data () {
         return {
-            date: '2018-12-08',
+            date: '',
+            date2: '',
             container: null
         }
     },

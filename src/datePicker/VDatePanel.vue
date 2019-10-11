@@ -53,7 +53,6 @@
 
 <script>
 import Icon from '../icon/VIcon'
-// todo popover 弹出 popper.js
 export default {
     name: 'VDatePanel',
     props: {

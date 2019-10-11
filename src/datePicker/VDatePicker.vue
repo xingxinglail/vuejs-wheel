@@ -1,13 +1,33 @@
 <template>
     <div class="v-date-picker" ref="reference">
-        <v-input ref="input" v-model="inputValue" placeholder="选择日期" @change="onChange" @focus="onFocus" />
-        <div class="v-date-picker-panel" v-if="popperVisible" v-show="visible" ref="popper">
+        <v-input ref="input"
+                 v-model="inputValue"
+                 placeholder="选择日期"
+                 @change="onChange"
+                 @focus="onFocus" />
+        <v-input ref="input"
+                 v-if="type === 'daterange'"
+                 v-model="endInputValue"
+                 placeholder="选择日期"
+                 @focus="onFocus" />
+        <div class="v-date-picker-panel"
+             :class="{ 'v-date-picker-panel-range': type === 'daterange' }"
+             v-if="popperVisible"
+             v-show="visible"
+             ref="popper">
             <v-date-panel :data="data"
                           :current="current"
                           :panel="panel"
                           @select="onSelect"
                           @change-date="onChangeDate" />
+            <v-date-panel v-if="type === 'daterange'"
+                          :data="endData"
+                          :current="endCurrent"
+                          :panel="endPanel"
+                          @select="onSelect"
+                          @change-date="onChangeDate" />
         </div>
+<!--        <v-date-range v-if="type === 'daterange'" />-->
     </div>
 </template>
 
@@ -15,6 +35,7 @@
 import dayjs from 'dayjs'
 import Input from '../input/VInput'
 import VDatePanel from './VDatePanel'
+import VDateRange from './VDateRange'
 import Popper from '../mixins/popper'
 
 export default {
@@ -53,13 +74,27 @@ export default {
     data () {
         return {
             data: [],
+            endData: [],
             inputValue: '',
+            endInputValue: '',
             current: {
                 year: 0,
                 month: 0,
                 date: 0
             },
+            endCurrent: {
+                year: 0,
+                month: 0,
+                date: 0
+            },
             panel: {
+                year: 0,
+                month: 0,
+                monthStr: '0',
+                date: 0,
+                dateStr: '0'
+            },
+            endPanel: {
                 year: 0,
                 month: 0,
                 monthStr: '0',
@@ -75,6 +110,7 @@ export default {
         this._nowMonth = now.getMonth()
         this._nowDate = now.getDate()
         this._now = now
+        this._copyInputValue = ''
     },
     created () {
     },
@@ -96,14 +132,23 @@ export default {
                     // todo
                 }
             } else {
-                let date = dayjs(val)
-                if (!date.isValid()) date = dayjs()
-                this.inputValue = date.format(this.format)
-                const { current } = this
-                current.year = date.year()
-                current.month = date.month()
-                current.date = date.date()
-                this.changePanel(current)
+                if (!dayjs(val).isValid()) {
+                    if (this._copyInputValue === '') {
+                        const date = dayjs()
+                        this.changePanel({ year: date.year(), month: date.month(), date: date.date() })
+                    } else {
+                        this.inputValue = this._copyInputValue
+                    }
+                } else {
+                    const date = dayjs(val)
+                    this.inputValue = date.format(this.format)
+                    this._copyInputValue = this.inputValue
+                    const { current } = this
+                    current.year = date.year()
+                    current.month = date.month()
+                    current.date = date.date()
+                    this.changePanel(current)
+                }
             }
         },
         getDate (panel) {
@@ -169,9 +214,10 @@ export default {
             this.visible = false
         },
         onChange () {
-            const { inputValue } = this
-            this.formatVal(inputValue)
-            this.emitDate(inputValue)
+            const { _copyInputValue } = this
+            this.formatVal(this.inputValue)
+            if (this.inputValue === _copyInputValue) return
+            this.$emit('change', this.inputValue)
         },
         emitDate (val) {
             let date = val
@@ -183,14 +229,15 @@ export default {
     watch: {
         value: {
             immediate: true,
-            handler (v) {
+            handler (v, ov) {
                 this.formatVal(v)
             }
         }
     },
     components: {
         'v-input': Input,
-        'v-date-panel': VDatePanel
+        'v-date-panel': VDatePanel,
+        'v-date-range': VDateRange
     }
 }
 </script>
@@ -212,5 +259,14 @@ $color: #409eff;
     line-height: 30px;
     margin: 5px 0;
     font-size: 12px;
+
+    &.v-date-picker-panel-range {
+        display: flex;
+        align-items: flex-start;
+
+        .v-date-picker-date-panel:first-child {
+            border-right: 1px solid #e4e4e4;
+        }
+    }
 }
 </style>
