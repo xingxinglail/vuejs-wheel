@@ -1,7 +1,7 @@
 <template>
-    <div class="v-date-picker">
-        <v-input v-model="inputValue" placeholder="选择日期" />
-        <div class="v-date-picker-panel">
+    <div class="v-date-picker" ref="reference">
+        <v-input ref="input" v-model="inputValue" placeholder="选择日期" @input="onInput" @focus="onFocus" />
+        <div class="v-date-picker-panel" v-if="popperVisible" v-show="visible" ref="popper">
             <v-date-panel :data="data"
                           :current="current"
                           :panel="panel"
@@ -15,6 +15,7 @@
 import dayjs from 'dayjs'
 import Input from '../input/VInput'
 import VDatePanel from './VDatePanel'
+import Popper from '../mixins/popper'
 
 export default {
     name: 'VDatePicker',
@@ -22,6 +23,7 @@ export default {
         prop: 'value',
         event: 'change'
     },
+    mixins: [Popper],
     props: {
         value: [String, Number, Date, Array],
         type: {
@@ -32,7 +34,21 @@ export default {
             type: String,
             default: 'YYYY-MM-DD'
         },
-        valueFormat: String
+        valueFormat: String,
+        popperOptions: {
+            type: Object,
+            default () {
+                return {
+                    removeOnDestroy: true,
+                    placement: 'bottom-start',
+                    onCreate: () => {
+                        document.body.appendChild(this.$refs.popper)
+                        this.open()
+                        this.initClickOutside()
+                    }
+                }
+            }
+        }
     },
     data () {
         return {
@@ -61,7 +77,23 @@ export default {
         this._nowDate = now.getDate()
         this._now = now
     },
+    created () {
+    },
+    beforeDestroy () {
+        document.removeEventListener('click', this.handleDocumentClick)
+    },
     methods: {
+        onInput () {
+            console.log(this.inputValue)
+        },
+        initClickOutside () {
+            document.addEventListener('click', this.handleDocumentClick)
+        },
+        handleDocumentClick ({ target }) {
+            const { reference, popper } = this.$refs
+            if (reference.contains(target) || target === popper || popper.contains(target)) return
+            this.close()
+        },
         formatVal (val) {
             if (Array.isArray(val)) {
                 if (this.type === 'daterange') {
@@ -128,6 +160,20 @@ export default {
             if (this.valueFormat) date = dayjs(date).format(this.valueFormat)
             this.$emit('change', date)
             this.visible = false
+            this.$refs.input.$el.querySelector('input').blur()
+        },
+        onFocus () {
+            if (!this.popperVisible) {
+                this.popperVisible = true
+            } else {
+                this.open()
+            }
+        },
+        open () {
+            this.visible = true
+        },
+        close () {
+            this.visible = false
         }
     },
     watch: {
@@ -151,17 +197,16 @@ export default {
 $color: #409eff;
 
 .v-date-picker {
+}
 
-    .v-date-picker-panel {
-        position: absolute;
-        color: #606266;
-        border: 1px solid #e4e7ed;
-        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-        background: #fff;
-        border-radius: 4px;
-        line-height: 30px;
-        margin: 5px 0;
-        font-size: 12px;
-    }
+.v-date-picker-panel {
+    color: #606266;
+    border: 1px solid #e4e7ed;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    background: #fff;
+    border-radius: 4px;
+    line-height: 30px;
+    margin: 5px 0;
+    font-size: 12px;
 }
 </style>
