@@ -37,14 +37,26 @@
                 <div class="item">六</div>
             </div>
             <div class="date-wrapper">
-                <div class="item"
-                     v-for="item in data"
-                     :key="item.str"
-                     :aa="item.date"
-                     :class="{ current: item.isCurrent, today: item.isToday, 'next-month': item.isNextMonth, 'prev-month': item.isPrevMonth }"
-                     @click="onDateClick(item)"
-                     @mousedown.prevent>
-                    <span>{{ item.day }}</span>
+                <div
+                    class="item"
+                    v-for="item in data"
+                    :key="item.str"
+                    :aa="item.date"
+                    :class="{
+                        current: item.isCurrent,
+                        today: item.isToday,
+                        'next-month': item.isNextMonth,
+                        'prev-month': item.isPrevMonth,
+                        'in-range': item.isRange,
+                        'start-date': item.isStart,
+                        'end-date': item.isEnd
+                    }"
+                    @click="onDateClick(item)"
+                    @mouseenter="onMouseenter(item.date)"
+                    @mousedown.prevent>
+                    <div class="inner">
+                        <span>{{ item.day }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,6 +65,7 @@
 
 <script>
 import Icon from '../icon/VIcon'
+
 export default {
     name: 'VDatePanel',
     props: {
@@ -67,7 +80,9 @@ export default {
         panel: {
             type: Object,
             required: true
-        }
+        },
+        startDate: Object,
+        endDate: Object
     },
     methods: {
         changeDate (type, unit) {
@@ -75,6 +90,9 @@ export default {
         },
         onDateClick (data) {
             this.$emit('select', data)
+        },
+        onMouseenter (date) {
+            this.$emit('hover', date)
         }
     },
     components: {
@@ -135,6 +153,12 @@ $color: #409eff;
             width: 44px;
             height: 44px;
             line-height: 44px;
+            padding: 4px 0;
+            box-sizing: border-box;
+
+            .inner {
+                height: 100%;
+            }
         }
 
         .date-wrapper, .week-wrapper {
@@ -179,10 +203,39 @@ $color: #409eff;
                     background-color: $color;
                 }
 
-                &.prev-month, &.next-month {
+                &.start-date, &.end-date {
+
+                    &.start-date .inner {
+                        border-top-left-radius: 20px;
+                        border-bottom-left-radius: 20px;
+                        margin-left: 3px;
+                    }
+
+                    &.end-date .inner {
+                        border-top-right-radius: 20px;
+                        border-bottom-right-radius: 20px;
+                        margin-right: 3px;
+                    }
 
                     span {
-                        color: #c0c4cc;
+                        border-radius: 50%;
+                        color: #fff;
+                        background-color: $color;
+                    }
+                }
+
+                &.in-range .inner {
+                    background-color: #f2f6fc;
+                }
+
+                &.prev-month, &.next-month {
+
+                    .inner {
+
+                        span {
+                            color: #c0c4cc;
+                            background-color: transparent;
+                        }
                     }
                 }
             }

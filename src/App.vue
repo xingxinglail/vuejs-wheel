@@ -4,7 +4,7 @@
         <br>
         <br>
         <br>
-<!--        <v-date-picker v-model="date2" type="daterange" value-format="YYYY-MM-DD" @change="change" />-->
+        <v-date-picker v-model="date2" type="daterange" value-format="YYYY-MM-DD" @change="change2" />
     </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
     data () {
         return {
             date: '',
-            date2: '',
+            date2: ['2019-10-08', '2019-10-09'],
             container: null
         }
     },
@@ -30,6 +30,10 @@ export default {
         change (e) {
             console.log(e)
             console.log(this.date)
+        },
+        change2 (e) {
+            console.log(e)
+            console.log(this.date2)
         }
     }
 }

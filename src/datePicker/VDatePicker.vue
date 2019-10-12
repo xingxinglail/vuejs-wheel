@@ -18,16 +18,19 @@
             <v-date-panel :data="data"
                           :current="current"
                           :panel="panel"
+                          :end-date="endCurrent"
+                          @hover="onHover"
                           @select="onSelect"
                           @change-date="onChangeDate" />
             <v-date-panel v-if="type === 'daterange'"
                           :data="endData"
                           :current="endCurrent"
                           :panel="endPanel"
+                          :start-date="current"
+                          @hover="onHover"
                           @select="onSelect"
                           @change-date="onChangeDate" />
         </div>
-<!--        <v-date-range v-if="type === 'daterange'" />-->
     </div>
 </template>
 
@@ -35,7 +38,6 @@
 import dayjs from 'dayjs'
 import Input from '../input/VInput'
 import VDatePanel from './VDatePanel'
-import VDateRange from './VDateRange'
 import Popper from '../mixins/popper'
 
 export default {
@@ -82,11 +84,7 @@ export default {
                 month: 0,
                 date: 0
             },
-            endCurrent: {
-                year: 0,
-                month: 0,
-                date: 0
-            },
+            endCurrent: undefined,
             panel: {
                 year: 0,
                 month: 0,
@@ -101,7 +99,8 @@ export default {
                 date: 0,
                 dateStr: '0'
             },
-            visible: false
+            visible: false,
+            dateRange: undefined
         }
     },
     beforeCreate () {
@@ -113,11 +112,35 @@ export default {
         this._copyInputValue = ''
     },
     created () {
+        if (this.type === 'daterange') {
+            this.endCurrent = {
+                year: 0,
+                month: 0,
+                date: 0
+            }
+        }
     },
     beforeDestroy () {
         document.removeEventListener('click', this.handleDocumentClick)
     },
     methods: {
+        onHover (date) {
+            if (!this.dateRange) return
+            this.markRange(this.dateRange, date)
+        },
+        markRange (minDate, maxDate) {
+            minDate = minDate.getTime()
+            maxDate = maxDate ? maxDate.getTime() : minDate
+            ;[minDate, maxDate] = [Math.min(minDate, maxDate), Math.max(minDate, maxDate)]
+            const allData = this.data.concat(this.endData)
+            for (let i = 0; i < allData.length; i++) {
+                const data = allData[i]
+                const time = data.date.getTime()
+                data.isRange = minDate && data.isNextMonth === false && data.isPrevMonth === false && minDate <= time && maxDate >= time
+                data.isStart = minDate && minDate === time
+                data.isEnd = maxDate && maxDate === time
+            }
+        },
         initClickOutside () {
             document.addEventListener('click', this.handleDocumentClick)
         },
@@ -127,11 +150,7 @@ export default {
             this.close()
         },
         formatVal (val) {
-            if (Array.isArray(val)) {
-                if (this.type === 'daterange') {
-                    // todo
-                }
-            } else {
+            if (this.type === 'date') {
                 if (!dayjs(val).isValid()) {
                     if (this._copyInputValue === '') {
                         const date = dayjs()
@@ -148,6 +167,30 @@ export default {
                     current.month = date.month()
                     current.date = date.date()
                     this.changePanel(current)
+                }
+            } else {
+                if (this.type === 'daterange') {
+                    if (Array.isArray(val) && val.length >= 2) {
+                        const isValid = this.checkRangeValue(val, (startDate, endDate) => {
+                            this.inputValue = startDate.format(this.format)
+                            this.endInputValue = endDate.format(this.format)
+                            let panelEndDate = endDate
+                            if (startDate.isSame(endDate, 'month')) {
+                                panelEndDate = endDate.add(1, 'month')
+                            }
+                            this.changePanel(
+                                { year: startDate.year(), month: startDate.month(), date: startDate.date() },
+                                { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
+                            )
+                        })
+                        if (isValid) return
+                    }
+                    const startDate = dayjs()
+                    const endDate = startDate.add(1, 'month')
+                    this.changePanel(
+                        { year: startDate.year(), month: startDate.month(), date: startDate.date() },
+                        { year: endDate.year(), month: endDate.month(), date: endDate.date() }
+                    )
                 }
             }
         },
@@ -171,19 +214,35 @@ export default {
                     isCurrent: _year === cYear && _month === cMonth && _date === cDate,
                     isPrevMonth: _month < month,
                     isNextMonth: _month > month,
-                    isToday: _year === _nowYear && _month === _nowMonth && _date === _nowDate
+                    isToday: _year === _nowYear && _month === _nowMonth && _date === _nowDate,
+                    isRange: false,
+                    isStart: false,
+                    isEnd: false
                 })
             }
-            this.data = dateArr
+            return dateArr
         },
-        changePanel ({ year, month, date }) {
-            const { panel } = this
-            panel.year = year
-            panel.month = month
-            panel.monthStr = (month + 1).toString().padStart(2, '0')
-            panel.date = date
-            panel.dateStr = date.toString().padStart(2, '0')
-            this.getDate(panel)
+        changePanel (startDate, endDate) {
+            if (startDate) {
+                const { year, month, date } = startDate
+                const { panel } = this
+                panel.year = year
+                panel.month = month
+                panel.monthStr = (month + 1).toString().padStart(2, '0')
+                panel.date = date
+                panel.dateStr = date.toString().padStart(2, '0')
+                this.data = this.getDate(panel)
+            }
+            if (endDate) {
+                const { year, month, date } = endDate
+                const { endPanel } = this
+                endPanel.year = year
+                endPanel.month = month
+                endPanel.monthStr = (month + 1).toString().padStart(2, '0')
+                endPanel.date = date
+                endPanel.dateStr = date.toString().padStart(2, '0')
+                this.endData = this.getDate(endPanel)
+            }
         },
         onChangeDate (type, unit) {
             const { year, month, date } = this.panel
@@ -195,10 +254,20 @@ export default {
             }
             this.changePanel({ year: newDate.year(), month: newDate.month(), date: newDate.date() })
         },
-        onSelect (data) {
-            this.emitDate(data.date)
-            this.$refs.input.$el.querySelector('input').blur()
-            this.close()
+        onSelect ({ date }) {
+            if (this.type === 'date') {
+                this.emitDate(date)
+                this.$refs.input.$el.querySelector('input').blur()
+                this.close()
+            } else {
+                if (this.dateRange) {
+                    this.emitDate(this.dateRange, date)
+                    this.close()
+                    return
+                }
+                this.markRange(date)
+                this.dateRange = date
+            }
         },
         onFocus () {
             if (!this.popperVisible) {
@@ -208,6 +277,12 @@ export default {
             }
         },
         open () {
+            if (this.type === 'daterange') {
+                this.dateRange = undefined
+                this.checkRangeValue(this.value, (startDate, endDate) => {
+                    this.markRange(startDate.toDate(), endDate.toDate())
+                })
+            }
             this.visible = true
         },
         close () {
@@ -219,25 +294,39 @@ export default {
             if (this.inputValue === _copyInputValue) return
             this.$emit('change', this.inputValue)
         },
-        emitDate (val) {
-            let date = val
+        emitDate (val, endVal) {
             const { valueFormat } = this
-            if (valueFormat) date = dayjs(val).format(valueFormat)
-            this.$emit('change', date)
+            if (valueFormat) {
+                val = dayjs(val).format(valueFormat)
+                if (endVal) endVal = dayjs(endVal).format(valueFormat)
+            }
+            let data = val
+            if (endVal) data = [val, endVal]
+            this.$emit('change', data)
+        },
+        checkRangeValue (val, cb) {
+            if (Array.isArray(val) && val.length >= 2) {
+                const startDate = dayjs(val[0])
+                const endDate = dayjs(val[1])
+                if (startDate.isValid() && endDate.isValid()) {
+                    cb(startDate, endDate)
+                    return true
+                }
+            }
+            return false
         }
     },
     watch: {
         value: {
             immediate: true,
-            handler (v, ov) {
+            handler (v) {
                 this.formatVal(v)
             }
         }
     },
     components: {
         'v-input': Input,
-        'v-date-panel': VDatePanel,
-        'v-date-range': VDateRange
+        'v-date-panel': VDatePanel
     }
 }
 </script>
