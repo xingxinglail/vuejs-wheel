@@ -3,10 +3,14 @@
         <div class="v-date-picker-date-head">
             <div class="left">
                 <v-icon class="double"
+                        v-if="unlinkPanels || (!unlinkPanels && disabled !== 1)"
+                        :class="{ disabled: calcPrevYearDisabled() }"
                         name="doubleleft"
                         @click="changeDate('prev', 'year')"
                         @mousedown.native.prevent></v-icon>
                 <v-icon class="single"
+                        v-if="unlinkPanels || (!unlinkPanels && disabled !== 1)"
+                        :class="{ disabled: calcPrevMonthDisabled() }"
                         name="left"
                         @click="changeDate('prev', 'month')"
                         @mousedown.native.prevent></v-icon>
@@ -17,10 +21,14 @@
             </div>
             <div class="right">
                 <v-icon class="single"
+                        v-if="unlinkPanels || (!unlinkPanels && disabled !== -1)"
+                        :class="{ disabled: calcNextMonthDisabled() }"
                         name="right"
                         @click="changeDate('next', 'month')"
                         @mousedown.native.prevent></v-icon>
                 <v-icon class="double"
+                        v-if="unlinkPanels || (!unlinkPanels && disabled !== -1)"
+                        :class="{ disabled: calcNextYearDisabled() }"
                         name="doubleright"
                         @click="changeDate('next', 'year')"
                         @mousedown.native.prevent></v-icon>
@@ -64,6 +72,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import Icon from '../icon/VIcon'
 
 export default {
@@ -81,12 +90,52 @@ export default {
             type: Object,
             required: true
         },
-        startDate: Object,
-        endDate: Object
+        otherPanel: {
+            type: Object,
+            required: true
+        },
+        unlinkPanels: {
+            type: Boolean,
+            default: false
+        }
+    },
+    computed: {
+        disabled ({ panel, otherPanel }) {
+            const { year: oYear, month: oMonth } = otherPanel
+            if (oYear === 0) return Number.MAX_SAFE_INTEGER
+            const { year, month } = panel
+            const startDate = dayjs(new Date(year, month))
+            const endDate = dayjs(new Date(oYear, oMonth))
+            return startDate.diff(endDate, 'month')
+        }
     },
     methods: {
+        calcPrevYearDisabled () {
+            const { disabled } = this
+            return disabled !== Number.MAX_SAFE_INTEGER && disabled > 0 && disabled < 13
+        },
+        calcPrevMonthDisabled () {
+            const { disabled } = this
+            return disabled !== Number.MAX_SAFE_INTEGER && disabled === 1
+        },
+        calcNextYearDisabled () {
+            const { disabled } = this
+            return disabled !== Number.MAX_SAFE_INTEGER && disabled < 0 && disabled > -13
+        },
+        calcNextMonthDisabled () {
+            const { disabled } = this
+            return disabled !== Number.MAX_SAFE_INTEGER && disabled === -1
+        },
         changeDate (type, unit) {
-            this.$emit('change-date', type, unit)
+            if (type === 'prev') {
+                if (unit === 'year' && this.calcPrevYearDisabled()) return
+                if (unit === 'month' && this.calcPrevMonthDisabled()) return
+            }
+            if (type === 'next') {
+                if (unit === 'year' && this.calcNextYearDisabled()) return
+                if (unit === 'month' && this.calcNextMonthDisabled()) return
+            }
+            this.$emit('change-date', { type, unit })
         },
         onDateClick (data) {
             this.$emit('select', data)
@@ -134,6 +183,11 @@ $color: #409eff;
 
                 &:hover {
                     color: $color;
+                }
+
+                &.disabled {
+                    color: #ddd;
+                    cursor: not-allowed;
                 }
             }
 

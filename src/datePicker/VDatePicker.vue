@@ -9,6 +9,7 @@
                  v-if="type === 'daterange'"
                  v-model="endInputValue"
                  placeholder="选择日期"
+                 @change="onChange"
                  @focus="onFocus" />
         <div class="v-date-picker-panel"
              :class="{ 'v-date-picker-panel-range': type === 'daterange' }"
@@ -18,18 +19,20 @@
             <v-date-panel :data="data"
                           :current="current"
                           :panel="panel"
-                          :end-date="endCurrent"
+                          :other-panel="endPanel"
+                          :unlink-panels="unlinkPanels"
                           @hover="onHover"
                           @select="onSelect"
-                          @change-date="onChangeDate" />
+                          @change-date="onChangeDate($event, 'left')" />
             <v-date-panel v-if="type === 'daterange'"
                           :data="endData"
                           :current="endCurrent"
                           :panel="endPanel"
-                          :start-date="current"
+                          :other-panel="panel"
+                          :unlink-panels="unlinkPanels"
                           @hover="onHover"
                           @select="onSelect"
-                          @change-date="onChangeDate" />
+                          @change-date="onChangeDate($event, 'right')" />
         </div>
     </div>
 </template>
@@ -71,6 +74,10 @@ export default {
                     }
                 }
             }
+        },
+        unlinkPanels: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -110,6 +117,7 @@ export default {
         this._nowDate = now.getDate()
         this._now = now
         this._copyInputValue = ''
+        this._copyEndInputValue = ''
     },
     created () {
         if (this.type === 'daterange') {
@@ -173,10 +181,16 @@ export default {
                     if (Array.isArray(val) && val.length >= 2) {
                         const isValid = this.checkRangeValue(val, (startDate, endDate) => {
                             this.inputValue = startDate.format(this.format)
+                            this._copyInputValue = this.inputValue
                             this.endInputValue = endDate.format(this.format)
+                            this._copyEndInputValue = this.endInputValue
                             let panelEndDate = endDate
-                            if (startDate.isSame(endDate, 'month')) {
-                                panelEndDate = endDate.add(1, 'month')
+                            if (!this.unlinkPanels) {
+                                panelEndDate = startDate.add(1, 'month')
+                            } else {
+                                if (startDate.isSame(endDate, 'month')) {
+                                    panelEndDate = endDate.add(1, 'month')
+                                }
                             }
                             this.changePanel(
                                 { year: startDate.year(), month: startDate.month(), date: startDate.date() },
@@ -244,15 +258,50 @@ export default {
                 this.endData = this.getDate(endPanel)
             }
         },
-        onChangeDate (type, unit) {
-            const { year, month, date } = this.panel
-            let newDate = new Date(year, month, date)
-            if (type === 'next') {
-                newDate = dayjs(newDate).add(1, unit)
+        onChangeDate ({ type, unit }, panel) {
+            if (panel === 'left') {
+                const { year, month, date } = this.panel
+                let newDate = new Date(year, month, date)
+                if (type === 'next') {
+                    newDate = dayjs(newDate).add(1, unit)
+                } else {
+                    newDate = dayjs(newDate).subtract(1, unit)
+                }
+                if (this.type === 'daterange' && !this.unlinkPanels) {
+                    const endDate = dayjs(newDate).add(1, 'month')
+                    this.changePanel(
+                        { year: newDate.year(), month: newDate.month(), date: newDate.date() },
+                        { year: endDate.year(), month: endDate.month(), date: endDate.date() }
+                    )
+                } else {
+                    this.changePanel({ year: newDate.year(), month: newDate.month(), date: newDate.date() })
+                }
             } else {
-                newDate = dayjs(newDate).subtract(1, unit)
+                const { year, month, date } = this.endPanel
+                let newDate = new Date(year, month, date)
+                if (type === 'next') {
+                    newDate = dayjs(newDate).add(1, unit)
+                } else {
+                    newDate = dayjs(newDate).subtract(1, unit)
+                }
+                if (this.unlinkPanels) {
+                    this.changePanel(
+                        null,
+                        { year: newDate.year(), month: newDate.month(), date: newDate.date() }
+                    )
+                } else {
+                    const startDate = dayjs(newDate).subtract(1, 'month')
+                    this.changePanel(
+                        { year: startDate.year(), month: startDate.month(), date: startDate.date() },
+                        { year: newDate.year(), month: newDate.month(), date: newDate.date() }
+                    )
+                }
             }
-            this.changePanel({ year: newDate.year(), month: newDate.month(), date: newDate.date() })
+            if (this.type === 'daterange' && !this.dateRange) {
+                this.checkRangeValue(this.value, (startDate, endDate) => {
+                    this.markRange(startDate.toDate(), endDate.toDate())
+                })
+            }
         },
         onSelect ({ date }) {
             if (this.type === 'date') {
@@ -261,6 +310,9 @@ export default {
                 this.close()
             } else {
                 if (this.dateRange) {
+                    const time = this.dateRange.getTime()
+                    const time2 = date.getTime()
+                    ;[this.dateRange, date] = [Math.min(time, time2), Math.max(time, time2)]
                     this.emitDate(this.dateRange, date)
                     this.close()
                     return
@@ -289,10 +341,18 @@ export default {
             this.visible = false
         },
         onChange () {
-            const { _copyInputValue } = this
-            this.formatVal(this.inputValue)
-            if (this.inputValue === _copyInputValue) return
-            this.$emit('change', this.inputValue)
+            this.close()
+            if (this.type === 'date') {
+                const { _copyInputValue } = this
+                this.formatVal(this.inputValue)
+                if (this.inputValue === _copyInputValue) return
+                this.$emit('change', this.inputValue)
+            } else {
+                const { _copyInputValue, _copyEndInputValue } = this
+                this.formatVal([this.inputValue, this.endInputValue])
+                if (this.inputValue === _copyInputValue && this.endInputValue === _copyEndInputValue) return
+                this.$emit('change', [this.inputValue, this.endInputValue])
+            }
         },
         emitDate (val, endVal) {
             const { valueFormat } = this
