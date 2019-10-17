@@ -1,16 +1,42 @@
 <template>
     <div class="v-date-picker" ref="reference">
-        <v-input ref="startInput"
+        <v-input v-if="type === 'date'"
+                 ref="startInput"
                  v-model="inputValue"
                  placeholder="选择日期"
                  @change="onChange('start')"
                  @focus="onFocus" />
-        <v-input ref="endInput"
-                 v-if="type === 'daterange'"
-                 v-model="endInputValue"
-                 placeholder="选择日期"
-                 @change="onChange('end')"
-                 @focus="onFocus" />
+        <div v-else
+             class="v-date-picker-range-wrapper"
+             @click="onInputWrapperClick">
+            <input type="text"
+                   ref="startInput"
+                   v-model="inputValue"
+                   placeholder="选择日期"
+                   @change="onChange('start')" />
+            <span class="v-date-picker-separator">{{ separator }}</span>
+            <input type="text"
+                   ref="endInput"
+                   v-model="endInputValue"
+                   placeholder="选择日期"
+                   @change="onChange('end')" />
+            <div class="icon-wrapper" :class="{ closed: rangeClearVisible }">
+                <div class="calendar">
+                    <v-icon name="calendar" />
+                </div>
+                <div class="close" @click.stop="clear">
+                    <v-icon name="close-circle-fill" />
+                </div>
+            </div>
+<!--            <v-input ref="startInput"-->
+<!--                     v-model="inputValue"-->
+<!--                     placeholder="选择日期"-->
+<!--                     @change="onChange('start')" />-->
+<!--            <v-input ref="endInput"-->
+<!--                     v-model="endInputValue"-->
+<!--                     placeholder="选择日期"-->
+<!--                     @change="onChange('end')" />-->
+        </div>
         <div class="v-date-picker-panel"
              :class="{ 'v-date-picker-panel-range': type === 'daterange' }"
              v-if="popperVisible"
@@ -40,6 +66,7 @@
 <script>
 import dayjs from 'dayjs'
 import Input from '../input/VInput'
+import Icon from '../icon/VIcon'
 import VDatePanel from './VDatePanel'
 import Popper from '../mixins/popper'
 
@@ -78,6 +105,14 @@ export default {
         unlinkPanels: {
             type: Boolean,
             default: false
+        },
+        clearable: {
+            type: Boolean,
+            default: true
+        },
+        separator: {
+            type: String,
+            default: '~'
         }
     },
     data () {
@@ -108,6 +143,14 @@ export default {
             },
             visible: false,
             dateRange: undefined
+        }
+    },
+    computed: {
+        clearVisible ({ clearable, value }) {
+            return clearable && value
+        },
+        rangeClearVisible ({ clearable, value }) {
+            return clearable && value instanceof Array && value.length > 0
         }
     },
     beforeCreate () {
@@ -187,6 +230,7 @@ export default {
                     this.changePanel(current)
                 }
             } else {
+                if (!val) return
                 const [start, end] = val
                 if (!start || !dayjs(start).isValid()) {
                     this.inputValue = ''
@@ -322,6 +366,9 @@ export default {
                 })
             }
         },
+        onInputWrapperClick () {
+            this.onFocus()
+        },
         onSelect ({ date }) {
             if (this.type === 'date') {
                 this.emitDate(date)
@@ -362,15 +409,18 @@ export default {
         },
         afterClose () {
             const { startInput, endInput } = this.$refs
-            startInput.$el.querySelector('input').blur()
-            if (endInput) endInput.$el.querySelector('input').blur()
-            if (this.type !== 'daterange') return
-            const { inputValue, endInputValue } = this
-            if ((!inputValue || !dayjs(inputValue).isValid()) || (!endInputValue || !dayjs(endInputValue).isValid())) {
-                this.inputValue = ''
-                this.endInputValue = ''
-                this._copyInputValue = ''
-                this._copyEndInputValue = ''
+            if (this.type === 'date') {
+                startInput.$el.querySelector('input').blur()
+            } else {
+                startInput.blur()
+                endInput.blur()
+                const { inputValue, endInputValue } = this
+                if ((!inputValue || !dayjs(inputValue).isValid()) || (!endInputValue || !dayjs(endInputValue).isValid())) {
+                    this.inputValue = ''
+                    this.endInputValue = ''
+                    this._copyInputValue = ''
+                    this._copyEndInputValue = ''
+                }
             }
         },
         onChange (type) {
@@ -447,6 +497,12 @@ export default {
             }
             this.clearMarkRange()
             return false
+        },
+        clear () {
+            this.inputValue = ''
+            this.endInputValue = ''
+            this.$emit('change', null)
+            this.close()
         }
     },
     watch: {
@@ -459,6 +515,7 @@ export default {
     },
     components: {
         'v-input': Input,
+        'v-icon': Icon,
         'v-date-panel': VDatePanel
     }
 }
@@ -470,6 +527,79 @@ export default {
 $color: #409eff;
 
 .v-date-picker {
+
+    .v-date-picker-range-wrapper {
+        display: flex;
+        align-items: center;
+        width: 328px;
+        padding: 3px 10px;
+        box-sizing: border-box;
+        height: $height;
+        border: 1px solid #999;
+        border-radius: $border-radius;
+
+        .icon-wrapper {
+            position: relative;
+            width: $height;
+            height: $height;
+
+            & > div {
+                width: 14px;
+                height: 14px;
+                background-color: #fff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin: -7px 0 0 -7px;
+                opacity: 1;
+
+                .v-icon {
+                    font-size: 14px;
+                    color: rgba(0, 0, 0, 0.25);
+                    vertical-align: top;
+                }
+
+                &.close {
+                    transition: opacity .4s ease;
+                    z-index: 1;
+                    display: none;
+                    cursor: pointer;
+                    opacity: 0;
+
+                    .v-icon {
+                        transition: color .4s ease;
+                        font-size: 16px;
+                    }
+
+                    &:hover {
+
+                        .v-icon {
+                            color: rgba(0, 0, 0, 0.45);
+                        }
+                    }
+                }
+            }
+
+            &.closed .close {
+                display: block;
+            }
+        }
+
+        input {
+            border: 0;
+            outline: 0;
+            text-align: center;
+            height: 100%;
+        }
+
+        &:hover {
+
+            .closed .close {
+
+                opacity: 1;
+            }
+        }
+    }
 }
 
 .v-date-picker-panel {
