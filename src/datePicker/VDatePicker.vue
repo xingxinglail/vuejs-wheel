@@ -3,13 +3,13 @@
         <v-input ref="input"
                  v-model="inputValue"
                  placeholder="选择日期"
-                 @change="onChange"
+                 @change="onChange('start')"
                  @focus="onFocus" />
         <v-input ref="input"
                  v-if="type === 'daterange'"
                  v-model="endInputValue"
                  placeholder="选择日期"
-                 @change="onChange"
+                 @change="onChange('end')"
                  @focus="onFocus" />
         <div class="v-date-picker-panel"
              :class="{ 'v-date-picker-panel-range': type === 'daterange' }"
@@ -149,6 +149,16 @@ export default {
                 data.isEnd = maxDate && maxDate === time
             }
         },
+        clearMarkRange () {
+            if (!this.dateRange) return
+            const allData = this.data.concat(this.endData)
+            for (let i = 0; i < allData.length; i++) {
+                const data = allData[i]
+                data.isRange = false
+                data.isStart = false
+                data.isEnd = false
+            }
+        },
         initClickOutside () {
             document.addEventListener('click', this.handleDocumentClick)
         },
@@ -177,28 +187,32 @@ export default {
                     this.changePanel(current)
                 }
             } else {
-                if (this.type === 'daterange') {
-                    if (Array.isArray(val) && val.length >= 2) {
-                        const isValid = this.checkRangeValue(val, (startDate, endDate) => {
-                            this.inputValue = startDate.format(this.format)
-                            this._copyInputValue = this.inputValue
-                            this.endInputValue = endDate.format(this.format)
-                            this._copyEndInputValue = this.endInputValue
-                            let panelEndDate = endDate
-                            if (!this.unlinkPanels) {
-                                panelEndDate = startDate.add(1, 'month')
-                            } else {
-                                if (startDate.isSame(endDate, 'month')) {
-                                    panelEndDate = endDate.add(1, 'month')
-                                }
-                            }
-                            this.changePanel(
-                                { year: startDate.year(), month: startDate.month(), date: startDate.date() },
-                                { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
-                            )
-                        })
-                        if (isValid) return
+                const [start, end] = val
+                if (!start || !dayjs(start).isValid()) {
+                    this.inputValue = ''
+                } else {
+                    const date = dayjs(start)
+                    this.inputValue = date.format(this.format)
+                    this._copyInputValue = this.inputValue
+                    if (end && dayjs(end).isValid()) {
+                        const endDate = dayjs(end)
+                        this.endInputValue = endDate.format(this.format)
+                        this._copyEndInputValue = this.endInputValue
+                        let panelEndDate = endDate
+                        if (date.isSame(endDate, 'month')) {
+                            panelEndDate = endDate.add(1, 'month')
+                        }
+                        this.changePanel(
+                            { year: date.year(), month: date.month(), date: date.date() },
+                            { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
+                        )
                     }
+                }
+
+                const { _copyInputValue, _copyEndInputValue } = this
+                if (_copyInputValue === '' && _copyEndInputValue === '') {
+                    this.inputValue = _copyInputValue
+                    this.endInputValue = _copyEndInputValue
                     const startDate = dayjs()
                     const endDate = startDate.add(1, 'month')
                     this.changePanel(
@@ -206,6 +220,41 @@ export default {
                         { year: endDate.year(), month: endDate.month(), date: endDate.date() }
                     )
                 }
+
+                // return
+                // if (Array.isArray(val) && val.length >= 2) {
+                //     const isValid = this.checkRangeValue(val, (startDate, endDate) => {
+                //         this.inputValue = startDate.format(this.format)
+                //         this._copyInputValue = this.inputValue
+                //         this.endInputValue = endDate.format(this.format)
+                //         this._copyEndInputValue = this.endInputValue
+                //         let panelEndDate = endDate
+                //         if (!this.unlinkPanels) {
+                //             panelEndDate = startDate.add(1, 'month')
+                //         } else {
+                //             if (startDate.isSame(endDate, 'month')) {
+                //                 panelEndDate = endDate.add(1, 'month')
+                //             }
+                //         }
+                //         this.changePanel(
+                //             { year: startDate.year(), month: startDate.month(), date: startDate.date() },
+                //             { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
+                //         )
+                //     })
+                //     if (isValid) return
+                // }
+                // this.inputValue = this._copyInputValue
+                // this.endInputValue = this._copyEndInputValue
+                // if (this._copyInputValue === '' && this._copyEndInputValue === '') {
+                //     this.inputValue = this._copyInputValue
+                //     this.endInputValue = this._copyEndInputValue
+                //     const startDate = dayjs()
+                //     const endDate = startDate.add(1, 'month')
+                //     this.changePanel(
+                //         { year: startDate.year(), month: startDate.month(), date: startDate.date() },
+                //         { year: endDate.year(), month: endDate.month(), date: endDate.date() }
+                //     )
+                // }
             }
         },
         getDate (panel) {
@@ -330,28 +379,62 @@ export default {
         },
         open () {
             if (this.type === 'daterange') {
-                this.dateRange = undefined
+                if (this.visible) return
                 this.checkRangeValue(this.value, (startDate, endDate) => {
                     this.markRange(startDate.toDate(), endDate.toDate())
                 })
+                this.dateRange = undefined
             }
             this.visible = true
         },
         close () {
             this.visible = false
+            const { inputValue, endInputValue } = this
+            if ((!inputValue || !dayjs(inputValue).isValid()) || (!endInputValue || !dayjs(endInputValue).isValid())) {
+                this.inputValue = ''
+                this.endInputValue = ''
+                this._copyInputValue = ''
+                this._copyEndInputValue = ''
+            }
         },
-        onChange () {
-            this.close()
+        onChange (type) {
             if (this.type === 'date') {
                 const { _copyInputValue } = this
                 this.formatVal(this.inputValue)
                 if (this.inputValue === _copyInputValue) return
                 this.$emit('change', this.inputValue)
+                this.close()
             } else {
-                const { _copyInputValue, _copyEndInputValue } = this
-                this.formatVal([this.inputValue, this.endInputValue])
-                if (this.inputValue === _copyInputValue && this.endInputValue === _copyEndInputValue) return
-                this.$emit('change', [this.inputValue, this.endInputValue])
+                const { inputValue, endInputValue } = this
+                if (type === 'start') {
+                    if (!inputValue || !dayjs(inputValue).isValid()) {
+                        this.inputValue = this._copyInputValue
+                    } else {
+                        const date = dayjs(inputValue)
+                        this.inputValue = date.format(this.format)
+                        let _date = date.toDate()
+                        // 如果有结束日期
+                        if (endInputValue && dayjs(endInputValue).isValid()) {
+                            const endDate = dayjs(endInputValue).toDate()
+                            this.markRange(_date, endDate)
+                            this.emitDate(_date, endDate)
+                            this.close()
+                        } else {
+                            this.markRange(_date)
+                            this.dateRange = _date
+                        }
+                    }
+                } else {
+                    if (inputValue && dayjs(inputValue).isValid() && endInputValue && dayjs(endInputValue).isValid()) {
+                        const date = dayjs(inputValue).toDate()
+                        const endDate = dayjs(endInputValue).toDate()
+                        this.markRange(date, endDate)
+                        this.emitDate(date, endDate)
+                        this.close()
+                    } else if (!endInputValue || !dayjs(endInputValue).isValid()) {
+                        this.endInputValue = this._copyEndInputValue
+                    }
+                }
             }
         },
         emitDate (val, endVal) {
@@ -373,6 +456,7 @@ export default {
                     return true
                 }
             }
+            this.clearMarkRange()
             return false
         }
     },

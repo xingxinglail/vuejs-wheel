@@ -4,6 +4,7 @@
         <br>
         <br>
         <br>
+        2019-10-01
         <v-date-picker v-model="date2" unlink-panels type="daterange" value-format="YYYY-MM-DD" @change="change2" />
     </div>
 </template>
@@ -15,7 +16,7 @@ export default {
     data () {
         return {
             date: '',
-            date2: [],
+            date2: [], // '2019-10-01', '2019-10-11'
             container: null
         }
     },
@@ -32,8 +33,8 @@ export default {
             console.log(this.date)
         },
         change2 (e) {
-            console.log(e)
-            console.log(this.date2)
+            console.log('app change', e)
+            console.log('app change', this.date2)
         }
     }
 }
