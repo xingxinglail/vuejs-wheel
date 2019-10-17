@@ -3,22 +3,29 @@
         <v-input v-if="type === 'date'"
                  ref="startInput"
                  v-model="inputValue"
-                 placeholder="选择日期"
-                 @change="onChange('start')"
-                 @focus="onFocus" />
+                 :placeholder="placeholder"
+                 @focus="onFocus"
+                 @blur="onBlur"
+                 @change="onChange('start')"/>
         <div v-else
              class="v-date-picker-range-wrapper"
              @click="onInputWrapperClick">
             <input type="text"
                    ref="startInput"
                    v-model="inputValue"
-                   placeholder="选择日期"
+                   :placeholder="startPlaceholder"
+                   @click.stop
+                   @focus="onFocus"
+                   @blur="onBlur"
                    @change="onChange('start')" />
             <span class="v-date-picker-separator">{{ separator }}</span>
             <input type="text"
                    ref="endInput"
                    v-model="endInputValue"
-                   placeholder="选择日期"
+                   :placeholder="endPlaceholder"
+                   @click.stop
+                   @focus="onFocus"
+                   @blur="onBlur"
                    @change="onChange('end')" />
             <div class="icon-wrapper" :class="{ closed: rangeClearVisible }">
                 <div class="calendar">
@@ -28,14 +35,6 @@
                     <v-icon name="close-circle-fill" />
                 </div>
             </div>
-<!--            <v-input ref="startInput"-->
-<!--                     v-model="inputValue"-->
-<!--                     placeholder="选择日期"-->
-<!--                     @change="onChange('start')" />-->
-<!--            <v-input ref="endInput"-->
-<!--                     v-model="endInputValue"-->
-<!--                     placeholder="选择日期"-->
-<!--                     @change="onChange('end')" />-->
         </div>
         <div class="v-date-picker-panel"
              :class="{ 'v-date-picker-panel-range': type === 'daterange' }"
@@ -113,6 +112,18 @@ export default {
         separator: {
             type: String,
             default: '~'
+        },
+        placeholder: {
+            type: String,
+            default: ''
+        },
+        startPlaceholder: {
+            type: String,
+            default: ''
+        },
+        endPlaceholder: {
+            type: String,
+            default: ''
         }
     },
     data () {
@@ -255,6 +266,12 @@ export default {
                             { year: date.year(), month: date.month(), date: date.date() },
                             { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
                         )
+                    } else {
+                        const endDate = date.add(1, 'month')
+                        this.changePanel(
+                            { year: date.year(), month: date.month(), date: date.date() },
+                            { year: endDate.year(), month: endDate.month(), date: endDate.date() }
+                        )
                     }
                 }
 
@@ -392,6 +409,10 @@ export default {
             } else {
                 this.open()
             }
+            this.$emit('focus', this)
+        },
+        onBlur () {
+            this.$emit('blur', this)
         },
         open () {
             if (this.type === 'daterange') {
@@ -531,12 +552,16 @@ $color: #409eff;
     .v-date-picker-range-wrapper {
         display: flex;
         align-items: center;
-        width: 328px;
+        width: 310px;
         padding: 3px 10px;
         box-sizing: border-box;
         height: $height;
         border: 1px solid #999;
         border-radius: $border-radius;
+
+        &:hover {
+            border-color: #666;
+        }
 
         .icon-wrapper {
             position: relative;

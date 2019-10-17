@@ -5,7 +5,7 @@
         <br>
         <br>
         2019-08-01
-        <v-date-picker v-model="date2" type="daterange" value-format="YYYY-MM-DD" @change="change2" />
+        <v-date-picker v-model="date2" unlink-panels type="daterange" value-format="YYYY-MM-DD" @change="change2" />
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     data () {
         return {
             date: '',
-            date2: [], // '2019-10-01', '2019-10-11'
+            date2: ['2019-10-01', 'asd'], // '2019-10-01', '2019-10-11'
             container: null
         }
     },
