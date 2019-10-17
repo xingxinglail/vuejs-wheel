@@ -191,16 +191,21 @@ export default {
                 if (!start || !dayjs(start).isValid()) {
                     this.inputValue = ''
                 } else {
-                    const date = dayjs(start)
+                    let date = dayjs(start)
                     this.inputValue = date.format(this.format)
                     this._copyInputValue = this.inputValue
                     if (end && dayjs(end).isValid()) {
-                        const endDate = dayjs(end)
+                        let endDate = dayjs(end)
                         this.endInputValue = endDate.format(this.format)
                         this._copyEndInputValue = this.endInputValue
                         let panelEndDate = endDate
                         if (date.isSame(endDate, 'month')) {
                             panelEndDate = endDate.add(1, 'month')
+                        } else {
+                            if (endDate.isBefore(date, 'month')) [date, panelEndDate] = [panelEndDate, date]
+                        }
+                        if (!this.unlinkPanels) {
+                            panelEndDate = date.add(1, 'month')
                         }
                         this.changePanel(
                             { year: date.year(), month: date.month(), date: date.date() },
@@ -220,41 +225,6 @@ export default {
                         { year: endDate.year(), month: endDate.month(), date: endDate.date() }
                     )
                 }
-
-                // return
-                // if (Array.isArray(val) && val.length >= 2) {
-                //     const isValid = this.checkRangeValue(val, (startDate, endDate) => {
-                //         this.inputValue = startDate.format(this.format)
-                //         this._copyInputValue = this.inputValue
-                //         this.endInputValue = endDate.format(this.format)
-                //         this._copyEndInputValue = this.endInputValue
-                //         let panelEndDate = endDate
-                //         if (!this.unlinkPanels) {
-                //             panelEndDate = startDate.add(1, 'month')
-                //         } else {
-                //             if (startDate.isSame(endDate, 'month')) {
-                //                 panelEndDate = endDate.add(1, 'month')
-                //             }
-                //         }
-                //         this.changePanel(
-                //             { year: startDate.year(), month: startDate.month(), date: startDate.date() },
-                //             { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
-                //         )
-                //     })
-                //     if (isValid) return
-                // }
-                // this.inputValue = this._copyInputValue
-                // this.endInputValue = this._copyEndInputValue
-                // if (this._copyInputValue === '' && this._copyEndInputValue === '') {
-                //     this.inputValue = this._copyInputValue
-                //     this.endInputValue = this._copyEndInputValue
-                //     const startDate = dayjs()
-                //     const endDate = startDate.add(1, 'month')
-                //     this.changePanel(
-                //         { year: startDate.year(), month: startDate.month(), date: startDate.date() },
-                //         { year: endDate.year(), month: endDate.month(), date: endDate.date() }
-                //     )
-                // }
             }
         },
         getDate (panel) {
@@ -420,6 +390,19 @@ export default {
                             this.emitDate(_date, endDate)
                             this.close()
                         } else {
+                            let endDate = null
+                            if (!this.unlinkPanels) {
+                                endDate = date.add(1, 'month')
+                                endDate = {
+                                    year: endDate.year(),
+                                    month: endDate.month(),
+                                    date: endDate.date()
+                                }
+                            }
+                            this.changePanel(
+                                { year: date.year(), month: date.month(), date: date.date() },
+                                endDate
+                            )
                             this.markRange(_date)
                             this.dateRange = _date
                         }
