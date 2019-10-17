@@ -59,7 +59,6 @@ export default {
 
 $border-color: #999;
 $border-color-hover: #666;
-$border-radius: 4px;
 $font-size: 12px;
 $box-shadow-color: rgba(0, 0, 0, 0.5);
 $red: #F1453D;
@@ -75,7 +74,7 @@ $red: #F1453D;
     > input {
         height: $height;
         border: 1px solid $border-color;
-        border-radius: 4px;
+        border-radius: $border-radius;
         padding: 0 8px;
         font-size: inherit;
 
