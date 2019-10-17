@@ -1,11 +1,11 @@
 <template>
     <div class="v-date-picker" ref="reference">
-        <v-input ref="input"
+        <v-input ref="startInput"
                  v-model="inputValue"
                  placeholder="选择日期"
                  @change="onChange('start')"
                  @focus="onFocus" />
-        <v-input ref="input"
+        <v-input ref="endInput"
                  v-if="type === 'daterange'"
                  v-model="endInputValue"
                  placeholder="选择日期"
@@ -325,7 +325,6 @@ export default {
         onSelect ({ date }) {
             if (this.type === 'date') {
                 this.emitDate(date)
-                this.$refs.input.$el.querySelector('input').blur()
                 this.close()
             } else {
                 if (this.dateRange) {
@@ -359,6 +358,13 @@ export default {
         },
         close () {
             this.visible = false
+            this.afterClose()
+        },
+        afterClose () {
+            const { startInput, endInput } = this.$refs
+            startInput.$el.querySelector('input').blur()
+            if (endInput) endInput.$el.querySelector('input').blur()
+            if (this.type !== 'daterange') return
             const { inputValue, endInputValue } = this
             if ((!inputValue || !dayjs(inputValue).isValid()) || (!endInputValue || !dayjs(endInputValue).isValid())) {
                 this.inputValue = ''
