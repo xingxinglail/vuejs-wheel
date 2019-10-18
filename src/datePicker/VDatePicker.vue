@@ -6,7 +6,7 @@
                  :placeholder="placeholder"
                  @focus="onFocus"
                  @blur="onBlur"
-                 @change="onChange('start')"/>
+                 @change="onChange"/>
         <div v-else
              class="v-date-picker-range-wrapper"
              @click="onInputWrapperClick">
@@ -227,9 +227,8 @@ export default {
                     if (this._copyInputValue === '') {
                         const date = dayjs()
                         this.changePanel({ year: date.year(), month: date.month(), date: date.date() })
-                    } else {
-                        this.inputValue = this._copyInputValue
                     }
+                    this.inputValue = this._copyInputValue
                 } else {
                     const date = dayjs(val)
                     this.inputValue = date.format(this.format)
@@ -241,37 +240,40 @@ export default {
                     this.changePanel(current)
                 }
             } else {
-                if (!val) return
-                const [start, end] = val
-                if (!start || !dayjs(start).isValid()) {
+                if (!val) {
                     this.inputValue = ''
                 } else {
-                    let date = dayjs(start)
-                    this.inputValue = date.format(this.format)
-                    this._copyInputValue = this.inputValue
-                    if (end && dayjs(end).isValid()) {
-                        let endDate = dayjs(end)
-                        this.endInputValue = endDate.format(this.format)
-                        this._copyEndInputValue = this.endInputValue
-                        let panelEndDate = endDate
-                        if (date.isSame(endDate, 'month')) {
-                            panelEndDate = endDate.add(1, 'month')
-                        } else {
-                            if (endDate.isBefore(date, 'month')) [date, panelEndDate] = [panelEndDate, date]
-                        }
-                        if (!this.unlinkPanels) {
-                            panelEndDate = date.add(1, 'month')
-                        }
-                        this.changePanel(
-                            { year: date.year(), month: date.month(), date: date.date() },
-                            { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
-                        )
+                    const [start, end] = val
+                    if (!start || !dayjs(start).isValid()) {
+                        this.inputValue = ''
                     } else {
-                        const endDate = date.add(1, 'month')
-                        this.changePanel(
-                            { year: date.year(), month: date.month(), date: date.date() },
-                            { year: endDate.year(), month: endDate.month(), date: endDate.date() }
-                        )
+                        let date = dayjs(start)
+                        this.inputValue = date.format(this.format)
+                        this._copyInputValue = this.inputValue
+                        if (end && dayjs(end).isValid()) {
+                            let endDate = dayjs(end)
+                            this.endInputValue = endDate.format(this.format)
+                            this._copyEndInputValue = this.endInputValue
+                            let panelEndDate = endDate
+                            if (date.isSame(endDate, 'month')) {
+                                panelEndDate = endDate.add(1, 'month')
+                            } else {
+                                if (endDate.isBefore(date, 'month')) [date, panelEndDate] = [panelEndDate, date]
+                            }
+                            if (!this.unlinkPanels) {
+                                panelEndDate = date.add(1, 'month')
+                            }
+                            this.changePanel(
+                                { year: date.year(), month: date.month(), date: date.date() },
+                                { year: panelEndDate.year(), month: panelEndDate.month(), date: panelEndDate.date() }
+                            )
+                        } else {
+                            const endDate = date.add(1, 'month')
+                            this.changePanel(
+                                { year: date.year(), month: date.month(), date: date.date() },
+                                { year: endDate.year(), month: endDate.month(), date: endDate.date() }
+                            )
+                        }
                     }
                 }
 
@@ -450,7 +452,7 @@ export default {
                 this.formatVal(this.inputValue)
                 if (this.inputValue === _copyInputValue) return
                 this.emitDate(this.inputValue)
-                this.close()
+                // this.close()
             } else {
                 const { inputValue, endInputValue } = this
                 if (type === 'start') {
