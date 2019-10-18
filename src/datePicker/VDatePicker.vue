@@ -449,7 +449,7 @@ export default {
                 const { _copyInputValue } = this
                 this.formatVal(this.inputValue)
                 if (this.inputValue === _copyInputValue) return
-                this.$emit('change', this.inputValue)
+                this.emitDate(this.inputValue)
                 this.close()
             } else {
                 const { inputValue, endInputValue } = this
@@ -499,9 +499,13 @@ export default {
         },
         emitDate (val, endVal) {
             const { valueFormat } = this
+            val = dayjs(val)
             if (valueFormat) {
-                val = dayjs(val).format(valueFormat)
+                val = val.format(valueFormat)
                 if (endVal) endVal = dayjs(endVal).format(valueFormat)
+            } else {
+                val = val.toDate()
+                if (endVal) endVal = dayjs(endVal).toDate()
             }
             let data = val
             if (endVal) data = [val, endVal]
