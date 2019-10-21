@@ -30,6 +30,7 @@ import Pagination from './pagination/VPagination'
 import Table from './table/VTable'
 import TableColumn from './table/VTableColumn'
 import Sticky from './sticky/VSticky'
+import DatePicker from './datePicker/VDatePicker'
 
 export default {
     install (Vue) {
@@ -64,6 +65,7 @@ export default {
         Vue.component(Table.name, Table)
         Vue.component(TableColumn.name, TableColumn)
         Vue.component(Sticky.name, Sticky)
+        Vue.component(DatePicker.name, DatePicker)
         Vue.use(ToastFn)
     }
 }
