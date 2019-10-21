@@ -448,7 +448,6 @@ export default {
                 this.formatVal(this.inputValue)
                 if (this.inputValue === _copyInputValue) return
                 this.emitDate(this.inputValue)
-                // this.close()
             } else {
                 const { inputValue, endInputValue } = this
                 if (type === 'start') {

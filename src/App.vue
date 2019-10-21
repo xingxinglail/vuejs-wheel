@@ -5,7 +5,10 @@
         <br>
         <br>
         2019-08-01
-        <v-date-picker v-model="date2" unlink-panels type="daterange" @change="change2" />
+        <div style="display: flex">
+            <v-date-picker v-model="date2"  type="daterange" @change="change2" />
+            <v-date-picker v-model="date2" unlink-panels type="daterange" @change="change2" />
+        </div>
     </div>
 </template>
 
