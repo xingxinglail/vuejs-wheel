@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Table 表格 | wheel ui</title>
+    <meta name="description" content="帮助你构建更好的应用程序">
+    
+    
+    <link rel="preload" href="/vuejs-wheel/assets/css/0.styles.a97ae8cd.css" as="style"><link rel="preload" href="/vuejs-wheel/assets/js/app.9d5adef2.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/12.d21f8818.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/77.1cbb4474.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/51.eec0cae5.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/2.0a256af7.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/55.be7b8b16.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/52.8a3ee9d2.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/54.d9e351c3.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/38.eaecbec1.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/37.c92cb74b.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/39.c5252694.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/40.38672c31.js" as="script"><link rel="preload" href="/vuejs-wheel/assets/js/53.e74ba6b0.js" as="script"><link rel="prefetch" href="/vuejs-wheel/assets/js/1.ac1e587d.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/10.574bec1e.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/13.70d2192b.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/14.cc943f46.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/15.e94b03a9.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/16.da2027fc.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/17.9104329f.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/18.26fe26ff.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/19.f1313a9c.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/20.44713bbe.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/21.1c0a5eaa.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/22.16f7b9c0.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/23.dafaaf51.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/24.5b839c71.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/25.7e70e7d3.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/26.5c625c67.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/27.cb634849.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/28.f5387b17.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/29.cc458d02.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/3.10fb0a47.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/30.68ed9df4.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/31.80c48a23.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/32.581a1799.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/33.3b2a36fc.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/34.1e196c0a.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/35.935d5e0b.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/36.bfe8b91f.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/4.37f6b24d.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/41.0f95515d.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/42.dcd1b876.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/43.8509a861.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/44.9fcd985d.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/45.20784c2a.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/46.c4528788.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/47.70a0afef.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/48.9997666f.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/49.af781b0a.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/5.8c770400.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/50.b0599ef7.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/56.d8a9efc2.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/57.62d90d8e.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/58.231dc93e.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/59.583dab0a.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/6.68dfefe3.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/60.8538f1a4.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/61.275bf045.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/62.a8c3b05b.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/63.1647832a.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/64.fdaeb058.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/65.5e67b087.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/66.7d822571.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/67.074e39b1.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/68.b9c2f395.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/69.f969a5fe.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/7.da3181e1.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/70.403acf85.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/71.6e9fdbc9.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/72.b77cd242.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/73.819f54d5.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/74.76803085.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/75.eecf34e3.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/76.0bdc82cb.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/78.1be4872c.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/79.b831156c.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/8.734429a2.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/80.70ca4f14.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/81.77baf58c.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/82.4c3a1dee.js"><link rel="prefetch" href="/vuejs-wheel/assets/js/9.26dbd751.js">
+    <link rel="stylesheet" href="/vuejs-wheel/assets/css/0.styles.a97ae8cd.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuejs-wheel/" class="home-link router-link-active"><!----> <span class="site-name">wheel ui</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuejs-wheel/" class="nav-link">主页</a></div><div class="nav-item"><a href="https://github.com/xingxinglail/vuejs-wheel" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vuejs-wheel/" class="nav-link">主页</a></div><div class="nav-item"><a href="https://github.com/xingxinglail/vuejs-wheel" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>入门</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuejs-wheel/install/" class="sidebar-link">安装</a></li><li><a href="/vuejs-wheel/get-started/" class="sidebar-link">快速上手</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>组件</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuejs-wheel/components/icon.html" class="sidebar-link">Icon 图标</a></li><li><a href="/vuejs-wheel/components/button.html" class="sidebar-link">Button 按钮</a></li><li><a href="/vuejs-wheel/components/input.html" class="sidebar-link">Input 输入框</a></li><li><a href="/vuejs-wheel/components/layout.html" class="sidebar-link">Layout 布局</a></li><li><a href="/vuejs-wheel/components/container.html" class="sidebar-link">Container 布局容器</a></li><li><a href="/vuejs-wheel/components/collapse.html" class="sidebar-link">Collapse 折叠面板</a></li><li><a href="/vuejs-wheel/components/cascader.html" class="sidebar-link">Cascader 级联选择器</a></li><li><a href="/vuejs-wheel/components/carousel.html" class="sidebar-link">Carousel 走马灯</a></li><li><a href="/vuejs-wheel/components/popover.html" class="sidebar-link">Popover 弹出框</a></li><li><a href="/vuejs-wheel/components/tabs.html" class="sidebar-link">Tabs 标签页</a></li><li><a href="/vuejs-wheel/components/toast.html" class="sidebar-link">Toast 轻提示</a></li><li><a href="/vuejs-wheel/components/menu.html" class="sidebar-link">NavMenu 导航菜单</a></li><li><a href="/vuejs-wheel/components/pagination.html" class="sidebar-link">Pagination 分页</a></li><li><a href="/vuejs-wheel/components/table.html" class="active sidebar-link">Table 表格</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/vuejs-wheel/components/sticky.html" class="sidebar-link">Sticky 粘性布局</a></li><li><a href="/vuejs-wheel/components/datePicker.html" class="sidebar-link">DatePicker 日期选择器</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="table-表格"><a href="#table-表格" aria-hidden="true" class="header-anchor">#</a> Table 表格</h3> <h4 id="基础表格"><a href="#基础表格" aria-hidden="true" class="header-anchor">#</a> 基础表格</h4> <div class="table-wrapper"><p>基础的表格展示用法。</p> <div class="v-table" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:NaNpx;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="带斑马纹表格"><a href="#带斑马纹表格" aria-hidden="true" class="header-anchor">#</a> 带斑马纹表格</h4> <div class="table-wrapper"><p>使用带斑马纹的表格，可以更容易区分出不同行的数据。</p> <div class="v-table v-table-stripe" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:NaNpx;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row striped" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row striped" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">stripe</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="带边框表格"><a href="#带边框表格" aria-hidden="true" class="header-anchor">#</a> 带边框表格</h4> <div class="table-wrapper"><br> <div class="v-table v-table-bordered" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:NaNpx;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">bordered</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="固定表头"><a href="#固定表头" aria-hidden="true" class="header-anchor">#</a> 固定表头</h4> <div class="table-wrapper"><p>纵向内容过多时，可选择固定表头。</p> <div class="v-table v-table-bordered" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:220px;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>220<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">bordered</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">6</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">7</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="固定列"><a href="#固定列" aria-hidden="true" class="header-anchor">#</a> 固定列</h4> <div class="table-wrapper"><p>横向内容过多时，可选择固定列。</p> <div class="v-table v-table-bordered" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div> <div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:NaNpx;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">bordered</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">fixed</span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>150<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>province<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>省份<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>120<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table-column</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>city<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>市区<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>120<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table-column</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>300<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">fixed</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>right<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>操作<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">align</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>center<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>100<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span> <span class="token attr-name">slot-scope</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>scope<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>handleClick(scope.row)<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>查看<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-button</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table-column</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token function">handleClick</span> <span class="token punctuation">(</span><span class="token parameter">row</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>row<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="固定列和表头"><a href="#固定列和表头" aria-hidden="true" class="header-anchor">#</a> 固定列和表头</h4> <div class="table-wrapper"><p>横纵内容过多时，可选择固定列和表头。</p> <div class="v-table v-table-bordered" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div> <div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:220px;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>220<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">bordered</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">fixed</span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>150<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>province<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>省份<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>120<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table-column</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>city<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>市区<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>120<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table-column</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>300<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">fixed</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>right<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>操作<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">align</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>center<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>100<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span> <span class="token attr-name">slot-scope</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>scope<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>handleClick(scope.row)<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>查看<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-button</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table-column</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">6</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">7</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                province<span class="token punctuation">:</span> <span class="token string">'上海'</span><span class="token punctuation">,</span>
+                city<span class="token punctuation">:</span> <span class="token string">'普陀区'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token function">handleClick</span> <span class="token punctuation">(</span><span class="token parameter">row</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>row<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="多选"><a href="#多选" aria-hidden="true" class="header-anchor">#</a> 多选</h4> <div class="table-wrapper"><p>选择多行数据时使用 Checkbox。</p> <div class="v-table" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:NaNpx;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br> <button class="v-button icon-left" data-v-ed0a03e0><!----> <!----> <span class="text" data-v-ed0a03e0>选中第一行和第三行</span></button>
+     
+    <button class="v-button icon-left" data-v-ed0a03e0><!----> <!----> <span class="text" data-v-ed0a03e0>取消选择</span></button></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">:selection</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>selection<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">@selection-change</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>onSelectionChange<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>selection<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>toggleSelection([1, 3])<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>选中第一行和第三行<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-button</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>toggleSelection([])<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>取消选择<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-button</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            selection<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                selectedKeys<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token function">onSelectionChange</span> <span class="token punctuation">(</span><span class="token parameter">selectedKeys</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>selection<span class="token punctuation">.</span>selectedKeys <span class="token operator">=</span> selectedKeys
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token function">toggleSelection</span> <span class="token punctuation">(</span><span class="token parameter">keys</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>selection<span class="token punctuation">.</span>selectedKeys <span class="token operator">=</span> keys
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="排序"><a href="#排序" aria-hidden="true" class="header-anchor">#</a> 排序</h4> <div class="table-wrapper"><p>对表格进行排序，可快速查找或对比数据。</p> <div class="v-table" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:NaNpx;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">:sorter</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>sorter<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">@sort-change</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>onSortChange<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>date<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>日期<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>姓名<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>age<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>年龄<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>address<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>地址<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            sorter<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                age<span class="token punctuation">:</span> <span class="token string">'descend'</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token boolean">false</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                age<span class="token punctuation">:</span> <span class="token number">22</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-02'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1518 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                age<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-04'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1517 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+                age<span class="token punctuation">:</span> <span class="token number">18</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-01'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1519 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                key<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+                age<span class="token punctuation">:</span> <span class="token number">26</span><span class="token punctuation">,</span>
+                date<span class="token punctuation">:</span> <span class="token string">'2016-05-03'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'王小虎'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区金沙江路 1516 弄'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token function">onSortChange</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> field<span class="token punctuation">,</span> order <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>field <span class="token operator">===</span> <span class="token string">'age'</span> <span class="token operator">&amp;&amp;</span> order<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>order <span class="token operator">===</span> <span class="token string">'ascend'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> a<span class="token punctuation">.</span>age <span class="token operator">-</span> b<span class="token punctuation">.</span>age
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>order <span class="token operator">===</span> <span class="token string">'descend'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> b<span class="token punctuation">.</span>age <span class="token operator">-</span> a<span class="token punctuation">.</span>age
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>field <span class="token operator">===</span> <span class="token string">'date'</span> <span class="token operator">&amp;&amp;</span> order<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>order <span class="token operator">===</span> <span class="token string">'ascend'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>date<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>date<span class="token punctuation">)</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>order <span class="token operator">===</span> <span class="token string">'descend'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>date<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>date<span class="token punctuation">)</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="展开行"><a href="#展开行" aria-hidden="true" class="header-anchor">#</a> 展开行</h4> <div class="table-wrapper"><p>当行内容过多并且不想显示横向滚动条时，可以使用 Table 展开行功能。</p> <div class="v-table" data-v-7b801aac><div class="hidden-columns" data-v-7b801aac><div></div> <div></div> <div></div> <div></div></div> <div class="v-table-header" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <thead data-v-7b801aac><tr data-v-7b801aac></tr></thead></table></div> <div class="v-table-body" style="height:NaNpx;" data-v-7b801aac><table data-v-7b801aac><colgroup data-v-7b801aac></colgroup> <tbody data-v-7b801aac><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr><tr class="v-table-row" data-v-7b801aac></tr></tbody></table></div> <!----> <!----> <!----></div> <br></div> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table</span>
+    <span class="token attr-name">:data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>data<span class="token punctuation">&quot;</span></span>
+    <span class="token attr-name">row-key</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>id<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>expand<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span> <span class="token attr-name">v-slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>props<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>商品名称： {{ props.row.name }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>所属店铺： {{ props.row.shop }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>商品 ID： {{ props.row.id }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>店铺 ID： {{ props.row.shopId }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>商品分类： {{ props.row.category }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>店铺地址： {{ props.row.address }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>商品描述： {{ props.row.desc }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table-column</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>id<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>商品 ID<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>name<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>商品名称<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>180<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>v-table-column</span>
+        <span class="token attr-name">field</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>desc<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>描述<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>v-table</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                id<span class="token punctuation">:</span> <span class="token string">'12987122'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'好滋好味鸡蛋仔'</span><span class="token punctuation">,</span>
+                category<span class="token punctuation">:</span> <span class="token string">'江浙小吃、小吃零食'</span><span class="token punctuation">,</span>
+                desc<span class="token punctuation">:</span> <span class="token string">'荷兰优质淡奶，奶香浓而不腻'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区真北路'</span><span class="token punctuation">,</span>
+                shop<span class="token punctuation">:</span> <span class="token string">'王小虎夫妻店'</span><span class="token punctuation">,</span>
+                shopId<span class="token punctuation">:</span> <span class="token string">'10333'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                id<span class="token punctuation">:</span> <span class="token string">'12987123'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'好滋好味鸡蛋仔'</span><span class="token punctuation">,</span>
+                category<span class="token punctuation">:</span> <span class="token string">'江浙小吃、小吃零食'</span><span class="token punctuation">,</span>
+                desc<span class="token punctuation">:</span> <span class="token string">'荷兰优质淡奶，奶香浓而不腻'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区真北路'</span><span class="token punctuation">,</span>
+                shop<span class="token punctuation">:</span> <span class="token string">'王小虎夫妻店'</span><span class="token punctuation">,</span>
+                shopId<span class="token punctuation">:</span> <span class="token string">'10333'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                id<span class="token punctuation">:</span> <span class="token string">'12987125'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'好滋好味鸡蛋仔'</span><span class="token punctuation">,</span>
+                category<span class="token punctuation">:</span> <span class="token string">'江浙小吃、小吃零食'</span><span class="token punctuation">,</span>
+                desc<span class="token punctuation">:</span> <span class="token string">'荷兰优质淡奶，奶香浓而不腻'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区真北路'</span><span class="token punctuation">,</span>
+                shop<span class="token punctuation">:</span> <span class="token string">'王小虎夫妻店'</span><span class="token punctuation">,</span>
+                shopId<span class="token punctuation">:</span> <span class="token string">'10333'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                id<span class="token punctuation">:</span> <span class="token string">'12987126'</span><span class="token punctuation">,</span>
+                name<span class="token punctuation">:</span> <span class="token string">'好滋好味鸡蛋仔'</span><span class="token punctuation">,</span>
+                category<span class="token punctuation">:</span> <span class="token string">'江浙小吃、小吃零食'</span><span class="token punctuation">,</span>
+                desc<span class="token punctuation">:</span> <span class="token string">'荷兰优质淡奶，奶香浓而不腻'</span><span class="token punctuation">,</span>
+                address<span class="token punctuation">:</span> <span class="token string">'上海市普陀区真北路'</span><span class="token punctuation">,</span>
+                shop<span class="token punctuation">:</span> <span class="token string">'王小虎夫妻店'</span><span class="token punctuation">,</span>
+                shopId<span class="token punctuation">:</span> <span class="token string">'10333'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="table-attributes"><a href="#table-attributes" aria-hidden="true" class="header-anchor">#</a> Table Attributes</h4> <table><thead><tr><th>参数</th> <th>说明</th> <th>类型</th> <th>可选值</th> <th>默认值</th></tr></thead> <tbody><tr><td>data</td> <td>数据数组</td> <td>array</td> <td>-</td> <td>-</td></tr> <tr><td>rowKey</td> <td>表格行 key 的取值</td> <td>string</td> <td>-</td> <td>'key'</td></tr> <tr><td>bordered</td> <td>是否展示外边框和列边框</td> <td>boolean</td> <td></td> <td>false</td></tr> <tr><td>loading</td> <td>页面是否加载中</td> <td>boolean</td> <td>-</td> <td>false</td></tr> <tr><td>stripe</td> <td>是否为斑马纹 table</td> <td>boolean</td> <td>-</td> <td>false</td></tr> <tr><td>height</td> <td>Table 的高度</td> <td>number / string</td> <td>-</td> <td>-</td></tr> <tr><td>sorter</td> <td>排序规则</td> <td>object</td> <td>-</td> <td>-</td></tr> <tr><td>selection</td> <td>选中行的 key 对象</td> <td>object</td> <td>-</td> <td>-</td></tr> <tr><td>defaultExpandAll</td> <td>展开所有行</td> <td>boolean</td> <td>-</td> <td>false</td></tr> <tr><td>expandRowKeys</td> <td>展开行的 key 数组</td> <td>array</td> <td>-</td> <td>-</td></tr></tbody></table> <h4 id="table-events"><a href="#table-events" aria-hidden="true" class="header-anchor">#</a> Table Events</h4> <table><thead><tr><th>事件名称</th> <th>说明</th> <th>回调参数</th></tr></thead> <tbody><tr><td>select</td> <td>当用户手动勾选数据行的 Checkbox 时触发的事件</td> <td>row, selected, selectedRows, nativeEvent</td></tr> <tr><td>select-all</td> <td>当用户手动勾选全选 Checkbox 时触发的事件</td> <td>selected, selectedRows</td></tr> <tr><td>selection-change</td> <td>当选择项发生变化时会触发该事件</td> <td>selectedKeys, selectedRows</td></tr> <tr><td>sort-change</td> <td>当表格的排序条件发生变化的时候会触发该事件</td> <td>{ field, order }</td></tr></tbody></table> <h4 id="table-column-attributes"><a href="#table-column-attributes" aria-hidden="true" class="header-anchor">#</a> Table-column Attributes</h4> <table><thead><tr><th>参数</th> <th>说明</th> <th>类型</th> <th>可选值</th> <th>默认值</th></tr></thead> <tbody><tr><td>type</td> <td>对应列的类型。如果设置了 <code>selection</code> 则显示多选框；如果设置了 <code>expand</code> 则显示为一个可展开的按钮</td> <td>string</td> <td>selection/expand</td> <td>-</td></tr> <tr><td>label</td> <td>显示的标题</td> <td>string</td> <td>-</td> <td>-</td></tr> <tr><td>field</td> <td>对应列内容的字段名</td> <td>string</td> <td>-</td> <td>-</td></tr> <tr><td>width</td> <td>对应列的宽度</td> <td>string</td> <td>-</td> <td>-</td></tr> <tr><td>min-width</td> <td>对应列的最小宽度，与 width 的区别是 width 是固定的，min-width 会把剩余宽度按比例分配给设置了 min-width 的列</td> <td>string</td> <td>-</td> <td>-</td></tr> <tr><td>fixed</td> <td>列是否固定在左侧或者右侧，true 表示固定在左侧</td> <td>string, boolean</td> <td>true, left, right</td> <td>-</td></tr> <tr><td>align</td> <td>对齐方式</td> <td>string</td> <td>left/center/right</td> <td>-</td></tr></tbody></table> <h4 id="table-column-scoped-slot"><a href="#table-column-scoped-slot" aria-hidden="true" class="header-anchor">#</a> Table-column Scoped Slot</h4> <table><thead><tr><th>name</th> <th>说明</th></tr></thead> <tbody><tr><td>-</td> <td>自定义列的内容，参数为 { $index, column, row }</td></tr></tbody></table></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/vuejs-wheel/components/pagination.html" class="prev">
+          Pagination 分页
+        </a></span> <span class="next"><a href="/vuejs-wheel/components/sticky.html">
+          Sticky 粘性布局
+        </a>
+        →
+      </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/vuejs-wheel/assets/js/app.9d5adef2.js" defer></script><script src="/vuejs-wheel/assets/js/12.d21f8818.js" defer></script><script src="/vuejs-wheel/assets/js/77.1cbb4474.js" defer></script><script src="/vuejs-wheel/assets/js/51.eec0cae5.js" defer></script><script src="/vuejs-wheel/assets/js/2.0a256af7.js" defer></script><script src="/vuejs-wheel/assets/js/55.be7b8b16.js" defer></script><script src="/vuejs-wheel/assets/js/52.8a3ee9d2.js" defer></script><script src="/vuejs-wheel/assets/js/54.d9e351c3.js" defer></script><script src="/vuejs-wheel/assets/js/38.eaecbec1.js" defer></script><script src="/vuejs-wheel/assets/js/37.c92cb74b.js" defer></script><script src="/vuejs-wheel/assets/js/39.c5252694.js" defer></script><script src="/vuejs-wheel/assets/js/40.38672c31.js" defer></script><script src="/vuejs-wheel/assets/js/53.e74ba6b0.js" defer></script>
+  </body>
+</html>
