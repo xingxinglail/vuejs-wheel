@@ -152,14 +152,14 @@ $color: #409eff;
 .v-date-picker-date-panel {
 
     .v-date-picker-date-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        position: relative;
         margin: 12px;
 
         .center {
+            text-align: center;
             font-size: 16px;
             font-weight: 500;
+            margin: 0 64px;
 
             span {
                 cursor: pointer;
@@ -171,6 +171,17 @@ $color: #409eff;
         }
 
         .left, .right {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+
+            &.left {
+                left: 0;
+            }
+
+            &.right {
+                right: 0;
+            }
 
             .double, .single {
                 vertical-align: middle;
