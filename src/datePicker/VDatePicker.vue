@@ -640,6 +640,7 @@ $color: #409eff;
     line-height: 30px;
     margin: 5px 0;
     font-size: 12px;
+    z-index: 6;
 
     &.v-date-picker-panel-range {
         display: flex;
