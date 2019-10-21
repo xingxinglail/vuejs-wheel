@@ -15,8 +15,8 @@ export default {
     name: 'App',
     data () {
         return {
-            date: '',
-            date2: [], // '2019-10-01', '2019-10-11'
+            date: '2019-07-01',
+            date2: '', // '2019-10-01', '2019-10-11'
             container: null
         }
     },

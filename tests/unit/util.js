@@ -29,6 +29,7 @@ import VTable from '../../src/table/VTable'
 import VTableColumn from '../../src/table/VTableColumn'
 import VSticky from '../../src/sticky/VSticky'
 import VScrollbar from '../../src/scrollbar/VScrollbar'
+import VDatePicker from '../../src/datePicker/VDatePicker'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -63,6 +64,7 @@ Vue.component('v-table', VTable)
 Vue.component('v-table-column', VTableColumn)
 Vue.component('v-sticky', VSticky)
 Vue.component('v-scrollbar', VScrollbar)
+Vue.component('v-date-picker', VDatePicker)
 Vue.use(ToastPlugin)
 
 let id = 0
