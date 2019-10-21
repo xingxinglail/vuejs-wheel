@@ -42,7 +42,6 @@
              v-show="visible"
              ref="popper">
             <v-date-panel :data="data"
-                          :current="current"
                           :panel="panel"
                           :other-panel="endPanel"
                           :unlink-panels="unlinkPanels"
@@ -51,7 +50,6 @@
                           @change-date="onChangeDate($event, 'left')" />
             <v-date-panel v-if="type === 'daterange'"
                           :data="endData"
-                          :current="endCurrent"
                           :panel="endPanel"
                           :other-panel="panel"
                           :unlink-panels="unlinkPanels"

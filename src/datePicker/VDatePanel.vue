@@ -82,10 +82,6 @@ export default {
             type: Array,
             required: true
         },
-        current: {
-            type: Object,
-            required: true
-        },
         panel: {
             type: Object,
             required: true
