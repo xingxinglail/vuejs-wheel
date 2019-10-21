@@ -9,12 +9,11 @@
                  @change="onChange"/>
         <div v-else
              class="v-date-picker-range-wrapper"
-             @click="onInputWrapperClick">
+             @click.self="onInputWrapperClick">
             <input type="text"
                    ref="startInput"
                    v-model="inputValue"
                    :placeholder="startPlaceholder"
-                   @click.stop
                    @focus="onFocus"
                    @blur="onBlur"
                    @change="onChange('start')" />
@@ -23,7 +22,6 @@
                    ref="endInput"
                    v-model="endInputValue"
                    :placeholder="endPlaceholder"
-                   @click.stop
                    @focus="onFocus"
                    @blur="onBlur"
                    @change="onChange('end')" />
