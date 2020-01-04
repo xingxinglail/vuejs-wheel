@@ -26,7 +26,6 @@ export default {
     methods: {
         change (e) {
             console.log(e)
-            console.log(this.date)
         },
         change2 (e) {
             console.log('app change', e)
