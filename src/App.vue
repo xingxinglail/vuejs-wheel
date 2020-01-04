@@ -23,13 +23,6 @@ export default {
             container: null
         }
     },
-    created () {
-        setTimeout(() => {
-            // this.date = '2018-12-11'
-        }, 2000)
-    },
-    mounted () {
-    },
     methods: {
         change (e) {
             console.log(e)
@@ -42,6 +35,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
