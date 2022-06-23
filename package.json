@@ -43,7 +43,7 @@
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "jsdom": "^15.1.1",
+    "jsdom": "^16.5.0",
     "karma": "^4.3.0",
     "karma-chai": "^0.1.0",
     "karma-chai-spies": "^0.1.4",
